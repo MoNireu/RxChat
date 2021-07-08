@@ -15,7 +15,7 @@ target 'RxChat' do
   pod 'RealmSwift'
   pod 'Firebase/Auth'
   pod 'GoogleSignIn'
-
+  pod 'Firebase/Analytics'
 
   target 'RxChatTests' do
     inherit! :search_paths

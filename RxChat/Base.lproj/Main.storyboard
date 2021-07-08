@@ -21,15 +21,18 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h7d-Qt-7A9">
-                                <rect key="frame" x="20" y="515" width="374" height="30"/>
-                                <state key="normal" title="Button"/>
-                            </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lpQ-9i-GS9">
                                 <rect key="frame" x="20" y="377" width="374" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tLD-Fa-2b6" customClass="GIDSignInButton">
+                                <rect key="frame" x="20" y="515" width="374" height="30"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="75d-mv-Xyj"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -38,11 +41,10 @@
                             <constraint firstItem="271-iK-OCr" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="CUz-mR-9ij"/>
                             <constraint firstItem="271-iK-OCr" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Cmo-9V-GYW"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="271-iK-OCr" secondAttribute="trailing" constant="20" id="DfG-6B-pAt"/>
-                            <constraint firstItem="h7d-Qt-7A9" firstAttribute="top" secondItem="271-iK-OCr" secondAttribute="bottom" constant="50" id="IdS-Bw-oiQ"/>
+                            <constraint firstItem="tLD-Fa-2b6" firstAttribute="top" secondItem="271-iK-OCr" secondAttribute="bottom" constant="50" id="Eg9-6K-aTJ"/>
                             <constraint firstItem="271-iK-OCr" firstAttribute="top" secondItem="lpQ-9i-GS9" secondAttribute="bottom" constant="20" id="S5K-Sq-KgO"/>
-                            <constraint firstItem="h7d-Qt-7A9" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="WG5-tO-pNX"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="h7d-Qt-7A9" secondAttribute="trailing" constant="20" id="hlo-CP-IAo"/>
-                            <constraint firstItem="h7d-Qt-7A9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="z1v-yf-iqZ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="tLD-Fa-2b6" secondAttribute="trailing" constant="20" id="a6m-5s-cTA"/>
+                            <constraint firstItem="tLD-Fa-2b6" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="dJP-Rx-nsk"/>
                             <constraint firstItem="lpQ-9i-GS9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="zeh-E6-lWf"/>
                             <constraint firstItem="271-iK-OCr" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="zfO-Fs-aWP"/>
                         </constraints>
