@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -101,7 +101,6 @@
 				B50FAAF74F98DE853FF0C562 /* Pods-RxChatTests.debug.xcconfig */,
 				76D2BFC85D59DA277B4B318E /* Pods-RxChatTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -140,9 +139,11 @@
 		E15B2D152696E8B2005D1C3F /* RxChat */ = {
 			isa = PBXGroup;
 			children = (
+				E1D9339B2696ED1C007ECA6B /* Model */,
+				E1D9339A2696ED14007ECA6B /* ViewController */,
+				E1D933992696ED0D007ECA6B /* ViewModel */,
 				E15B2D162696E8B2005D1C3F /* AppDelegate.swift */,
 				E15B2D182696E8B2005D1C3F /* SceneDelegate.swift */,
-				E15B2D1A2696E8B2005D1C3F /* ViewController.swift */,
 				E15B2D1C2696E8B2005D1C3F /* Main.storyboard */,
 				E15B2D1F2696E8B3005D1C3F /* Assets.xcassets */,
 				E15B2D212696E8B3005D1C3F /* LaunchScreen.storyboard */,
@@ -167,6 +168,28 @@
 				E15B2D3A2696E8B3005D1C3F /* Info.plist */,
 			);
 			path = RxChatUITests;
+			sourceTree = "<group>";
+		};
+		E1D933992696ED0D007ECA6B /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		E1D9339A2696ED14007ECA6B /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				E15B2D1A2696E8B2005D1C3F /* ViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		E1D9339B2696ED1C007ECA6B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
