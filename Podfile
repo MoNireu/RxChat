@@ -13,6 +13,8 @@ target 'RxChat' do
   pod 'RxDataSources'
   pod 'RxCoreData'
   pod 'RealmSwift'
+  pod 'Firebase/Auth'
+  pod 'GoogleSignIn'
 
 
   target 'RxChatTests' do
