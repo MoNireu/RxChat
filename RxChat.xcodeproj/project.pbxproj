@@ -18,6 +18,8 @@
 		E15B2D2E2696E8B3005D1C3F /* RxChatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B2D2D2696E8B3005D1C3F /* RxChatTests.swift */; };
 		E15B2D392696E8B3005D1C3F /* RxChatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B2D382696E8B3005D1C3F /* RxChatUITests.swift */; };
 		E18269922696F156000D083F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E18269912696F156000D083F /* GoogleService-Info.plist */; };
+		E1E11E3C269C1E2D000CE221 /* FirebaseUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E11E3B269C1E2D000CE221 /* FirebaseUtil.swift */; };
+		E1E11E3F269C1F19000CE221 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E11E3E269C1F19000CE221 /* User.swift */; };
 		F40B614B66CA94FF9952236D /* Pods_RxChatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3DF6715B9A87D0122530F26 /* Pods_RxChatTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +64,8 @@
 		E15B2D382696E8B3005D1C3F /* RxChatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxChatUITests.swift; sourceTree = "<group>"; };
 		E15B2D3A2696E8B3005D1C3F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E18269912696F156000D083F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E1E11E3B269C1E2D000CE221 /* FirebaseUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUtil.swift; sourceTree = "<group>"; };
+		E1E11E3E269C1F19000CE221 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		F3DB8FB578DB68731E0FB61F /* Pods-RxChat-RxChatUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxChat-RxChatUITests.debug.xcconfig"; path = "Target Support Files/Pods-RxChat-RxChatUITests/Pods-RxChat-RxChatUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -141,6 +145,7 @@
 		E15B2D152696E8B2005D1C3F /* RxChat */ = {
 			isa = PBXGroup;
 			children = (
+				E1E11E3A269C1E1B000CE221 /* Utility */,
 				E1D9339B2696ED1C007ECA6B /* Model */,
 				E1D9339A2696ED14007ECA6B /* ViewController */,
 				E1D933992696ED0D007ECA6B /* ViewModel */,
@@ -191,8 +196,17 @@
 		E1D9339B2696ED1C007ECA6B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E1E11E3E269C1F19000CE221 /* User.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		E1E11E3A269C1E1B000CE221 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				E1E11E3B269C1E2D000CE221 /* FirebaseUtil.swift */,
+			);
+			path = Utility;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -472,6 +486,8 @@
 			files = (
 				E15B2D1B2696E8B2005D1C3F /* ViewController.swift in Sources */,
 				E15B2D172696E8B2005D1C3F /* AppDelegate.swift in Sources */,
+				E1E11E3C269C1E2D000CE221 /* FirebaseUtil.swift in Sources */,
+				E1E11E3F269C1F19000CE221 /* User.swift in Sources */,
 				E15B2D192696E8B2005D1C3F /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
