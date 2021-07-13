@@ -66,6 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                     }
                 })
             
+            firebaseUtil.setUserData(uid, email!, "MoNireu")
             
         }
     }

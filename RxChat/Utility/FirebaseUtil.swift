@@ -37,18 +37,16 @@ class FirebaseUtil {
     
     
     
-    func writeUserData(_ uid: String, _ email: String, _ id: String) {
+    func setUserData(_ uid: String, _ email: String, _ id: String) {
         let docRef = db.collection("Users").document(uid)
-        docRef.setData([
-            "Email" : email,
-            "ID" : id
-        ]) { err in 
-            if let err = err {
-                print("Error writing document: \(err)")
-            }
-            else {
-                print("Document successfully written")
-            }
-        }
+        docRef.rx
+            .setData([
+                "email" : email,
+                "id" : id
+            ])
+            .subscribe(onError: { err in
+                print("Error setting user data: \(err.localizedDescription)")
+            })
+            .dispose()
     }
 }
