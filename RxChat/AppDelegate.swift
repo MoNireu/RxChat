@@ -12,12 +12,19 @@ import GoogleSignIn
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     
+    var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
         
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
         GIDSignIn.sharedInstance().delegate = self
+        
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let signInVC = storyboard.instantiateViewController(withIdentifier: "SignInVC")
+        self.window?.rootViewController = signInVC
+        self.window?.makeKeyAndVisible()
         return true
     }
     
@@ -64,9 +71,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                     else {
                         print("User not exist")
                     }
+                    let storyboard = self.window?.rootViewController?.storyboard
+                    if let editProfileVC = storyboard?.instantiateViewController(withIdentifier: "EditProfileVC") as? EditProfileViewController {
+                        editProfileVC.viewModel = EditProfileViewModel(ownerInfo: user!)
+                        editProfileVC.loadViewIfNeeded()
+                        editProfileVC.bindViewModel()
+                        editProfileVC.modalPresentationStyle = .fullScreen
+                        var rootVC = UIApplication.shared.windows.first?.rootViewController
+                        rootVC?.present(editProfileVC, animated: true)
+                    }
                 })
             
-            firebaseUtil.setUserData(uid, email!, "MoNireu")
+//            firebaseUtil.setUserData(uid, email!, "MoNireu")
             
         }
     }
