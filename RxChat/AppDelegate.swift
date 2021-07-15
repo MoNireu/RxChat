@@ -11,20 +11,14 @@ import GoogleSignIn
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
-    
-    var window: UIWindow?
+       
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
         
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
         GIDSignIn.sharedInstance().delegate = self
-        
-        self.window = UIWindow(frame: UIScreen.main.bounds)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let signInVC = storyboard.instantiateViewController(withIdentifier: "SignInVC")
-        self.window?.rootViewController = signInVC
-        self.window?.makeKeyAndVisible()
+
         return true
     }
     
@@ -41,9 +35,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             print("GoogleSignIn Error: Sign in error!" + error.localizedDescription)
             return
         }
-        
+
         print("GoogleSign-in Suceed!")
-        
+
         guard let authentication = user.authentication else { return }
         let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken,
                                                        accessToken: authentication.accessToken)
@@ -53,45 +47,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                 print(error?.localizedDescription)
                 return
             }
-            
+
             print("Firebase Sign-in Suceed!")
-            
+
             let uid = authResult!.user.uid
             let email = authResult!.user.email
-            
+
             print("UID: " + uid)
             print("Email: " + email!)
-            
+
             let firebaseUtil = FirebaseUtil()
             firebaseUtil.retriveUserData(uid)
                 .subscribe(onNext: { user in
+                    let ownerInfo: User
                     if user != nil {
+                        ownerInfo = user!
                         print("User exist")
                     }
                     else {
+                        ownerInfo = User(email: email!, id: nil)
                         print("User not exist")
                     }
+
                     
-                    let storyboard = self.window?.rootViewController?.storyboard
-                    if let editProfileVC = storyboard?.instantiateViewController(withIdentifier: "EditProfileVC") as? EditProfileViewController {
-                        editProfileVC.viewModel = EditProfileViewModel(ownerInfo: user!)
-                        editProfileVC.loadViewIfNeeded()
-                        editProfileVC.bindViewModel()
-                        editProfileVC.modalPresentationStyle = .fullScreen
-                        var rootVC = UIApplication.shared.windows.first?.rootViewController
-                        rootVC?.present(editProfileVC, animated: true)
-                    }
+                    let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
+                    let signInViewModel = sceneDelegate?.signInViewModel
+                    let editProfileViewModel = EditProfileViewModel(ownerInfo: ownerInfo, sceneCoordinator: signInViewModel!.sceneCoordinator)
+                    let editProfileScene = Scene.editProfile(editProfileViewModel)
+                    signInViewModel?.sceneCoordinator.transition(to: editProfileScene, using: .fullScreen, animated: true)
                 })
-            
-//            firebaseUtil.setUserData(uid, email!, "MoNireu")
-            
         }
-    }
-    
-    
-    func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
-        // Perform any operations when the user disconnects from app here.
-        // ...
     }
     
     // MARK: UISceneSession Lifecycle

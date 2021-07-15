@@ -11,14 +11,15 @@ import RxCocoa
 import Action
 
 
-class EditProfileViewModel {
+class EditProfileViewModel: CommonViewModel {
     let disposeBag = DisposeBag()
     var ownerInfo: User
     var ownerInfoSubject: BehaviorSubject<User>
     
-    init(ownerInfo: User) {
+    init(ownerInfo: User, sceneCoordinator: SceneCoordinatorType) {
         self.ownerInfo = ownerInfo
         ownerInfoSubject = BehaviorSubject<User>(value: ownerInfo)
+        super.init(sceneCoordinator: sceneCoordinator)
     }
     
     func profileEditDone() -> CocoaAction {
@@ -31,12 +32,7 @@ class EditProfileViewModel {
                     print("id: \(user.id)")
                     print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
                 })
-//            print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
-//            print("Profile Edit Done!")
-//            print("email: \(self.ownerInfo.email)")
-//            print("id: \(self.ownerInfo.id!)")
-//            print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
-            
+
             return Observable.empty()
         }
     }

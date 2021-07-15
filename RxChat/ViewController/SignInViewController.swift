@@ -8,13 +8,20 @@
 import UIKit
 import GoogleSignIn
 
-class SignInViewController: UIViewController {
+class SignInViewController: UIViewController, ViewModelBindableType {
+    
+    var viewModel: SignInViewModel!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         GIDSignIn.sharedInstance()?.presentingViewController = self
         GIDSignIn.sharedInstance().signIn()
+    }
+    
+    func bindViewModel() {
+        
     }
 
 
