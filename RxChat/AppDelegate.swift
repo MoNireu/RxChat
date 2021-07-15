@@ -71,6 +71,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                     else {
                         print("User not exist")
                     }
+                    
                     let storyboard = self.window?.rootViewController?.storyboard
                     if let editProfileVC = storyboard?.instantiateViewController(withIdentifier: "EditProfileVC") as? EditProfileViewController {
                         editProfileVC.viewModel = EditProfileViewModel(ownerInfo: user!)
