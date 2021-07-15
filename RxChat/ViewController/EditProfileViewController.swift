@@ -10,7 +10,7 @@ import RxCocoa
 import RxSwift
 import Action
 
-class EditProfileViewController: UIViewController {
+class EditProfileViewController: UIViewController, ViewModelBindableType {
     
     var disposeBag = DisposeBag()
     var viewModel: EditProfileViewModel!
