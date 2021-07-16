@@ -17,6 +17,7 @@
 		E15B2D232696E8B3005D1C3F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E15B2D212696E8B3005D1C3F /* LaunchScreen.storyboard */; };
 		E15B2D2E2696E8B3005D1C3F /* RxChatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B2D2D2696E8B3005D1C3F /* RxChatTests.swift */; };
 		E15B2D392696E8B3005D1C3F /* RxChatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B2D382696E8B3005D1C3F /* RxChatUITests.swift */; };
+		E15DD8EE26A18ABF00BECE22 /* Owner.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15DD8ED26A18ABF00BECE22 /* Owner.swift */; };
 		E1613B32269D7F9300F4E359 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1613B31269D7F9300F4E359 /* EditProfileViewController.swift */; };
 		E1613B35269D7FBA00F4E359 /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1613B34269D7FBA00F4E359 /* EditProfileViewModel.swift */; };
 		E1613B37269D824600F4E359 /* defaultProfileImage.png in Resources */ = {isa = PBXBuildFile; fileRef = E1613B36269D824600F4E359 /* defaultProfileImage.png */; };
@@ -73,6 +74,7 @@
 		E15B2D342696E8B3005D1C3F /* RxChatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RxChatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E15B2D382696E8B3005D1C3F /* RxChatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxChatUITests.swift; sourceTree = "<group>"; };
 		E15B2D3A2696E8B3005D1C3F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E15DD8ED26A18ABF00BECE22 /* Owner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Owner.swift; sourceTree = "<group>"; };
 		E1613B31269D7F9300F4E359 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		E1613B34269D7FBA00F4E359 /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
 		E1613B36269D824600F4E359 /* defaultProfileImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultProfileImage.png; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 			isa = PBXGroup;
 			children = (
 				E1E11E3E269C1F19000CE221 /* User.swift */,
+				E15DD8ED26A18ABF00BECE22 /* Owner.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -544,6 +547,7 @@
 				E170DF6026A01FC700A5BAAF /* SceneCoordinatorType.swift in Sources */,
 				E1613B35269D7FBA00F4E359 /* EditProfileViewModel.swift in Sources */,
 				E1E11E3F269C1F19000CE221 /* User.swift in Sources */,
+				E15DD8EE26A18ABF00BECE22 /* Owner.swift in Sources */,
 				E15B2D192696E8B2005D1C3F /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

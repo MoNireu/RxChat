@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-struct User {
+class User {
     let email: String
     var id: String?
     var profileImgData: Data?
