@@ -68,7 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             }
             
             let firebaseUtil = signInViewModel.firebaseUtil
-            firebaseUtil.retriveUserData(uid)
+            firebaseUtil.downloadOwnerData(uid)
                 .subscribe(onNext: { user in
                     let ownerInfo: User
                     if user != nil {
@@ -76,7 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                         print("User exist")
                     }
                     else {
-                        ownerInfo = User(email: email!, id: nil, profileImg: nil)
+                        ownerInfo = User(email: email!, id: nil, profileImgData: nil)
                         print("User not exist")
                     }
                     

@@ -17,7 +17,7 @@ class FirebaseUtil {
     private let STORAGE_BUCKET = "gs://rxchat-f485a.appspot.com"
     
     
-    func retriveUserData(_ uid: String) -> Observable<User?> {
+    func downloadOwnerData(_ uid: String) -> Observable<Owner?> {
         return Observable.create { observer in
             self.db.collection("Users").document(uid).rx
                 .getDocument()
@@ -28,9 +28,13 @@ class FirebaseUtil {
                         let id = data!["id"] as! String
                         
                         self.downloadProfileImage(email)
-                            .subscribe(onNext: { img in
-                                let user = User(email: email, id: id, profileImg: img)
-                                observer.onNext(user)
+                            .subscribe(onNext: { imgData in
+                                let owner = Owner(uid: uid, email: email, id: id, profileImgData: imgData)
+                                observer.onNext(owner)
+                                observer.onCompleted()
+                            }, onError: { err in
+                                let owner = Owner(uid: uid, email: email, id: id, profileImgData: nil)
+                                observer.onNext(owner)
                                 observer.onCompleted()
                             })
                             .disposed(by: self.disposeBag)
