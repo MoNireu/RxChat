@@ -85,7 +85,7 @@ class FirebaseUtil {
     }
     
     
-    func downloadProfileImage(_ email: String) -> Observable<UIImage> {
+    func downloadProfileImage(_ email: String) -> Observable<Data> {
         return Observable.create { observer in
             let ref = Storage.storage()
                 .reference(forURL: "\(self.STORAGE_BUCKET)/images/profile/\(email).jpg")
@@ -93,19 +93,16 @@ class FirebaseUtil {
             
             ref.getData(maxSize: 1 * 1024 * 1024)
                 .subscribe(onNext: { data in
-                    if let image = UIImage(data: data) {
-                        print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
-                        print("profile img download success!")
-                        print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
-                        observer.onNext(image)
-                    }
+                    print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
+                    print("profile img download success!")
+                    print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
+                    observer.onNext(data)
                     observer.onCompleted()
                 }, onError: { err in
                     print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
                     print("Error: profile img download failed")
                     print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
-                    let defaultImg = UIImage(named: "defaultProfileImage.png")
-                    observer.onNext(defaultImg!)
+                    observer.onError(err)
                     observer.onCompleted()
                 })
                 .disposed(by: self.disposeBag)
