@@ -11,12 +11,12 @@ import UIKit
 struct User {
     let email: String
     var id: String?
-    var profileImg: UIImage?
+    var profileImgData: Data?
     
     
-    init(email: String, id: String?, profileImg: UIImage?) {
+    init(email: String, id: String?, profileImgData: Data?) {
         self.email = email
         self.id = id
-        self.profileImg = profileImg
+        self.profileImgData = profileImgData
     }
 }

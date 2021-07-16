@@ -41,7 +41,7 @@ class EditProfileViewController: UIViewController, ViewModelBindableType {
                     self.idTextField.text = id
                 }
                 
-                if let profileImg = user.profileImg {
+                if let profileImg = user.profileImgData {
                     self.profileImageView.image = profileImg
                 }
             })
