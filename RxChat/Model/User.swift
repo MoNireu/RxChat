@@ -6,13 +6,17 @@
 //
 
 import Foundation
+import UIKit
 
 struct User {
     let email: String
     var id: String?
+    var profileImg: UIImage?
     
-    init(email: String, id: String?) {
+    
+    init(email: String, id: String?, profileImg: UIImage?) {
         self.email = email
         self.id = id
+        self.profileImg = profileImg
     }
 }

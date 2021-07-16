@@ -18,9 +18,6 @@ class EditProfileViewModel: CommonViewModel {
     var ownerInfo: User
     var ownerInfoSubject: BehaviorSubject<User>
     
-    var profileImage: UIImage!
-    var profileImageSubject: BehaviorSubject<UIImage>!
-    
     init(ownerInfo: User, sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil) {
         self.ownerInfo = ownerInfo
         ownerInfoSubject = BehaviorSubject<User>(value: ownerInfo)

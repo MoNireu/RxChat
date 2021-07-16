@@ -27,9 +27,14 @@ class FirebaseUtil {
                         let email = data!["email"] as! String
                         let id = data!["id"] as! String
                         
-                        observer.onNext(User(email: email, id: id))
+                        self.downloadProfileImage(email)
+                            .subscribe(onNext: { img in
+                                let user = User(email: email, id: id, profileImg: img)
+                                observer.onNext(user)
+                                observer.onCompleted()
+                            })
+                            .disposed(by: self.disposeBag)
                     }
-                    observer.onCompleted()
                 }, onError: { error in
                     observer.onNext(nil)
                     observer.onCompleted()
@@ -65,7 +70,7 @@ class FirebaseUtil {
                 print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
                 print("profile img upload success!")
                 print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
-
+                
             }, onError: { err in
                 print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
                 print("profile img upload failed")
@@ -75,22 +80,29 @@ class FirebaseUtil {
     
     
     func downloadProfileImage(_ email: String) -> Observable<UIImage> {
-        var img = UIImage()
-        let ref = Storage.storage()
-            .reference(forURL: "\(STORAGE_BUCKET)/images/profile/\(email).jpg")
-            .rx
-        
-        ref.getData(maxSize: 1 * 1024 * 1024)
-            .subscribe(onNext: { data in
-                img = UIImage()
-                if let _img = UIImage(data: data) {
-                    img = _img
-                }
-            }, onError: { err in
-                print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
-                print("profile img download failed")
-                print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
-            })
-        return Observable.just(img)
+        return Observable.create { observer in
+            let ref = Storage.storage()
+                .reference(forURL: "\(self.STORAGE_BUCKET)/images/profile/\(email).jpg")
+                .rx
+            
+            ref.getData(maxSize: 1 * 1024 * 1024)
+                .subscribe(onNext: { data in
+                    if let image = UIImage(data: data) {
+                        print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
+                        print("profile img download success!")
+                        print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
+                        observer.onNext(image)
+                    }
+                    observer.onCompleted()
+                }, onError: { err in
+                    print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
+                    print("Error: profile img download failed")
+                    print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
+                    observer.onCompleted()
+                })
+                .disposed(by: self.disposeBag)
+            
+            return Disposables.create()
+        }
     }
 }

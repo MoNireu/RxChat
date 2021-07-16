@@ -40,6 +40,10 @@ class EditProfileViewController: UIViewController, ViewModelBindableType {
                 if let id = user.id {
                     self.idTextField.text = id
                 }
+                
+                if let profileImg = user.profileImg {
+                    self.profileImageView.image = profileImg
+                }
             })
             .dispose()
         

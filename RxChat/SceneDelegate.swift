@@ -23,7 +23,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.makeKeyAndVisible()
         
         let sceneCoordinator = SceneCoordinator(window: window)
-        self.signInViewModel = SignInViewModel(sceneCoordinator: sceneCoordinator)
+        let firebaseUtil = FirebaseUtil()
+        self.signInViewModel = SignInViewModel(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
         let signInScene = Scene.signIn(self.signInViewModel!)
         sceneCoordinator.transition(to: signInScene, using: .root, animated: true)
         

@@ -8,10 +8,12 @@
 import UIKit
 import Firebase
 import GoogleSignIn
+import RxSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
        
+    let disposeBag = DisposeBag()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
@@ -55,8 +57,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
             print("UID: " + uid)
             print("Email: " + email!)
-
-            let firebaseUtil = FirebaseUtil()
+            
+            let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
+            guard let signInViewModel = sceneDelegate?.signInViewModel else {
+                print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
+                print("Error: SignInViewModel Not Loaded!")
+                print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
+                
+                return
+            }
+            
+            let firebaseUtil = signInViewModel.firebaseUtil
             firebaseUtil.retriveUserData(uid)
                 .subscribe(onNext: { user in
                     let ownerInfo: User
@@ -65,17 +76,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                         print("User exist")
                     }
                     else {
-                        ownerInfo = User(email: email!, id: nil)
+                        ownerInfo = User(email: email!, id: nil, profileImg: nil)
                         print("User not exist")
                     }
-
                     
-                    let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
-                    let signInViewModel = sceneDelegate?.signInViewModel
-                    let editProfileViewModel = EditProfileViewModel(ownerInfo: ownerInfo, sceneCoordinator: signInViewModel!.sceneCoordinator, firebaseUtil: firebaseUtil)
+                    let editProfileViewModel = EditProfileViewModel(ownerInfo: ownerInfo, sceneCoordinator: signInViewModel.sceneCoordinator, firebaseUtil: signInViewModel.firebaseUtil)
                     let editProfileScene = Scene.editProfile(editProfileViewModel)
-                    signInViewModel?.sceneCoordinator.transition(to: editProfileScene, using: .fullScreen, animated: true)
+                    signInViewModel.sceneCoordinator.transition(to: editProfileScene, using: .fullScreen, animated: true)
                 })
+                .disposed(by: self.disposeBag)
         }
     }
     
