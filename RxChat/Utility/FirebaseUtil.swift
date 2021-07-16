@@ -44,7 +44,7 @@ class FirebaseUtil {
     
     
     
-    func setUserData(_ uid: String, _ email: String, _ id: String) {
+    func uploadUserData(_ uid: String, _ email: String, _ id: String) {
         let docRef = db.collection("Users").document(uid)
         docRef.rx
             .setData([
@@ -58,24 +58,30 @@ class FirebaseUtil {
     }
     
     
-    func uploadProfileImage(_ email: String, _ profileImage: UIImage) {
-        let ref = Storage.storage()
-            .reference(forURL: "\(STORAGE_BUCKET)/images/profile/\(email).jpg")
-            .rx
-        
-        var imageData = Data()
-        imageData = profileImage.jpegData(compressionQuality: 0.8)!
-        ref.putData(imageData)
-            .subscribe(onNext: { metaData in
-                print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
-                print("profile img upload success!")
-                print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
-                
-            }, onError: { err in
-                print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
-                print("profile img upload failed")
-                print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
-            }).disposed(by: disposeBag)
+    func uploadProfileImage(_ email: String, _ profileImage: UIImage) -> Observable<Data> {
+        return Observable.create { observer in
+            let ref = Storage.storage()
+                .reference(forURL: "\(self.STORAGE_BUCKET)/images/profile/\(email).jpg")
+                .rx
+            
+            var imageData = Data()
+            imageData = profileImage.jpegData(compressionQuality: 0.8)!
+            ref.putData(imageData)
+                .subscribe(onNext: { metaData in
+                    print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
+                    print("profile img upload success!")
+                    print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
+                    observer.onNext(imageData)
+                    observer.onCompleted()
+                }, onError: { err in
+                    print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
+                    print("profile img upload failed")
+                    print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
+                    observer.onError(err)
+                }).disposed(by: self.disposeBag)
+            
+            return Disposables.create()
+        }
     }
     
     
