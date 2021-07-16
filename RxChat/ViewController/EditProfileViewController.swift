@@ -35,28 +35,27 @@ class EditProfileViewController: UIViewController, ViewModelBindableType {
     }
     
     func bindViewModel() {
-        viewModel.ownerInfoSubject
-            .subscribe(onNext: { user in
-                if let id = user.id {
-                    self.idTextField.text = id
-                }
-                
-                if let profileImg = user.profileImgData {
-                    self.profileImageView.image = profileImg
-                }
+        viewModel.ownerID
+            .subscribe(onNext: { id in
+                self.idTextField.text = id
             })
             .dispose()
+        
+        viewModel.ownerProfileImg
+            .subscribe(onNext: { image in
+                self.profileImageView.image = image
+            })
         
         idTextField.rx.text
             .subscribe(onNext: { id in
                 self.viewModel.ownerInfo.id = id
-                self.viewModel.ownerInfoSubject.onNext(self.viewModel.ownerInfo)
+                self.viewModel.ownerID.onNext(id ?? "")
             })
             .disposed(by: disposeBag)
         
         
-        
-        completeButton.rx.bind(to: viewModel.profileEditDone, input: profileImageView.image)
+        completeButton.rx.action = viewModel.profileEditDone
+//        completeButton.rx.bind(to: viewModel.profileEditDone, input: profileImageView.image)
         
 //        completeButton.rx.action = viewModel.profileEditDone()
     }
