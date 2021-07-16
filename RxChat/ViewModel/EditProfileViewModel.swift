@@ -9,21 +9,27 @@ import Foundation
 import RxSwift
 import RxCocoa
 import Action
-
+import Firebase
+import RxFirebase
 
 class EditProfileViewModel: CommonViewModel {
     let disposeBag = DisposeBag()
+    
     var ownerInfo: User
     var ownerInfoSubject: BehaviorSubject<User>
     
-    init(ownerInfo: User, sceneCoordinator: SceneCoordinatorType) {
+    var profileImage: UIImage!
+    var profileImageSubject: BehaviorSubject<UIImage>!
+    
+    init(ownerInfo: User, sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil) {
         self.ownerInfo = ownerInfo
         ownerInfoSubject = BehaviorSubject<User>(value: ownerInfo)
-        super.init(sceneCoordinator: sceneCoordinator)
+        
+        super.init(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
     }
     
-    func profileEditDone() -> CocoaAction {
-        return Action { _ in
+    lazy var profileEditDone: Action<UIImage?, Void> = {
+        return Action { image in
             self.ownerInfoSubject
                 .subscribe(onNext: { user in
                     print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
@@ -31,11 +37,10 @@ class EditProfileViewModel: CommonViewModel {
                     print("email: \(user.email)")
                     print("id: \(user.id)")
                     print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
+                    self.firebaseUtil.uploadProfileImage(user.email, image!)
                 })
-
             return Observable.empty()
         }
-    }
-    
-    
+        
+    }()
 }

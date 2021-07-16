@@ -21,8 +21,6 @@ target 'RxChat' do
   pod 'Firebase/Firestore'
   pod 'FirebaseFirestoreSwift'
 
-
-
   pod 'RxFirebase/Firestore'
   pod 'RxFirebase/RemoteConfig'
   pod 'RxFirebase/Database'

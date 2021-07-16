@@ -10,6 +10,7 @@ import RxCocoa
 import RxSwift
 import Action
 
+
 class EditProfileViewController: UIViewController, ViewModelBindableType {
     
     var disposeBag = DisposeBag()
@@ -25,7 +26,7 @@ class EditProfileViewController: UIViewController, ViewModelBindableType {
         
         profileImageView.clipsToBounds = true
         profileImageView.layer.cornerRadius = profileImageView.frame.size.height * 0.5
-        profileImageView.image = UIImage(named: "defaultProfileImage.png")
+//        profileImageView.image = UIImage(named: "defaultProfileImage.png")
         
         idTextField.placeholder = "닉네임을 입력하세요"
         idTextField.textAlignment = .center
@@ -49,7 +50,11 @@ class EditProfileViewController: UIViewController, ViewModelBindableType {
             })
             .disposed(by: disposeBag)
         
-        completeButton.rx.action = viewModel.profileEditDone()
+        
+        
+        completeButton.rx.bind(to: viewModel.profileEditDone, input: profileImageView.image)
+        
+//        completeButton.rx.action = viewModel.profileEditDone()
     }
     
     

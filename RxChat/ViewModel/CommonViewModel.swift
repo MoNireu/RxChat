@@ -11,8 +11,10 @@ import RxCocoa
 
 class CommonViewModel: NSObject {
     let sceneCoordinator: SceneCoordinatorType
+    let firebaseUtil: FirebaseUtil
     
-    init(sceneCoordinator: SceneCoordinatorType) {
+    init(sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil) {
         self.sceneCoordinator = sceneCoordinator
+        self.firebaseUtil = firebaseUtil
     }
 }

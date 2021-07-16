@@ -12,8 +12,10 @@ import RxSwift
 
 
 class FirebaseUtil {
-    let db = Firestore.firestore()
-    let disposeBag = DisposeBag()
+    private let db = Firestore.firestore()
+    private let disposeBag = DisposeBag()
+    private let STORAGE_BUCKET = "gs://rxchat-f485a.appspot.com"
+    
     
     func retriveUserData(_ uid: String) -> Observable<User?> {
         return Observable.create { observer in
@@ -48,5 +50,47 @@ class FirebaseUtil {
                 print("Error setting user data: \(err.localizedDescription)")
             })
             .dispose()
+    }
+    
+    
+    func uploadProfileImage(_ email: String, _ profileImage: UIImage) {
+        let ref = Storage.storage()
+            .reference(forURL: "\(STORAGE_BUCKET)/images/profile/\(email).jpg")
+            .rx
+        
+        var imageData = Data()
+        imageData = profileImage.jpegData(compressionQuality: 0.8)!
+        ref.putData(imageData)
+            .subscribe(onNext: { metaData in
+                print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
+                print("profile img upload success!")
+                print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
+
+            }, onError: { err in
+                print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
+                print("profile img upload failed")
+                print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
+            }).disposed(by: disposeBag)
+    }
+    
+    
+    func downloadProfileImage(_ email: String) -> Observable<UIImage> {
+        var img = UIImage()
+        let ref = Storage.storage()
+            .reference(forURL: "\(STORAGE_BUCKET)/images/profile/\(email).jpg")
+            .rx
+        
+        ref.getData(maxSize: 1 * 1024 * 1024)
+            .subscribe(onNext: { data in
+                img = UIImage()
+                if let _img = UIImage(data: data) {
+                    img = _img
+                }
+            }, onError: { err in
+                print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
+                print("profile img download failed")
+                print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
+            })
+        return Observable.just(img)
     }
 }

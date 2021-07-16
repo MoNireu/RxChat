@@ -72,7 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                     
                     let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
                     let signInViewModel = sceneDelegate?.signInViewModel
-                    let editProfileViewModel = EditProfileViewModel(ownerInfo: ownerInfo, sceneCoordinator: signInViewModel!.sceneCoordinator)
+                    let editProfileViewModel = EditProfileViewModel(ownerInfo: ownerInfo, sceneCoordinator: signInViewModel!.sceneCoordinator, firebaseUtil: firebaseUtil)
                     let editProfileScene = Scene.editProfile(editProfileViewModel)
                     signInViewModel?.sceneCoordinator.transition(to: editProfileScene, using: .fullScreen, animated: true)
                 })
