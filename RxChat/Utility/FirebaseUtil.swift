@@ -98,6 +98,8 @@ class FirebaseUtil {
                     print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
                     print("Error: profile img download failed")
                     print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
+                    let defaultImg = UIImage(named: "defaultProfileImage.png")
+                    observer.onNext(defaultImg!)
                     observer.onCompleted()
                 })
                 .disposed(by: self.disposeBag)
