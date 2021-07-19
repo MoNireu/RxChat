@@ -17,7 +17,7 @@ class FirebaseUtil {
     private let STORAGE_BUCKET = "gs://rxchat-f485a.appspot.com"
     
     
-    func downloadOwnerData(_ uid: String) -> Observable<Owner?> {
+    func downloadOwnerData(_ uid: String) -> Observable<User?> {
         return Observable.create { observer in
             self.db.collection("Users").document(uid).rx
                 .getDocument()
@@ -29,12 +29,12 @@ class FirebaseUtil {
                         
                         self.downloadProfileImage(email)
                             .subscribe(onNext: { imgData in
-                                let owner = Owner(uid: uid, email: email, id: id, profileImgData: imgData)
-                                observer.onNext(owner)
+                                let User = User(email: email, uid: uid, id: id, profileImgData: imgData)
+                                observer.onNext(User)
                                 observer.onCompleted()
                             }, onError: { err in
-                                let owner = Owner(uid: uid, email: email, id: id, profileImgData: nil)
-                                observer.onNext(owner)
+                                let User = User(email: email, uid: uid, id: id, profileImgData: nil)
+                                observer.onNext(User)
                                 observer.onCompleted()
                             })
                             .disposed(by: self.disposeBag)
@@ -48,17 +48,30 @@ class FirebaseUtil {
     
     
     
-    func uploadUserData(_ uid: String, _ email: String, _ id: String) {
-        let docRef = db.collection("Users").document(uid)
-        docRef.rx
-            .setData([
-                "email" : email,
-                "id" : id
-            ])
-            .subscribe(onError: { err in
-                print("Error setting user data: \(err.localizedDescription)")
-            })
-            .dispose()
+    func uploadOwnerData(_ userInfo: User, _ profileImage: UIImage) -> Observable<User> {
+        return Observable.create { observer in
+            let docRef = self.db.collection("Users").document(userInfo.uid!)
+            docRef.rx
+                .setData([
+                    "email" : userInfo.email,
+                    "id" : userInfo.id!
+                ])
+                .subscribe(
+                    onError: { err in
+                        print("Error setting user data: \(err.localizedDescription)")
+                    },
+                    onCompleted: {
+                        self.uploadProfileImage(userInfo.email, profileImage)
+                            .subscribe(
+                                onNext: { data in
+                                    userInfo.profileImgData = data
+                                    observer.onNext(userInfo)
+                                }
+                            ).disposed(by: self.disposeBag)
+                    }
+                ).disposed(by: self.disposeBag)
+            return Disposables.create()
+        }
     }
     
     

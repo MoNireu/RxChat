@@ -19,6 +19,7 @@ class EditProfileViewController: UIViewController, ViewModelBindableType {
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var idTextField: UITextField!
     @IBOutlet weak var completeButton: UIButton!
+    @IBOutlet weak var actIndicator: UIActivityIndicatorView!
     
     
     override func viewDidLoad() {
@@ -26,7 +27,6 @@ class EditProfileViewController: UIViewController, ViewModelBindableType {
         
         profileImageView.clipsToBounds = true
         profileImageView.layer.cornerRadius = profileImageView.frame.size.height * 0.5
-//        profileImageView.image = UIImage(named: "defaultProfileImage.png")
         
         idTextField.placeholder = "닉네임을 입력하세요"
         idTextField.textAlignment = .center
@@ -45,6 +45,7 @@ class EditProfileViewController: UIViewController, ViewModelBindableType {
             .subscribe(onNext: { image in
                 self.profileImageView.image = image
             })
+            .disposed(by: disposeBag)
         
         idTextField.rx.text
             .subscribe(onNext: { id in
@@ -53,14 +54,14 @@ class EditProfileViewController: UIViewController, ViewModelBindableType {
             })
             .disposed(by: disposeBag)
         
+
+        viewModel.uploadingProfile
+            .subscribe(onNext: { isUploading in
+                self.actIndicator.isHidden = !isUploading
+            })
+            .disposed(by: disposeBag)
         
-        completeButton.rx.action = viewModel.profileEditDone
-//        completeButton.rx.bind(to: viewModel.profileEditDone, input: profileImageView.image)
-        
-//        completeButton.rx.action = viewModel.profileEditDone()
+        completeButton.rx
+            .bind(to: viewModel.profileEditDone, input: profileImageView.image!)
     }
-    
-    
-    
-    
 }

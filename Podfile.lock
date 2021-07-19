@@ -422,6 +422,9 @@ PODS:
   - RxRelay (5.1.1):
     - RxSwift (~> 5)
   - RxSwift (5.1.2)
+  - RxSwiftUtilities (2.2.0):
+    - RxCocoa (~> 5.1)
+    - RxSwift (~> 5.1)
 
 DEPENDENCIES:
   - Action
@@ -442,6 +445,7 @@ DEPENDENCIES:
   - RxFirebase/RemoteConfig
   - RxFirebase/Storage
   - RxSwift
+  - RxSwiftUtilities
 
 SPEC REPOS:
   trunk:
@@ -489,6 +493,7 @@ SPEC REPOS:
     - RxFirebaseStorage
     - RxRelay
     - RxSwift
+    - RxSwiftUtilities
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
@@ -535,7 +540,8 @@ SPEC CHECKSUMS:
   RxFirebaseStorage: 271184ff8f8d3660bfc751dcafdbb4dd01d0b8a1
   RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
   RxSwift: 1e2e1f9570186967f617e49128ed26ccf1bafc8e
+  RxSwiftUtilities: 59e2d82daf74b9962f732b09e6da85a26281cfc0
 
-PODFILE CHECKSUM: 20dbbf8f8a2350cd9129f4123b4777f3517b7359
+PODFILE CHECKSUM: 5dac8745726ac692d2deaf35d9096e444b33b78f
 
 COCOAPODS: 1.10.1

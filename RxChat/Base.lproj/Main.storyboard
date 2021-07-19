@@ -86,6 +86,9 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="yoX-eQ-DJW">
+                                <rect key="frame" x="188.5" y="429.5" width="37" height="37"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="k9y-KP-86h"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -95,6 +98,8 @@
                             <constraint firstItem="nrY-w2-ccJ" firstAttribute="centerY" secondItem="w1H-c3-Yev" secondAttribute="centerY" constant="-100" id="PAq-o1-RhS"/>
                             <constraint firstItem="Ipg-yk-Ofg" firstAttribute="bottom" secondItem="k9y-KP-86h" secondAttribute="bottom" id="Zir-tL-6Ue"/>
                             <constraint firstItem="jxP-FM-sc5" firstAttribute="centerX" secondItem="w1H-c3-Yev" secondAttribute="centerX" id="gKo-kb-nCs"/>
+                            <constraint firstItem="yoX-eQ-DJW" firstAttribute="centerY" secondItem="w1H-c3-Yev" secondAttribute="centerY" id="ja9-OY-0S9"/>
+                            <constraint firstItem="yoX-eQ-DJW" firstAttribute="centerX" secondItem="w1H-c3-Yev" secondAttribute="centerX" id="qR7-Vy-PgH"/>
                             <constraint firstItem="k9y-KP-86h" firstAttribute="trailing" secondItem="Ipg-yk-Ofg" secondAttribute="trailing" constant="20" id="sfi-wP-fqq"/>
                             <constraint firstItem="jxP-FM-sc5" firstAttribute="leading" secondItem="k9y-KP-86h" secondAttribute="leading" constant="50" id="uJ3-yS-2sl"/>
                             <constraint firstItem="nrY-w2-ccJ" firstAttribute="centerX" secondItem="w1H-c3-Yev" secondAttribute="centerX" id="x1W-kK-ByF"/>
@@ -102,6 +107,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="actIndicator" destination="yoX-eQ-DJW" id="8I6-5w-PaD"/>
                         <outlet property="completeButton" destination="Ipg-yk-Ofg" id="MeV-vx-8SM"/>
                         <outlet property="idTextField" destination="jxP-FM-sc5" id="tH3-ee-19b"/>
                         <outlet property="profileImageView" destination="nrY-w2-ccJ" id="ydt-Kn-oRd"/>

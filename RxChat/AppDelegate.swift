@@ -76,7 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                         print("User exist")
                     }
                     else {
-                        ownerInfo = User(email: email!, id: nil, profileImgData: nil)
+                        ownerInfo = User(email: email!, uid: uid, id: nil, profileImgData: nil)
                         print("User not exist")
                     }
                     
