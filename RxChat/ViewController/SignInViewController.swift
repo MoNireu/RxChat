@@ -11,18 +11,17 @@ import GoogleSignIn
 class SignInViewController: UIViewController, ViewModelBindableType {
     
     var viewModel: SignInViewModel!
-    @IBOutlet weak var signInBackGround: GIDSignInButton!
-    @IBOutlet weak var signInButton: UIButton!
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        signInBackGround.style = .wide
+        GIDSignIn.sharedInstance()?.presentingViewController = self
+        GIDSignIn.sharedInstance().signIn()
     }
     
     func bindViewModel() {
-        signInButton.rx.action = viewModel.signInComplete
+        
     }
 
 

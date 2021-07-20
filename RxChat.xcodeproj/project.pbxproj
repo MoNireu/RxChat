@@ -222,9 +222,9 @@
 		E1D933992696ED0D007ECA6B /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				E170DF6526A02B1400A5BAAF /* SignInViewModel.swift */,
 				E1613B34269D7FBA00F4E359 /* EditProfileViewModel.swift */,
 				E170DF6326A0255100A5BAAF /* CommonViewModel.swift */,
+				E170DF6526A02B1400A5BAAF /* SignInViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -267,6 +267,7 @@
 				E15B2D102696E8B2005D1C3F /* Frameworks */,
 				E15B2D112696E8B2005D1C3F /* Resources */,
 				66F790203ED7C8B2E4319FC9 /* [CP] Embed Pods Frameworks */,
+				1E64EA8594A1CC74F373AE05 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -305,6 +306,7 @@
 				E15B2D312696E8B3005D1C3F /* Frameworks */,
 				E15B2D322696E8B3005D1C3F /* Resources */,
 				FCEC5AAE85552346B25E3D15 /* [CP] Embed Pods Frameworks */,
+				75027B3976D08503E85DC058 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -388,6 +390,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1E64EA8594A1CC74F373AE05 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RxChat/Pods-RxChat-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RxChat/Pods-RxChat-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RxChat/Pods-RxChat-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		66F790203ED7C8B2E4319FC9 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -425,6 +444,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		75027B3976D08503E85DC058 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RxChat-RxChatUITests/Pods-RxChat-RxChatUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RxChat-RxChatUITests/Pods-RxChat-RxChatUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RxChat-RxChatUITests/Pods-RxChat-RxChatUITests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B0622B01938DC6CC03DAD372 /* [CP] Check Pods Manifest.lock */ = {

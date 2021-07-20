@@ -7,6 +7,7 @@
 
 import Foundation
 import RxSwift
+import RxSwiftUtilities
 import RxCocoa
 import Action
 import Firebase
