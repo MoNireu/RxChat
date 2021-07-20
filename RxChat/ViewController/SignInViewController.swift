@@ -6,24 +6,27 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 import GoogleSignIn
 
 class SignInViewController: UIViewController, ViewModelBindableType {
     
     var viewModel: SignInViewModel!
+    @IBOutlet weak var signInButtonBackGround: GIDSignInButton!
+        
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        GIDSignIn.sharedInstance()?.presentingViewController = self
-        GIDSignIn.sharedInstance().signIn()
+        signInButtonBackGround.style = .wide
     }
     
-    func bindViewModel() {
-        
+    @IBAction func signIn(_ sender: Any) {
+        viewModel.signInComplete.execute()
     }
-
-
+    
+    
+    func bindViewModel() {
+    }
+    
 }
-

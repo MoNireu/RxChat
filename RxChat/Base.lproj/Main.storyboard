@@ -27,12 +27,15 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tLD-Fa-2b6" customClass="GIDSignInButton">
+                            <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="tLD-Fa-2b6" customClass="GIDSignInButton">
                                 <rect key="frame" x="20" y="515" width="374" height="30"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="75d-mv-Xyj"/>
                                 </constraints>
+                                <connections>
+                                    <action selector="signIn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ngr-EC-Dvc"/>
+                                </connections>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -50,6 +53,9 @@
                             <constraint firstItem="271-iK-OCr" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="zfO-Fs-aWP"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="signInButtonBackGround" destination="tLD-Fa-2b6" id="uUE-mG-7qC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

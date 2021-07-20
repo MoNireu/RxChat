@@ -7,7 +7,6 @@ target 'RxChat' do
 
   # Pods for RxChat
   pod 'RxSwift'
-  pod 'RxSwiftUtilities'
   pod 'RxCocoa'
   pod 'Action'
   pod 'NSObject+Rx'
@@ -17,7 +16,7 @@ target 'RxChat' do
 
   pod 'Firebase/Auth'
   pod 'Firebase/Analytics'
-  pod 'GoogleSignIn'
+  pod 'GoogleSignIn', '6.0.0'
 
   pod 'Firebase/Firestore'
   pod 'FirebaseFirestoreSwift'

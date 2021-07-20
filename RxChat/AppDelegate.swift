@@ -11,16 +11,27 @@ import GoogleSignIn
 import RxSwift
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
-       
+class AppDelegate: UIResponder, UIApplicationDelegate {
+    
     let disposeBag = DisposeBag()
+    let signInConfig = GIDConfiguration.init(clientID: "863245705241-oj0a8jamduf0rmb334n7ee70bnle3lvm.apps.googleusercontent.com")
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
         
-        GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
-        GIDSignIn.sharedInstance().delegate = self
-
+        GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
+            if error != nil || user == nil {
+                // Show the app's signed-out state.
+                print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
+                print("GID: SignIn Succeed!")
+                print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
+            } else {
+                // Show the app's signed-in state.
+                print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
+                print("GID: SignIn Failed")
+                print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
+            }
+        }
         return true
     }
     
@@ -29,63 +40,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     func application(_ application: UIApplication, open url: URL,
                      options: [UIApplication.OpenURLOptionsKey: Any])
     -> Bool {
-        return GIDSignIn.sharedInstance().handle(url)
-    }
-    
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error?) {
-        if let error = error {
-            print("GoogleSignIn Error: Sign in error!" + error.localizedDescription)
-            return
+        var handled: Bool
+        
+        handled = GIDSignIn.sharedInstance.handle(url)
+        if handled {
+            return true
         }
-
-        print("GoogleSign-in Suceed!")
-
-        guard let authentication = user.authentication else { return }
-        let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken,
-                                                       accessToken: authentication.accessToken)
-        Auth.auth().signIn(with: credential) { authResult, error in
-            guard error == nil else {
-                print("Error: Firebase Sign-in Failed")
-                print(error?.localizedDescription)
-                return
-            }
-
-            print("Firebase Sign-in Suceed!")
-
-            let uid = authResult!.user.uid
-            let email = authResult!.user.email
-
-            print("UID: " + uid)
-            print("Email: " + email!)
-            
-            let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
-            guard let signInViewModel = sceneDelegate?.signInViewModel else {
-                print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
-                print("Error: SignInViewModel Not Loaded!")
-                print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
-                
-                return
-            }
-            
-            let firebaseUtil = signInViewModel.firebaseUtil
-            firebaseUtil.downloadOwnerData(uid)
-                .subscribe(onNext: { user in
-                    let ownerInfo: User
-                    if user != nil {
-                        ownerInfo = user!
-                        print("User exist")
-                    }
-                    else {
-                        ownerInfo = User(email: email!, uid: uid, id: nil, profileImgData: nil)
-                        print("User not exist")
-                    }
-                    
-                    let editProfileViewModel = EditProfileViewModel(ownerInfo: ownerInfo, sceneCoordinator: signInViewModel.sceneCoordinator, firebaseUtil: signInViewModel.firebaseUtil)
-                    let editProfileScene = Scene.editProfile(editProfileViewModel)
-                    signInViewModel.sceneCoordinator.transition(to: editProfileScene, using: .fullScreen, animated: true)
-                })
-                .disposed(by: self.disposeBag)
-        }
+        return false
     }
     
     // MARK: UISceneSession Lifecycle
@@ -104,4 +65,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     
     
 }
-
