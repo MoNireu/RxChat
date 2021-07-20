@@ -29,9 +29,18 @@
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tLD-Fa-2b6" customClass="GIDSignInButton">
                                 <rect key="frame" x="20" y="515" width="374" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BBi-Xc-Gka">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="30"/>
+                                    </button>
+                                </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="75d-mv-Xyj"/>
+                                    <constraint firstItem="BBi-Xc-Gka" firstAttribute="leading" secondItem="tLD-Fa-2b6" secondAttribute="leading" id="DlE-DP-HYP"/>
+                                    <constraint firstAttribute="bottom" secondItem="BBi-Xc-Gka" secondAttribute="bottom" id="Qoz-Nb-Xgk"/>
+                                    <constraint firstAttribute="trailing" secondItem="BBi-Xc-Gka" secondAttribute="trailing" id="Z8L-2u-c53"/>
+                                    <constraint firstItem="BBi-Xc-Gka" firstAttribute="top" secondItem="tLD-Fa-2b6" secondAttribute="top" id="nJd-or-mvV"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -50,6 +59,10 @@
                             <constraint firstItem="271-iK-OCr" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="zfO-Fs-aWP"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="signInBackGround" destination="tLD-Fa-2b6" id="oPG-UE-3wB"/>
+                        <outlet property="signInButton" destination="BBi-Xc-Gka" id="qBg-F7-SMB"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

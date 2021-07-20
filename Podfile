@@ -7,7 +7,6 @@ target 'RxChat' do
 
   # Pods for RxChat
   pod 'RxSwift'
-  pod 'RxSwiftUtilities'
   pod 'RxCocoa'
   pod 'Action'
   pod 'NSObject+Rx'

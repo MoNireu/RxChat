@@ -4,6 +4,55 @@
 <dict>
 	<key>CLIENT_ID</key>
 	<string>863245705241-oj0a8jamduf0rmb334n7ee70bnle3lvm.apps.googleusercontent.com</string>
+	<key>CFBundleIdentifier</key>
+	<string>print(&quot;GoogleSign-in Suceed!&quot;)
+        
+        guard let authentication = user.authentication else { return }
+        let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken,
+                                                       accessToken: authentication.accessToken)
+        Auth.auth().signIn(with: credential) { authResult, error in
+            guard error == nil else {
+                print(&quot;Error: Firebase Sign-in Failed&quot;)
+                print(error?.localizedDescription)
+                return
+            }
+            
+            print(&quot;Firebase Sign-in Suceed!&quot;)
+            
+            let uid = authResult!.user.uid
+            let email = authResult!.user.email
+            
+            print(&quot;UID: &quot; + uid)
+            print(&quot;Email: &quot; + email!)
+            
+            let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
+            guard let signInViewModel = sceneDelegate?.signInViewModel else {
+                print(&quot;↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓&quot;)
+                print(&quot;Error: SignInViewModel Not Loaded!&quot;)
+                print(&quot;↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑&quot;)
+                
+                return
+            }
+            
+            let firebaseUtil = signInViewModel.firebaseUtil
+            firebaseUtil.downloadOwnerData(uid)
+                .subscribe(onNext: { user in
+                    let ownerInfo: User
+                    if user != nil {
+                        ownerInfo = user!
+                        print(&quot;User exist&quot;)
+                    }
+                    else {
+                        ownerInfo = User(email: email!, uid: uid, id: nil, profileImgData: nil)
+                        print(&quot;User not exist&quot;)
+                    }
+                    
+                    let editProfileViewModel = EditProfileViewModel(ownerInfo: ownerInfo, sceneCoordinator: signInViewModel.sceneCoordinator, firebaseUtil: signInViewModel.firebaseUtil)
+                    let editProfileScene = Scene.editProfile(editProfileViewModel)
+                    signInViewModel.sceneCoordinator.transition(to: editProfileScene, using: .fullScreen, animated: true)
+                })
+                .disposed(by: self.disposeBag)
+        }</string>
 	<key>REVERSED_CLIENT_ID</key>
 	<string>com.googleusercontent.apps.863245705241-oj0a8jamduf0rmb334n7ee70bnle3lvm</string>
 	<key>API_KEY</key>
@@ -19,15 +68,15 @@
 	<key>STORAGE_BUCKET</key>
 	<string>rxchat-f485a.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_GCM_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:863245705241:ios:ef5da9c248fe910ecf0a88</string>
 </dict>

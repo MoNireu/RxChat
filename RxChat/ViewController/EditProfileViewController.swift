@@ -53,7 +53,6 @@ class EditProfileViewController: UIViewController, ViewModelBindableType {
                 self.viewModel.ownerID.onNext(id ?? "")
             })
             .disposed(by: disposeBag)
-        
 
         viewModel.uploadingProfile
             .subscribe(onNext: { isUploading in
