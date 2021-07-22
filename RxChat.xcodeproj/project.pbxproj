@@ -13,6 +13,7 @@
 		E159B04126A94CFA00071C52 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = E159B04026A94CFA00071C52 /* RxRelay */; };
 		E159B04326A94CFA00071C52 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = E159B04226A94CFA00071C52 /* RxCocoa */; };
 		E159B04526A94CFA00071C52 /* RxBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = E159B04426A94CFA00071C52 /* RxBlocking */; };
+		E159B04726A95C4600071C52 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = E159B04626A95C4600071C52 /* plus.png */; };
 		E15B2D172696E8B2005D1C3F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B2D162696E8B2005D1C3F /* AppDelegate.swift */; };
 		E15B2D192696E8B2005D1C3F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B2D182696E8B2005D1C3F /* SceneDelegate.swift */; };
 		E15B2D1B2696E8B2005D1C3F /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B2D1A2696E8B2005D1C3F /* SignInViewController.swift */; };
@@ -64,6 +65,7 @@
 		9EB6730C2571AAE35CD8B001 /* Pods-RxChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxChat.debug.xcconfig"; path = "Target Support Files/Pods-RxChat/Pods-RxChat.debug.xcconfig"; sourceTree = "<group>"; };
 		BB0D740BDCD23FBED81B6BCC /* Pods-RxChatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxChatTests.release.xcconfig"; path = "Target Support Files/Pods-RxChatTests/Pods-RxChatTests.release.xcconfig"; sourceTree = "<group>"; };
 		BC57A12DD001E4D35CBE88ED /* Pods_RxChat_RxChatUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RxChat_RxChatUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E159B04626A95C4600071C52 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
 		E15B2D132696E8B2005D1C3F /* RxChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RxChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E15B2D162696E8B2005D1C3F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E15B2D182696E8B2005D1C3F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 			isa = PBXGroup;
 			children = (
 				E1613B36269D824600F4E359 /* defaultProfileImage.png */,
+				E159B04626A95C4600071C52 /* plus.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -380,6 +383,7 @@
 				E18269922696F156000D083F /* GoogleService-Info.plist in Resources */,
 				E15B2D202696E8B3005D1C3F /* Assets.xcassets in Resources */,
 				E15B2D1E2696E8B2005D1C3F /* Main.storyboard in Resources */,
+				E159B04726A95C4600071C52 /* plus.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

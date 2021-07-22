@@ -22,7 +22,6 @@ class EditProfileViewController: UIViewController, ViewModelBindableType {
     @IBOutlet weak var completeButton: UIButton!
     @IBOutlet weak var actIndicator: UIActivityIndicatorView!
     @IBOutlet weak var profileImageSetButton: UIButton!
-    @IBOutlet weak var testImageView: UIImageView!
     
     
     override func viewDidLoad() {

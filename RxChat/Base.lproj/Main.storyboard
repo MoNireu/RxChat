@@ -98,24 +98,15 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eb8-va-mnI">
                                 <rect key="frame" x="132" y="273" width="150" height="150"/>
                             </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gnn-Oo-nDs">
-                                <rect key="frame" x="132" y="115" width="150" height="150"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="150" id="Yxp-uX-eFt"/>
-                                    <constraint firstAttribute="height" constant="150" id="ls4-Nx-kLR"/>
-                                </constraints>
-                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="k9y-KP-86h"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Ipg-yk-Ofg" firstAttribute="leading" secondItem="k9y-KP-86h" secondAttribute="leading" constant="20" id="I1o-1x-jYp"/>
                             <constraint firstItem="eb8-va-mnI" firstAttribute="leading" secondItem="nrY-w2-ccJ" secondAttribute="leading" id="IkV-Ne-N6H"/>
-                            <constraint firstItem="gnn-Oo-nDs" firstAttribute="centerX" secondItem="w1H-c3-Yev" secondAttribute="centerX" id="JaE-0F-Jhj"/>
                             <constraint firstItem="k9y-KP-86h" firstAttribute="trailing" secondItem="jxP-FM-sc5" secondAttribute="trailing" constant="50" id="MyG-yl-YLH"/>
                             <constraint firstItem="eb8-va-mnI" firstAttribute="bottom" secondItem="nrY-w2-ccJ" secondAttribute="bottom" id="OK2-6d-JMK"/>
                             <constraint firstItem="nrY-w2-ccJ" firstAttribute="centerY" secondItem="w1H-c3-Yev" secondAttribute="centerY" constant="-100" id="PAq-o1-RhS"/>
-                            <constraint firstItem="nrY-w2-ccJ" firstAttribute="top" secondItem="gnn-Oo-nDs" secondAttribute="bottom" constant="8" symbolic="YES" id="Rul-hk-wXB"/>
                             <constraint firstItem="Ipg-yk-Ofg" firstAttribute="bottom" secondItem="k9y-KP-86h" secondAttribute="bottom" id="Zir-tL-6Ue"/>
                             <constraint firstItem="jxP-FM-sc5" firstAttribute="centerX" secondItem="w1H-c3-Yev" secondAttribute="centerX" id="gKo-kb-nCs"/>
                             <constraint firstItem="yoX-eQ-DJW" firstAttribute="centerY" secondItem="w1H-c3-Yev" secondAttribute="centerY" id="ja9-OY-0S9"/>
@@ -134,7 +125,6 @@
                         <outlet property="idTextField" destination="jxP-FM-sc5" id="tH3-ee-19b"/>
                         <outlet property="profileImageSetButton" destination="eb8-va-mnI" id="T3C-Fa-I05"/>
                         <outlet property="profileImageView" destination="nrY-w2-ccJ" id="ydt-Kn-oRd"/>
-                        <outlet property="testImageView" destination="gnn-Oo-nDs" id="U6I-MX-oWd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Ph-YJ-0b1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
