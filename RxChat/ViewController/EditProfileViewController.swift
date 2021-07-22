@@ -22,6 +22,7 @@ class EditProfileViewController: UIViewController, ViewModelBindableType {
     @IBOutlet weak var completeButton: UIButton!
     @IBOutlet weak var actIndicator: UIActivityIndicatorView!
     @IBOutlet weak var profileImageSetButton: UIButton!
+    @IBOutlet weak var profilePlusImageView: UIImageView!
     
     
     override func viewDidLoad() {
@@ -29,6 +30,9 @@ class EditProfileViewController: UIViewController, ViewModelBindableType {
         
         profileImageView.clipsToBounds = true
         profileImageView.layer.cornerRadius = profileImageView.frame.size.height * 0.5
+        
+        profilePlusImageView.clipsToBounds = true
+        profilePlusImageView.layer.cornerRadius = profilePlusImageView.frame.size.height * 0.5
         
         idTextField.placeholder = "닉네임을 입력하세요"
         idTextField.textAlignment = .center
