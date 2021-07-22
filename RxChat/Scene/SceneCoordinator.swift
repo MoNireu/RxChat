@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 import RxSwift
 import RxCocoa
 
@@ -57,7 +58,7 @@ class SceneCoordinator: SceneCoordinatorType {
             subject.onCompleted()
         }
         
-        return subject.ignoreElements()
+        return subject.ignoreElements().asCompletable()
     }
     
     @discardableResult

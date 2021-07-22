@@ -6,9 +6,6 @@ target 'RxChat' do
   use_frameworks!
 
   # Pods for RxChat
-  pod 'RxSwift'
-  pod 'RxCocoa'
-  pod 'Action'
   pod 'NSObject+Rx'
   pod 'RxDataSources'
   pod 'RxCoreData'
@@ -25,7 +22,6 @@ target 'RxChat' do
   pod 'RxFirebase/RemoteConfig'
   pod 'RxFirebase/Database'
   pod 'RxFirebase/Storage'
-  pod 'RxFirebase/Auth'
   pod 'RxFirebase/Functions'
 
   target 'RxChatTests' do

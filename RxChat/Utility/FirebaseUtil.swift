@@ -48,7 +48,7 @@ class FirebaseUtil {
     
     
     
-    func uploadOwnerData(_ userInfo: User, _ profileImage: UIImage) -> Observable<User> {
+    func uploadOwnerData(_ userInfo: User) -> Observable<User> {
         return Observable.create { observer in
             let docRef = self.db.collection("Users").document(userInfo.uid!)
             docRef.rx
@@ -61,10 +61,9 @@ class FirebaseUtil {
                         print("Error setting user data: \(err.localizedDescription)")
                     },
                     onCompleted: {
-                        self.uploadProfileImage(userInfo.email, profileImage)
+                        self.uploadProfileImage(userInfo.email, userInfo.profileImgData!)
                             .subscribe(
                                 onNext: { data in
-                                    userInfo.profileImgData = data
                                     observer.onNext(userInfo)
                                 }
                             ).disposed(by: self.disposeBag)
@@ -75,14 +74,12 @@ class FirebaseUtil {
     }
     
     
-    func uploadProfileImage(_ email: String, _ profileImage: UIImage) -> Observable<Data> {
+    func uploadProfileImage(_ email: String, _ imageData: Data) -> Observable<Data> {
         return Observable.create { observer in
             let ref = Storage.storage()
                 .reference(forURL: "\(self.STORAGE_BUCKET)/images/profile/\(email).jpg")
                 .rx
             
-            var imageData = Data()
-            imageData = profileImage.jpegData(compressionQuality: 0.8)!
             ref.putData(imageData)
                 .subscribe(onNext: { metaData in
                     print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")

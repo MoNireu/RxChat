@@ -212,9 +212,6 @@ PODS:
     - abseil/base/base_internal
     - abseil/base/config
     - abseil/meta/type_traits
-  - Action (4.2.0):
-    - RxCocoa (< 7.0, >= 5.0)
-    - RxSwift (< 7.0, >= 5.0)
   - AppAuth (1.4.0):
     - AppAuth/Core (= 1.4.0)
     - AppAuth/ExternalUserAgent (= 1.4.0)
@@ -382,8 +379,6 @@ PODS:
     - Differentiator (~> 4.0)
     - RxCocoa (~> 5.0)
     - RxSwift (~> 5.0)
-  - RxFirebase/Auth (0.3.8):
-    - RxFirebaseAuthentication (~> 0.3)
   - RxFirebase/Database (0.3.8):
     - RxFirebaseDatabase (~> 0.3)
   - RxFirebase/Firestore (0.3.8):
@@ -394,11 +389,6 @@ PODS:
     - RxFirebaseRemoteConfig (~> 0.3)
   - RxFirebase/Storage (0.3.8):
     - RxFirebaseStorage (~> 0.3)
-  - RxFirebaseAuthentication (0.3.8):
-    - FirebaseAuth (~> 6)
-    - FirebaseCore (~> 6)
-    - RxCocoa (~> 5)
-    - RxSwift (~> 5)
   - RxFirebaseDatabase (0.3.8):
     - FirebaseDatabase (~> 6)
     - RxCocoa (~> 5)
@@ -424,7 +414,6 @@ PODS:
   - RxSwift (5.1.2)
 
 DEPENDENCIES:
-  - Action
   - Firebase/Analytics
   - Firebase/Auth
   - Firebase/Firestore
@@ -432,21 +421,17 @@ DEPENDENCIES:
   - GoogleSignIn (= 6.0.0)
   - "NSObject+Rx"
   - RealmSwift
-  - RxCocoa
   - RxCoreData
   - RxDataSources
-  - RxFirebase/Auth
   - RxFirebase/Database
   - RxFirebase/Firestore
   - RxFirebase/Functions
   - RxFirebase/RemoteConfig
   - RxFirebase/Storage
-  - RxSwift
 
 SPEC REPOS:
   trunk:
     - abseil
-    - Action
     - AppAuth
     - BoringSSL-GRPC
     - Differentiator
@@ -481,7 +466,6 @@ SPEC REPOS:
     - RxCoreData
     - RxDataSources
     - RxFirebase
-    - RxFirebaseAuthentication
     - RxFirebaseDatabase
     - RxFirebaseFirestore
     - RxFirebaseFunctions
@@ -492,7 +476,6 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
-  Action: 5dc2194f7a0b77857c82a677b0da655f197c005f
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
   BoringSSL-GRPC: 8edf627ee524575e2f8d19d56f068b448eea3879
   Differentiator: 886080237d9f87f322641dedbc5be257061b0602
@@ -527,7 +510,6 @@ SPEC CHECKSUMS:
   RxCoreData: 1ed5f83e80facccc90fc054eb7f39a44177de56a
   RxDataSources: efee07fa4de48477eca0a4611e6d11e2da9c1114
   RxFirebase: 45e6448c69c7212e21f8ba89144443f916437861
-  RxFirebaseAuthentication: 5d0573fd641947ed857346624d1c849bbd86bdff
   RxFirebaseDatabase: 5c1d3d31c9858f05ff6ad92e5b4b696354d1497b
   RxFirebaseFirestore: edabc5e6b02bd876a323a0e53cb5071356505db2
   RxFirebaseFunctions: c32622f9bb7c75c01a2489a38e376b5038e2d6f3
@@ -536,6 +518,6 @@ SPEC CHECKSUMS:
   RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
   RxSwift: 1e2e1f9570186967f617e49128ed26ccf1bafc8e
 
-PODFILE CHECKSUM: 2b5f700c6eac0937fc4e714a7dc8efc35a999f35
+PODFILE CHECKSUM: 09f1795dafb1a07a8429930d0ea36416403baa9f
 
 COCOAPODS: 1.10.1

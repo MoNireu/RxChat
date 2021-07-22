@@ -13,6 +13,7 @@ import Action
 
 class EditProfileViewController: UIViewController, ViewModelBindableType {
     
+    
     var disposeBag = DisposeBag()
     var viewModel: EditProfileViewModel!
     
@@ -20,6 +21,8 @@ class EditProfileViewController: UIViewController, ViewModelBindableType {
     @IBOutlet weak var idTextField: UITextField!
     @IBOutlet weak var completeButton: UIButton!
     @IBOutlet weak var actIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var profileImageSetButton: UIButton!
+    @IBOutlet weak var testImageView: UIImageView!
     
     
     override func viewDidLoad() {
@@ -32,7 +35,9 @@ class EditProfileViewController: UIViewController, ViewModelBindableType {
         idTextField.textAlignment = .center
         
         completeButton.layer.cornerRadius = completeButton.frame.size.height * 0.35
+        
     }
+    
     
     func bindViewModel() {
         viewModel.ownerID
@@ -42,8 +47,18 @@ class EditProfileViewController: UIViewController, ViewModelBindableType {
             .dispose()
         
         viewModel.ownerProfileImg
-            .subscribe(onNext: { image in
-                self.profileImageView.image = image
+            .bind(to: profileImageView.rx.image)
+            .disposed(by: disposeBag)
+        
+        
+        profileImageSetButton.rx.tap
+            .subscribe(onNext: { _ in
+                let imgPicker = UIImagePickerController()
+                imgPicker.delegate = self
+                imgPicker.sourceType = .photoLibrary
+                imgPicker.mediaTypes = ["public.image"]
+                imgPicker.allowsEditing = true
+                self.present(imgPicker, animated: true)
             })
             .disposed(by: disposeBag)
         
@@ -54,14 +69,29 @@ class EditProfileViewController: UIViewController, ViewModelBindableType {
             })
             .disposed(by: disposeBag)
         
-
+        
         viewModel.uploadingProfile
             .subscribe(onNext: { isUploading in
                 self.actIndicator.isHidden = !isUploading
             })
             .disposed(by: disposeBag)
         
-        completeButton.rx
-            .bind(to: viewModel.profileEditDone, input: profileImageView.image!)
+        completeButton.rx.action = viewModel.profileEditDone
+        
+    }
+}
+
+
+extension EditProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[.originalImage] as? UIImage {
+            viewModel.ownerInfo.profileImgData = image.jpegData(compressionQuality: 0.8)
+            viewModel.ownerProfileImg.onNext(image)
+        }
+        picker.dismiss(animated: true)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
     }
 }

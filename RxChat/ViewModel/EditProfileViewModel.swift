@@ -16,7 +16,6 @@ class EditProfileViewModel: CommonViewModel {
     let disposeBag = DisposeBag()
     
     var ownerInfo: User
-    //    var ownerEmail: BehaviorSubject<String>
     var ownerID: BehaviorSubject<String>
     var ownerProfileImg: BehaviorSubject<UIImage>
     let uploadingProfile = BehaviorSubject<Bool>(value: false)
@@ -34,16 +33,17 @@ class EditProfileViewModel: CommonViewModel {
         super.init(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
     }
     
-    lazy var profileEditDone: Action<UIImage, Void> = {
-        return Action { img in
+    lazy var profileEditDone: CocoaAction = {
+        return Action { _ in
             self.uploadingProfile.onNext(true)
-            self.firebaseUtil.uploadOwnerData(self.ownerInfo, img)
+            self.firebaseUtil.uploadOwnerData(self.ownerInfo)
                 .subscribe(onNext: { uploadedUser in
                     self.uploadingProfile.onNext(false)
                     print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
                     print("Profile Edit Done!")
                     print(uploadedUser.email)
                     print(uploadedUser.id)
+                    print(uploadedUser.profileImgData)
                     print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
                 })
             
