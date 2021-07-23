@@ -29,12 +29,12 @@ class FirebaseUtil {
                         
                         self.downloadProfileImage(email)
                             .subscribe(onNext: { imgData in
-                                let User = User(email: email, uid: uid, id: id, profileImgData: imgData)
-                                observer.onNext(User)
+                                let user = User(email: email, uid: uid, id: id, profileImgData: imgData)
+                                observer.onNext(user)
                                 observer.onCompleted()
                             }, onError: { err in
-                                let User = User(email: email, uid: uid, id: id, profileImgData: nil)
-                                observer.onNext(User)
+                                let user = User(email: email, uid: uid, id: id, profileImgData: nil)
+                                observer.onNext(user)
                                 observer.onCompleted()
                             })
                             .disposed(by: self.disposeBag)

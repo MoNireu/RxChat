@@ -56,12 +56,15 @@ class EditProfileViewController: UIViewController, ViewModelBindableType {
         
         profileImageSetButton.rx.tap
             .subscribe(onNext: { _ in
+                self.viewModel.uploadingProfile.onNext(true)
                 let imgPicker = UIImagePickerController()
                 imgPicker.delegate = self
                 imgPicker.sourceType = .photoLibrary
                 imgPicker.mediaTypes = ["public.image"]
                 imgPicker.allowsEditing = true
-                self.present(imgPicker, animated: true)
+                self.present(imgPicker, animated: true) {
+                    self.viewModel.uploadingProfile.onNext(false)
+                }
             })
             .disposed(by: disposeBag)
         
