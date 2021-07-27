@@ -143,7 +143,74 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Ph-YJ-0b1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1173.913043478261" y="115.84821428571428"/>
+            <point key="canvasLocation" x="983" y="116"/>
+        </scene>
+        <!--친구목록-->
+        <scene sceneID="Q1g-Cj-N8m">
+            <objects>
+                <viewController storyboardIdentifier="FriendListVC" title="친구목록" id="Imf-sG-dD0" customClass="FriendListViewController" customModule="RxChat" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="c9X-wT-7oD">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="uDI-Wp-YEL"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="친구목록" id="wxf-4D-z5j"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xNn-dP-Ln1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="983" y="834"/>
+        </scene>
+        <!--개인채팅-->
+        <scene sceneID="aRC-eQ-dX2">
+            <objects>
+                <viewController storyboardIdentifier="PrivateChatListVC" title="개인채팅" id="QZ6-Qd-btU" customClass="PrivateChatListViewController" customModule="RxChat" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="oLF-oQ-7bB">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="CcS-ed-4p9"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="개인채팅" id="EFS-Bn-dX4"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IQB-Go-r04" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="983" y="1507"/>
+        </scene>
+        <!--단체채팅-->
+        <scene sceneID="d7L-Ib-KgW">
+            <objects>
+                <viewController storyboardIdentifier="GroupChatListVC" title="단체채팅" id="3Rf-tq-K21" customClass="GroupChatListViewController" customModule="RxChat" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Hm6-o0-T58">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="rDT-mC-AYF"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="단체채팅" id="cFm-Is-nFj"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jlB-qa-vm4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="983" y="2189"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="WMv-tN-xna">
+            <objects>
+                <tabBarController storyboardIdentifier="ChatListTBC" automaticallyAdjustsScrollViewInsets="NO" id="Zv4-2N-cWV" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="sWu-8n-UlJ">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="Imf-sG-dD0" kind="relationship" relationship="viewControllers" id="EZ6-yV-6Ng"/>
+                        <segue destination="QZ6-Qd-btU" kind="relationship" relationship="viewControllers" id="DaG-zG-ffi"/>
+                        <segue destination="3Rf-tq-K21" kind="relationship" relationship="viewControllers" id="Xsj-KR-Jqt"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pLP-QP-7Ew" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="132" y="1507"/>
         </scene>
     </scenes>
     <resources>
