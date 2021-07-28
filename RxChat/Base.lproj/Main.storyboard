@@ -171,11 +171,11 @@
                         <viewLayoutGuide key="safeArea" id="CcS-ed-4p9"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="개인채팅" id="EFS-Bn-dX4"/>
+                    <navigationItem key="navigationItem" id="7h3-ym-d7i"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IQB-Go-r04" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="983" y="1507"/>
+            <point key="canvasLocation" x="1892.753623188406" y="1506.6964285714284"/>
         </scene>
         <!--단체채팅-->
         <scene sceneID="d7L-Ib-KgW">
@@ -187,11 +187,11 @@
                         <viewLayoutGuide key="safeArea" id="rDT-mC-AYF"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="단체채팅" id="cFm-Is-nFj"/>
+                    <navigationItem key="navigationItem" id="eWa-OV-SM5"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jlB-qa-vm4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="983" y="2189"/>
+            <point key="canvasLocation" x="1892.753623188406" y="2188.3928571428569"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="WMv-tN-xna">
@@ -199,18 +199,57 @@
                 <tabBarController storyboardIdentifier="ChatListTBC" automaticallyAdjustsScrollViewInsets="NO" id="Zv4-2N-cWV" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="sWu-8n-UlJ">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
                         <segue destination="Imf-sG-dD0" kind="relationship" relationship="viewControllers" id="EZ6-yV-6Ng"/>
-                        <segue destination="QZ6-Qd-btU" kind="relationship" relationship="viewControllers" id="DaG-zG-ffi"/>
-                        <segue destination="3Rf-tq-K21" kind="relationship" relationship="viewControllers" id="Xsj-KR-Jqt"/>
+                        <segue destination="F6o-Pb-HQ1" kind="relationship" relationship="viewControllers" id="DaG-zG-ffi"/>
+                        <segue destination="Kbv-xq-gum" kind="relationship" relationship="viewControllers" id="Xsj-KR-Jqt"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pLP-QP-7Ew" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="132" y="1507"/>
+        </scene>
+        <!--개인채팅-->
+        <scene sceneID="SDK-2g-Lqs">
+            <objects>
+                <navigationController storyboardIdentifier="PrivateChatNav" automaticallyAdjustsScrollViewInsets="NO" id="F6o-Pb-HQ1" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="개인채팅" id="EFS-Bn-dX4"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="85I-6G-pur">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="QZ6-Qd-btU" kind="relationship" relationship="rootViewController" id="PxG-Ks-wyD"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9fs-s8-dfd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="982.60869565217399" y="1506.6964285714284"/>
+        </scene>
+        <!--단체채팅-->
+        <scene sceneID="XfN-LU-edd">
+            <objects>
+                <navigationController storyboardIdentifier="GroupChatNav" automaticallyAdjustsScrollViewInsets="NO" id="Kbv-xq-gum" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="단체채팅" id="cFm-Is-nFj"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="fEr-MO-Pbs">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="3Rf-tq-K21" kind="relationship" relationship="rootViewController" id="NbT-Ls-QYN"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qVg-8M-5Qm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="982.60869565217399" y="2188.3928571428569"/>
         </scene>
     </scenes>
     <resources>

@@ -47,11 +47,17 @@ extension Scene {
                 fatalError()
             }
             
-            guard var privateChatListVC = chatListTBC.viewControllers?[1] as? PrivateChatListViewController else {
+            guard let privateChatNav = chatListTBC.viewControllers?[1] as? UINavigationController else {
+                fatalError()
+            }
+            guard var privateChatListVC = privateChatNav.viewControllers.first as? PrivateChatListViewController else {
                 fatalError()
             }
             
-            guard var groupChatListVC = chatListTBC.viewControllers?[2] as? GroupChatListViewController else {
+            guard let groupChatNav = chatListTBC.viewControllers?[2] as? UINavigationController else {
+                fatalError()
+            }
+            guard var groupChatListVC = groupChatNav.viewControllers.first as? GroupChatListViewController else {
                 fatalError()
             }
             
