@@ -48,7 +48,7 @@ class FirebaseUtil {
     
     
     
-    func uploadOwnerData(_ userInfo: User) -> Observable<User> {
+    func uploadOwnerData(_ userInfo: User, uploadProfileImage: Bool) -> Observable<User> {
         return Observable.create { observer in
             let docRef = self.db.collection("Users").document(userInfo.uid!)
             docRef.rx
@@ -61,6 +61,7 @@ class FirebaseUtil {
                         print("Error setting user data: \(err.localizedDescription)")
                     },
                     onCompleted: {
+                        guard uploadProfileImage else {return observer.onNext(userInfo)}
                         self.uploadProfileImage(userInfo.email, userInfo.profileImgData!)
                             .subscribe(
                                 onNext: { data in

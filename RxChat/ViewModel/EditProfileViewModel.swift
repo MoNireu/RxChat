@@ -19,6 +19,7 @@ class EditProfileViewModel: CommonViewModel {
     var ownerID: BehaviorSubject<String>
     var ownerProfileImg: BehaviorSubject<UIImage>
     let uploadingProfile = BehaviorSubject<Bool>(value: false)
+    var profileImageChanged = false
     
     init(ownerInfo: User, sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil) {
         self.ownerInfo = ownerInfo
@@ -36,7 +37,7 @@ class EditProfileViewModel: CommonViewModel {
     lazy var profileEditDone: CocoaAction = {
         return Action { _ in
             self.uploadingProfile.onNext(true)
-            self.firebaseUtil.uploadOwnerData(self.ownerInfo)
+            self.firebaseUtil.uploadOwnerData(self.ownerInfo, uploadProfileImage: self.profileImageChanged)
                 .subscribe(onNext: { uploadedUser in
                     self.uploadingProfile.onNext(false)
                     
@@ -45,12 +46,6 @@ class EditProfileViewModel: CommonViewModel {
                     let groupChatListVM = GroupChatListViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
                     let chatListScene = Scene.chatList(friendListVM, privateChatListVM, groupChatListVM)
                     self.sceneCoordinator.transition(to: chatListScene, using: .fullScreen, animated: true)
-//                    print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
-//                    print("Profile Edit Done!")
-//                    print(uploadedUser.email)
-//                    print(uploadedUser.id)
-//                    print(uploadedUser.profileImgData)
-//                    print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
                 })
             
             return Observable.empty()

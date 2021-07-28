@@ -56,6 +56,7 @@ class EditProfileViewController: UIViewController, ViewModelBindableType {
         
         profileImageSetButton.rx.tap
             .subscribe(onNext: { _ in
+                self.viewModel.profileImageChanged = true
                 self.viewModel.uploadingProfile.onNext(true)
                 let imgPicker = UIImagePickerController()
                 imgPicker.delegate = self
