@@ -164,6 +164,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		E120AE5026B3C425009067F4 /* TableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = TableViewCell;
+			sourceTree = "<group>";
+		};
 		E15B2D0A2696E8B2005D1C3F = {
 			isa = PBXGroup;
 			children = (
@@ -187,6 +194,7 @@
 		E15B2D152696E8B2005D1C3F /* RxChat */ = {
 			isa = PBXGroup;
 			children = (
+				E120AE5026B3C425009067F4 /* TableViewCell */,
 				E1A76A1826A7FCAD00C8F783 /* RxExtension */,
 				E170DF5626A01B1D00A5BAAF /* Scene */,
 				E1613B30269D7CE600F4E359 /* Resources */,

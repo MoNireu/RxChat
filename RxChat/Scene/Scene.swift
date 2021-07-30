@@ -43,7 +43,10 @@ extension Scene {
                 fatalError()
             }
             
-            guard var friendListVC = chatListTBC.viewControllers?[0] as? FriendListViewController else {
+            guard let friendListNav = chatListTBC.viewControllers?[0] as? UINavigationController else {
+                fatalError()
+            }
+            guard var friendListVC = friendListNav.viewControllers.first as? FriendListViewController else {
                 fatalError()
             }
             
