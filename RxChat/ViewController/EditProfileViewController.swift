@@ -92,7 +92,7 @@ class EditProfileViewController: UIViewController, ViewModelBindableType {
 extension EditProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[.originalImage] as? UIImage {
-            viewModel.ownerInfo.profileImgData = image.jpegData(compressionQuality: 0.8)
+            viewModel.ownerInfo.profileImg = image
             viewModel.ownerProfileImg.onNext(image)
         }
         picker.dismiss(animated: true)

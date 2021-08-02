@@ -29,11 +29,11 @@ class FirebaseUtil {
                         
                         self.downloadProfileImage(email)
                             .subscribe(onNext: { imgData in
-                                let user = User(email: email, uid: uid, id: id, profileImgData: imgData)
+                                let user = User(email: email, uid: uid, id: id, profileImg: UIImage(data: imgData))
                                 observer.onNext(user)
                                 observer.onCompleted()
                             }, onError: { err in
-                                let user = User(email: email, uid: uid, id: id, profileImgData: nil)
+                                let user = User(email: email, uid: uid, id: id, profileImg: nil)
                                 observer.onNext(user)
                                 observer.onCompleted()
                             })
@@ -62,7 +62,7 @@ class FirebaseUtil {
                     },
                     onCompleted: {
                         guard uploadProfileImage else {return observer.onNext(userInfo)}
-                        self.uploadProfileImage(userInfo.email, userInfo.profileImgData!)
+                        self.uploadProfileImage(userInfo.email, userInfo.profileImg!)
                             .subscribe(
                                 onNext: { data in
                                     observer.onNext(userInfo)
@@ -75,12 +75,13 @@ class FirebaseUtil {
     }
     
     
-    func uploadProfileImage(_ email: String, _ imageData: Data) -> Observable<Data> {
+    func uploadProfileImage(_ email: String, _ image: UIImage) -> Observable<Data> {
         return Observable.create { observer in
             let ref = Storage.storage()
                 .reference(forURL: "\(self.STORAGE_BUCKET)/images/profile/\(email).jpg")
                 .rx
             
+            let imageData = image.jpegData(compressionQuality: 0.8)!
             ref.putData(imageData)
                 .subscribe(onNext: { metaData in
                     print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")

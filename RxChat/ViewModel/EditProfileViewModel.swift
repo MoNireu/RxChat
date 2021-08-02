@@ -25,8 +25,8 @@ class EditProfileViewModel: CommonViewModel {
         self.ownerInfo = ownerInfo
         ownerID = BehaviorSubject<String>(value: ownerInfo.id ?? "")
         
-        let profileImg: UIImage
-        if let profileImgData = ownerInfo.profileImgData { profileImg = UIImage(data: profileImgData)! }
+        var profileImg: UIImage
+        if let _profileImg = ownerInfo.profileImg { profileImg = _profileImg }
         else { profileImg = UIImage(named: "defaultProfileImage.png")! }
         
         self.ownerProfileImg = BehaviorSubject<UIImage>(value: profileImg)
