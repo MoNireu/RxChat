@@ -56,16 +56,29 @@ class EditProfileViewController: UIViewController, ViewModelBindableType {
         
         profileImageSetButton.rx.tap
             .subscribe(onNext: { _ in
-                self.viewModel.profileImageChanged = true
-                self.viewModel.uploadingProfile.onNext(true)
-                let imgPicker = UIImagePickerController()
-                imgPicker.delegate = self
-                imgPicker.sourceType = .photoLibrary
-                imgPicker.mediaTypes = ["public.image"]
-                imgPicker.allowsEditing = true
-                self.present(imgPicker, animated: true) {
-                    self.viewModel.uploadingProfile.onNext(false)
-                }
+                let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                alert.addAction(UIAlertAction(title: "기본 이미지 선택", style: .default) { _ in
+                    self.viewModel.profileImageChanged = true
+                    
+                    let image = UIImage(named: "defaultProfileImage.png")
+                    self.viewModel.ownerInfo.profileImg = image
+                    self.viewModel.ownerProfileImg.onNext(image!)
+                })
+                alert.addAction(UIAlertAction(title: "나의 앨범에서 선택", style: .default) {_ in
+                    self.viewModel.profileImageChanged = true
+                    
+                    self.viewModel.uploadingProfile.onNext(true)
+                    let imgPicker = UIImagePickerController()
+                    imgPicker.delegate = self
+                    imgPicker.sourceType = .photoLibrary
+                    imgPicker.mediaTypes = ["public.image"]
+                    imgPicker.allowsEditing = true
+                    self.present(imgPicker, animated: true) {
+                        self.viewModel.uploadingProfile.onNext(false)
+                    }
+                })
+                alert.addAction(UIAlertAction(title: "취소", style: .cancel))
+                self.present(alert, animated: true)
             })
             .disposed(by: disposeBag)
         
