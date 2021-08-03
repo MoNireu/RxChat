@@ -43,13 +43,13 @@ class EditProfileViewController: UIViewController, ViewModelBindableType {
     
     
     func bindViewModel() {
-        viewModel.ownerID
+        viewModel.myId
             .subscribe(onNext: { id in
                 self.idTextField.text = id
             })
             .dispose()
         
-        viewModel.ownerProfileImg
+        viewModel.myProfileImg
             .bind(to: profileImageView.rx.image)
             .disposed(by: disposeBag)
         
@@ -61,8 +61,8 @@ class EditProfileViewController: UIViewController, ViewModelBindableType {
                     self.viewModel.profileImageChanged = true
                     
                     let image = UIImage(named: "defaultProfileImage.png")
-                    self.viewModel.ownerInfo.profileImg = image
-                    self.viewModel.ownerProfileImg.onNext(image!)
+                    self.viewModel.myInfo.profileImg = image
+                    self.viewModel.myProfileImg.onNext(image!)
                 })
                 alert.addAction(UIAlertAction(title: "나의 앨범에서 선택", style: .default) {_ in
                     self.viewModel.profileImageChanged = true
@@ -84,8 +84,8 @@ class EditProfileViewController: UIViewController, ViewModelBindableType {
         
         idTextField.rx.text
             .subscribe(onNext: { id in
-                self.viewModel.ownerInfo.id = id
-                self.viewModel.ownerID.onNext(id ?? "")
+                self.viewModel.myInfo.id = id
+                self.viewModel.myId.onNext(id ?? "")
             })
             .disposed(by: disposeBag)
         
@@ -105,8 +105,8 @@ class EditProfileViewController: UIViewController, ViewModelBindableType {
 extension EditProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[.originalImage] as? UIImage {
-            viewModel.ownerInfo.profileImg = image
-            viewModel.ownerProfileImg.onNext(image)
+            viewModel.myInfo.profileImg = image
+            viewModel.myProfileImg.onNext(image)
         }
         picker.dismiss(animated: true)
     }

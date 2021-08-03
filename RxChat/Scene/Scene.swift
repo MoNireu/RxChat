@@ -50,17 +50,17 @@ extension Scene {
                 fatalError()
             }
             
-            guard let privateChatNav = chatListTBC.viewControllers?[1] as? UINavigationController else {
+            guard let privateChatListNav = chatListTBC.viewControllers?[1] as? UINavigationController else {
                 fatalError()
             }
-            guard var privateChatListVC = privateChatNav.viewControllers.first as? PrivateChatListViewController else {
+            guard var privateChatListVC = privateChatListNav.viewControllers.first as? PrivateChatListViewController else {
                 fatalError()
             }
             
-            guard let groupChatNav = chatListTBC.viewControllers?[2] as? UINavigationController else {
+            guard let groupChatListNav = chatListTBC.viewControllers?[2] as? UINavigationController else {
                 fatalError()
             }
-            guard var groupChatListVC = groupChatNav.viewControllers.first as? GroupChatListViewController else {
+            guard var groupChatListVC = groupChatListNav.viewControllers.first as? GroupChatListViewController else {
                 fatalError()
             }
             
@@ -68,9 +68,9 @@ extension Scene {
             privateChatListVC.bind(viewModel: viewModel2)
             groupChatListVC.bind(viewModel: viewModel3)
             
-            chatListTBC.viewControllers?[0] = friendListVC
-            chatListTBC.viewControllers?[1] = privateChatListVC
-            chatListTBC.viewControllers?[2] = groupChatListVC
+            chatListTBC.viewControllers?[0] = friendListNav
+            chatListTBC.viewControllers?[1] = privateChatListNav
+            chatListTBC.viewControllers?[2] = groupChatListNav
             
             return chatListTBC
         }

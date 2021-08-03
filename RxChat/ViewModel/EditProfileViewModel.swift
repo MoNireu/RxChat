@@ -15,21 +15,21 @@ import RxFirebase
 class EditProfileViewModel: CommonViewModel {
     let disposeBag = DisposeBag()
     
-    var ownerInfo: User
-    var ownerID: BehaviorSubject<String>
-    var ownerProfileImg: BehaviorSubject<UIImage>
+    var myInfo: User
+    var myId: BehaviorSubject<String>
+    var myProfileImg: BehaviorSubject<UIImage>
     let uploadingProfile = BehaviorSubject<Bool>(value: false)
     var profileImageChanged = false
     
-    init(ownerInfo: User, sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil) {
-        self.ownerInfo = ownerInfo
-        ownerID = BehaviorSubject<String>(value: ownerInfo.id ?? "")
+    init(myInfo: User, sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil) {
+        self.myInfo = myInfo
+        myId = BehaviorSubject<String>(value: myInfo.id ?? "")
         
         var profileImg: UIImage
-        if let _profileImg = ownerInfo.profileImg { profileImg = _profileImg }
+        if let _profileImg = myInfo.profileImg { profileImg = _profileImg }
         else { profileImg = UIImage(named: "defaultProfileImage.png")! }
         
-        self.ownerProfileImg = BehaviorSubject<UIImage>(value: profileImg)
+        self.myProfileImg = BehaviorSubject<UIImage>(value: profileImg)
         
         super.init(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
     }
@@ -37,11 +37,11 @@ class EditProfileViewModel: CommonViewModel {
     lazy var profileEditDone: CocoaAction = {
         return Action { _ in
             self.uploadingProfile.onNext(true)
-            self.firebaseUtil.uploadOwnerData(self.ownerInfo, uploadProfileImage: self.profileImageChanged)
+            self.firebaseUtil.uploadMyData(self.myInfo, uploadProfileImage: self.profileImageChanged)
                 .subscribe(onNext: { uploadedUser in
                     self.uploadingProfile.onNext(false)
                     
-                    let friendListVM = FriendListViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
+                    let friendListVM = FriendListViewModel(myInfo: self.myInfo, sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
                     let privateChatListVM = PrivateChatListViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
                     let groupChatListVM = GroupChatListViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
                     let chatListScene = Scene.chatList(friendListVM, privateChatListVM, groupChatListVM)

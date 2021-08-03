@@ -51,19 +51,19 @@ class SignInViewModel: CommonViewModel {
                     
                     
                     let firebaseUtil = self.firebaseUtil
-                    firebaseUtil.downloadOwnerData(uid)
+                    firebaseUtil.downloadMyData(uid)
                         .subscribe(onNext: { user in
-                            let ownerInfo: User
+                            let myInfo: User
                             if user != nil {
-                                ownerInfo = user!
+                                myInfo = user!
                                 print("User exist")
                             }
                             else {
-                                ownerInfo = User(email: email!, uid: uid, id: nil, profileImg: nil)
+                                myInfo = User(email: email!, uid: uid, id: nil, profileImg: nil)
                                 print("User not exist")
                             }
                             
-                            let editProfileViewModel = EditProfileViewModel(ownerInfo: ownerInfo, sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
+                            let editProfileViewModel = EditProfileViewModel(myInfo: myInfo, sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
                             let editProfileScene = Scene.editProfile(editProfileViewModel)
                             self.sceneCoordinator.transition(to: editProfileScene, using: .fullScreen, animated: true)
                         })

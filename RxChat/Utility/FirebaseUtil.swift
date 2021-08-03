@@ -17,7 +17,7 @@ class FirebaseUtil {
     private let STORAGE_BUCKET = "gs://rxchat-f485a.appspot.com"
     
     
-    func downloadOwnerData(_ uid: String) -> Observable<User?> {
+    func downloadMyData(_ uid: String) -> Observable<User?> {
         return Observable.create { observer in
             self.db.collection("Users").document(uid).rx
                 .getDocument()
@@ -48,7 +48,7 @@ class FirebaseUtil {
     
     
     
-    func uploadOwnerData(_ userInfo: User, uploadProfileImage: Bool) -> Observable<User> {
+    func uploadMyData(_ userInfo: User, uploadProfileImage: Bool) -> Observable<User> {
         return Observable.create { observer in
             let docRef = self.db.collection("Users").document(userInfo.uid!)
             docRef.rx
