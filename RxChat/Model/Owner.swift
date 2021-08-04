@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class Onwer: User {
+class Owner: User {
     var uid: String
     
     

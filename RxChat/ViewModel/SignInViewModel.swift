@@ -53,13 +53,13 @@ class SignInViewModel: CommonViewModel {
                     let firebaseUtil = self.firebaseUtil
                     firebaseUtil.downloadMyData(uid)
                         .subscribe(onNext: { user in
-                            let myInfo: User
+                            let myInfo: Owner
                             if user != nil {
                                 myInfo = user!
                                 print("User exist")
                             }
                             else {
-                                myInfo = User(email: email!, uid: uid, id: nil, profileImg: nil)
+                                myInfo = Owner(uid: uid, email: email!, id: nil, profileImg: nil)
                                 print("User not exist")
                             }
                             

@@ -15,13 +15,13 @@ import RxFirebase
 class EditProfileViewModel: CommonViewModel {
     let disposeBag = DisposeBag()
     
-    var myInfo: User
+    var myInfo: Owner
     var myId: BehaviorSubject<String>
     var myProfileImg: BehaviorSubject<UIImage>
     let uploadingProfile = BehaviorSubject<Bool>(value: false)
     var profileImageChanged = false
     
-    init(myInfo: User, sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil) {
+    init(myInfo: Owner, sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil) {
         self.myInfo = myInfo
         myId = BehaviorSubject<String>(value: myInfo.id ?? "")
         

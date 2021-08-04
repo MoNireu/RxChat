@@ -254,9 +254,9 @@
 		E1D933992696ED0D007ECA6B /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				E1613B34269D7FBA00F4E359 /* EditProfileViewModel.swift */,
 				E170DF6326A0255100A5BAAF /* CommonViewModel.swift */,
 				E170DF6526A02B1400A5BAAF /* SignInViewModel.swift */,
+				E1613B34269D7FBA00F4E359 /* EditProfileViewModel.swift */,
 				E1232F1C26AFE5E000A9EA31 /* FriendListViewModel.swift */,
 				E1232F2226AFE6C100A9EA31 /* PrivateChatListViewModel.swift */,
 				E1232F2826AFE74000A9EA31 /* GroupChatListViewModel.swift */,
