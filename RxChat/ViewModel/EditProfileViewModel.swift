@@ -36,17 +36,25 @@ class EditProfileViewModel: CommonViewModel {
     
     lazy var profileEditDone: CocoaAction = {
         return Action { _ in
+            // start activity indicator
             self.uploadingProfile.onNext(true)
+            // upload my data & profile image
             self.firebaseUtil.uploadMyData(self.myInfo, uploadProfileImage: self.profileImageChanged)
                 .subscribe(onNext: { uploadedUser in
-                    self.uploadingProfile.onNext(false)
-                    
-                    let friendListVM = FriendListViewModel(myInfo: self.myInfo, sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
-                    let privateChatListVM = PrivateChatListViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
-                    let groupChatListVM = GroupChatListViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
-                    let chatListScene = Scene.chatList(friendListVM, privateChatListVM, groupChatListVM)
-                    self.sceneCoordinator.transition(to: chatListScene, using: .fullScreen, animated: true)
-                })
+                    // upload profile update time
+                    self.firebaseUtil.uploadProfileUpdateTime(uploadedUser.email)
+                        .subscribe(onCompleted: {
+                            // stop acitivy indicator
+                            self.uploadingProfile.onNext(false)
+                            
+                            // change to scene "FriendList"
+                            let friendListVM = FriendListViewModel(myInfo: self.myInfo, sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
+                            let privateChatListVM = PrivateChatListViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
+                            let groupChatListVM = GroupChatListViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
+                            let chatListScene = Scene.chatList(friendListVM, privateChatListVM, groupChatListVM)
+                            self.sceneCoordinator.transition(to: chatListScene, using: .fullScreen, animated: true)
+                        }).disposed(by: self.disposeBag)
+                }).disposed(by: self.disposeBag)
             
             return Observable.empty()
         }

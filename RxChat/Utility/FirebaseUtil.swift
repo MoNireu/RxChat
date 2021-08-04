@@ -126,4 +126,18 @@ class FirebaseUtil {
             return Disposables.create()
         }
     }
+    
+    
+    func uploadProfileUpdateTime(_ email: String) -> Observable<Void> {
+        return Observable.create { observer in
+            let docRef = self.db.collection("UserProfileLastUpdate").document(email)
+            docRef.rx
+                .setData(["lastUpdateTime" : Date()])
+                .subscribe(onCompleted: {
+                    observer.onCompleted()
+                }).disposed(by: self.disposeBag)
+            
+            return Disposables.create()
+        }
+    }
 }
