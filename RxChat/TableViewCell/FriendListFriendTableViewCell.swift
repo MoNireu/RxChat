@@ -1,13 +1,13 @@
 //
-//  FriendListTableViewCell.swift
+//  FriendListFriendTableViewCell.swift
 //  RxChat
 //
-//  Created by MoNireu on 2021/08/03.
+//  Created by MoNireu on 2021/08/04.
 //
 
 import UIKit
 
-class FriendListMyTableViewCell: UITableViewCell {
+class FriendListFriendTableViewCell: UITableViewCell {
 
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var profileName: UILabel!

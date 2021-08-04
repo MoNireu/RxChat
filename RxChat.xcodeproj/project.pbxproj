@@ -38,6 +38,7 @@
 		E170DF6426A0255100A5BAAF /* CommonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E170DF6326A0255100A5BAAF /* CommonViewModel.swift */; };
 		E170DF6626A02B1400A5BAAF /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E170DF6526A02B1400A5BAAF /* SignInViewModel.swift */; };
 		E18269922696F156000D083F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E18269912696F156000D083F /* GoogleService-Info.plist */; };
+		E18BE13026BA6D19000B29FA /* FriendListFriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18BE12F26BA6D19000B29FA /* FriendListFriendTableViewCell.swift */; };
 		E1A76A1F26A7FD0D00C8F783 /* UIImagePickerController+RxCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A76A1D26A7FD0D00C8F783 /* UIImagePickerController+RxCreate.swift */; };
 		E1A76A2026A7FD0D00C8F783 /* UIImagePickerController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A76A1E26A7FD0D00C8F783 /* UIImagePickerController+Rx.swift */; };
 		E1A76A2226A8091E00C8F783 /* RxImagePickerDelegateProxy.swift .swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A76A2126A8091E00C8F783 /* RxImagePickerDelegateProxy.swift .swift */; };
@@ -101,6 +102,7 @@
 		E170DF6326A0255100A5BAAF /* CommonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonViewModel.swift; sourceTree = "<group>"; };
 		E170DF6526A02B1400A5BAAF /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		E18269912696F156000D083F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E18BE12F26BA6D19000B29FA /* FriendListFriendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListFriendTableViewCell.swift; sourceTree = "<group>"; };
 		E1A76A1D26A7FD0D00C8F783 /* UIImagePickerController+RxCreate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+RxCreate.swift"; sourceTree = "<group>"; };
 		E1A76A1E26A7FD0D00C8F783 /* UIImagePickerController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+Rx.swift"; sourceTree = "<group>"; };
 		E1A76A2126A8091E00C8F783 /* RxImagePickerDelegateProxy.swift .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RxImagePickerDelegateProxy.swift .swift"; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				E10D16E726B91942003DD5D3 /* FriendListMyTableViewCell.swift */,
+				E18BE12F26BA6D19000B29FA /* FriendListFriendTableViewCell.swift */,
 			);
 			path = TableViewCell;
 			sourceTree = "<group>";
@@ -550,6 +553,7 @@
 				E10D16E826B91942003DD5D3 /* FriendListMyTableViewCell.swift in Sources */,
 				E1613B32269D7F9300F4E359 /* EditProfileViewController.swift in Sources */,
 				E1E11E3C269C1E2D000CE221 /* FirebaseUtil.swift in Sources */,
+				E18BE13026BA6D19000B29FA /* FriendListFriendTableViewCell.swift in Sources */,
 				E170DF6426A0255100A5BAAF /* CommonViewModel.swift in Sources */,
 				E170DF5826A01B2900A5BAAF /* TransitionModel.swift in Sources */,
 				E170DF6626A02B1400A5BAAF /* SignInViewModel.swift in Sources */,
