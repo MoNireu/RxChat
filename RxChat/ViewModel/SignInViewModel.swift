@@ -59,7 +59,7 @@ class SignInViewModel: CommonViewModel {
                                 print("User exist")
                             }
                             else {
-                                myInfo = Owner(uid: uid, email: email!, id: nil, profileImg: nil)
+                                myInfo = Owner(uid: uid, email: email!, id: nil, profileImg: nil, friendList: [])
                                 print("User not exist")
                             }
                             

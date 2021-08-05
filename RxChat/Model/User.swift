@@ -15,9 +15,10 @@ class User {
     
     
     
+    
     init(email: String, id: String?, profileImg: UIImage?) {
         self.email = email
         self.id = id
-        self.profileImg = profileImg
+        self.profileImg = profileImg   
     }
 }
