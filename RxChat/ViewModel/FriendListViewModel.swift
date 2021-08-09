@@ -17,12 +17,9 @@ class FriendListViewModel: CommonViewModel {
     
     init(myInfo: Owner, sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil) {
         self.myInfo = myInfo
-        profileInfoSubject = BehaviorSubject<[User]>(value: [
-                                                        myInfo,
-                                                        User(email: "test1", id: "test1", profileImg: UIImage(named: "defaultProfileImage.png")),
-                                                        User(email: "test2", id: "test2", profileImg: UIImage(named: "defaultProfileImage.png"))
-        ])
-        
+        var profileInfoList = myInfo.friendList
+        profileInfoList.insert(myInfo, at: 0)
+        profileInfoSubject = BehaviorSubject<[User]>(value: profileInfoList)
         super.init(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
     }
     
