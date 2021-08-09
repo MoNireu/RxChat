@@ -61,14 +61,19 @@ class FirebaseUtil {
     
     func downloadMyFriendList(_ uid: String) -> Observable<[User]> {
         return Observable.create { observer in
-            let docRef = self.db.collection("Users").document(uid).collection("Friends")
-            docRef.rx
+            let colRef = self.db.collection("Users").document(uid).collection("Friends")
+            colRef.rx
                 .getDocuments()
-                .subscribe(onNext: { docs in
+                .subscribe(onNext: { data in
+                    let docs = data.documents
+                    guard !docs.isEmpty else {
+                        observer.onNext([])
+                        return
+                    }
                     var friendList: [User] = []
                     var notFoundCnt = 0
                     
-                    let docObservable = Observable.from(docs.documents)
+                    let docObservable = Observable.from(docs)
                     docObservable.subscribe(onNext: { doc in
                         let friendData = doc.data()
                         let friendEmail = doc.documentID
@@ -78,7 +83,7 @@ class FirebaseUtil {
                         self.findUser(friendEmail)
                             .subscribe(onNext: { user in
                                 friendList.append(user)
-                                if friendList.count + notFoundCnt == docs.documents.count { observer.onNext(friendList) }
+                                if friendList.count + notFoundCnt == docs.count { observer.onNext(friendList) }
                             }, onError: { _ in
                                 notFoundCnt += 1
                                 print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
