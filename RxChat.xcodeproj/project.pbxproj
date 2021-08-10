@@ -37,6 +37,8 @@
 		E170DF6226A0203A00A5BAAF /* SceneCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E170DF6126A0203A00A5BAAF /* SceneCoordinator.swift */; };
 		E170DF6426A0255100A5BAAF /* CommonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E170DF6326A0255100A5BAAF /* CommonViewModel.swift */; };
 		E170DF6626A02B1400A5BAAF /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E170DF6526A02B1400A5BAAF /* SignInViewModel.swift */; };
+		E180E3E826C277BB000F4CEA /* FindUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E180E3E726C277BB000F4CEA /* FindUserViewController.swift */; };
+		E180E3EA26C277D1000F4CEA /* FindUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E180E3E926C277D1000F4CEA /* FindUserViewModel.swift */; };
 		E18269922696F156000D083F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E18269912696F156000D083F /* GoogleService-Info.plist */; };
 		E18BE13026BA6D19000B29FA /* FriendListFriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18BE12F26BA6D19000B29FA /* FriendListFriendTableViewCell.swift */; };
 		E18BE13226BA81ED000B29FA /* Owner.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18BE13126BA81ED000B29FA /* Owner.swift */; };
@@ -102,6 +104,8 @@
 		E170DF6126A0203A00A5BAAF /* SceneCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCoordinator.swift; sourceTree = "<group>"; };
 		E170DF6326A0255100A5BAAF /* CommonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonViewModel.swift; sourceTree = "<group>"; };
 		E170DF6526A02B1400A5BAAF /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
+		E180E3E726C277BB000F4CEA /* FindUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindUserViewController.swift; sourceTree = "<group>"; };
+		E180E3E926C277D1000F4CEA /* FindUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindUserViewModel.swift; sourceTree = "<group>"; };
 		E18269912696F156000D083F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E18BE12F26BA6D19000B29FA /* FriendListFriendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListFriendTableViewCell.swift; sourceTree = "<group>"; };
 		E18BE13126BA81ED000B29FA /* Owner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Owner.swift; sourceTree = "<group>"; };
@@ -260,6 +264,7 @@
 				E1232F1C26AFE5E000A9EA31 /* FriendListViewModel.swift */,
 				E1232F2226AFE6C100A9EA31 /* PrivateChatListViewModel.swift */,
 				E1232F2826AFE74000A9EA31 /* GroupChatListViewModel.swift */,
+				E180E3E926C277D1000F4CEA /* FindUserViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -273,6 +278,7 @@
 				E1232F1E26AFE5EF00A9EA31 /* FriendListViewController.swift */,
 				E1232F2026AFE6A700A9EA31 /* PrivateChatListViewController.swift */,
 				E1232F2626AFE73500A9EA31 /* GroupChatListViewController.swift */,
+				E180E3E726C277BB000F4CEA /* FindUserViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -552,6 +558,7 @@
 				E170DF5E26A01F4D00A5BAAF /* Scene.swift in Sources */,
 				E1A76A1F26A7FD0D00C8F783 /* UIImagePickerController+RxCreate.swift in Sources */,
 				E1A76A2226A8091E00C8F783 /* RxImagePickerDelegateProxy.swift .swift in Sources */,
+				E180E3EA26C277D1000F4CEA /* FindUserViewModel.swift in Sources */,
 				E170DF6226A0203A00A5BAAF /* SceneCoordinator.swift in Sources */,
 				E10D16E826B91942003DD5D3 /* FriendListMyTableViewCell.swift in Sources */,
 				E1613B32269D7F9300F4E359 /* EditProfileViewController.swift in Sources */,
@@ -564,6 +571,7 @@
 				E1232F2726AFE73500A9EA31 /* GroupChatListViewController.swift in Sources */,
 				E170DF5C26A01DAD00A5BAAF /* ViewModelBindableType.swift in Sources */,
 				E170DF6026A01FC700A5BAAF /* SceneCoordinatorType.swift in Sources */,
+				E180E3E826C277BB000F4CEA /* FindUserViewController.swift in Sources */,
 				E1613B35269D7FBA00F4E359 /* EditProfileViewModel.swift in Sources */,
 				E1232F1D26AFE5E000A9EA31 /* FriendListViewModel.swift in Sources */,
 				E1232F2326AFE6C100A9EA31 /* PrivateChatListViewModel.swift in Sources */,

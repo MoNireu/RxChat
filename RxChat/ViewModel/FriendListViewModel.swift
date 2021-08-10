@@ -7,6 +7,8 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
+import Action
 import UIKit
 
 
@@ -23,6 +25,15 @@ class FriendListViewModel: CommonViewModel {
         super.init(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
     }
     
+    
+    lazy var presentFindUserView: CocoaAction = {
+        return Action { _ in
+            let findUserViewModel = FindUserViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
+            let findUserScene = Scene.findUser(findUserViewModel)
+            self.sceneCoordinator.transition(to: findUserScene, using: .modal, animated: true)
+            return Observable.empty()
+        }
+    }()
     
     
     

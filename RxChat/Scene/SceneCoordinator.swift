@@ -55,7 +55,11 @@ class SceneCoordinator: SceneCoordinatorType {
         case .push:
             subject.onCompleted()
         case .modal:
-            subject.onCompleted()
+            currentVC.present(target, animated: true) {
+                subject.onCompleted()
+            }
+            
+            currentVC = target.sceneViewController
         }
         
         return subject.ignoreElements().asCompletable()

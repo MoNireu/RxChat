@@ -14,6 +14,7 @@ class FriendListViewController: UIViewController, ViewModelBindableType {
     var disposeBag = DisposeBag()
     var viewModel: FriendListViewModel!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var findUserButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,9 +49,6 @@ class FriendListViewController: UIViewController, ViewModelBindableType {
                 
             }.disposed(by: disposeBag)
         
-        
-        
-        
-        
+        findUserButton.rx.action = self.viewModel.presentFindUserView
     }
 }
