@@ -389,7 +389,7 @@
                                     <string>Title</string>
                                 </scopeButtonTitles>
                             </searchBar>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ka0-Ri-kiy">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ka0-Ri-kiy">
                                 <rect key="frame" x="132" y="298" width="150" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="0NU-zh-PTi"/>
@@ -451,6 +451,7 @@
                     <connections>
                         <outlet property="addFriendButton" destination="ttl-sl-9AY" id="rf4-HV-Ija"/>
                         <outlet property="nameLabel" destination="u0M-He-frf" id="gti-zR-Pdk"/>
+                        <outlet property="noResultLabel" destination="05O-vh-qK2" id="tsD-ly-f7d"/>
                         <outlet property="noResultView" destination="fdE-dM-eCC" id="g55-5J-noj"/>
                         <outlet property="profileImageView" destination="Ka0-Ri-kiy" id="Hca-3M-7FW"/>
                         <outlet property="searchBar" destination="E4d-M1-W5Z" id="ziu-FZ-pTI"/>

@@ -58,8 +58,6 @@ class SceneCoordinator: SceneCoordinatorType {
             currentVC.present(target, animated: true) {
                 subject.onCompleted()
             }
-            
-            currentVC = target.sceneViewController
         }
         
         return subject.ignoreElements().asCompletable()

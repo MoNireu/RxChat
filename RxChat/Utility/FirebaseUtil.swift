@@ -10,6 +10,10 @@ import RxFirebase
 import Firebase
 import RxSwift
 
+enum FirebaseUtilError: Error {
+    case canNotFindUser
+}
+
 
 class FirebaseUtil {
     private let db = Firestore.firestore()
@@ -99,10 +103,10 @@ class FirebaseUtil {
     func findUser(_ email: String) -> Observable<User> {
         return Observable.create { observer in
             let query = self.db.collection("Users").whereField("email", isEqualTo: email)
-            query.rx.getFirstDocument()
+            query.rx.getDocuments()
                 .subscribe(onNext: { doc in
-                    if doc.exists {
-                        let data = doc.data()
+                    if doc.count != 0 {
+                        let data = doc.documents.first!.data()
                         let id = data["id"] as? String
                         
                         self.downloadProfileImage(email)
@@ -115,7 +119,7 @@ class FirebaseUtil {
                             }).disposed(by: self.disposeBag)
                     }
                     else {
-                        observer.onError(fatalError())
+                        observer.onError(FirebaseUtilError.canNotFindUser)
                     }
                 }).disposed(by: self.disposeBag)
             return Disposables.create()
