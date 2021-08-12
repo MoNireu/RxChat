@@ -19,6 +19,7 @@ class FindUserViewController: UIViewController, ViewModelBindableType {
     @IBOutlet weak var addFriendButton: UIButton!
     @IBOutlet weak var noResultView: UIView!
     @IBOutlet weak var noResultLabel: UILabel!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     
     override func viewDidLoad() {
@@ -32,6 +33,8 @@ class FindUserViewController: UIViewController, ViewModelBindableType {
         
         noResultLabel.isHidden = true
         noResultView.isHidden = false
+        
+        self.activityIndicator.stopAnimating()
     }
     
     func bindViewModel() {
@@ -43,9 +46,11 @@ class FindUserViewController: UIViewController, ViewModelBindableType {
         
         searchBar.rx.searchButtonClicked
             .subscribe(onNext: { _ in
+                self.activityIndicator.startAnimating()
                 guard let text = self.searchBar.text else { return }
                 self.viewModel.findUser.execute(text)
                     .subscribe(onNext: { user in
+                        self.activityIndicator.stopAnimating()
                         if let user = user {
                             self.noResultView.isHidden = true
                             self.noResultLabel.isHidden = true

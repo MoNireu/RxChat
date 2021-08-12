@@ -428,13 +428,18 @@
                                     <constraint firstItem="05O-vh-qK2" firstAttribute="centerX" secondItem="fdE-dM-eCC" secondAttribute="centerX" id="sjV-uC-aRa"/>
                                 </constraints>
                             </view>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="jnY-Uy-jyb">
+                                <rect key="frame" x="197" y="438" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="o3i-J5-uvC"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="fdE-dM-eCC" firstAttribute="leading" secondItem="o3i-J5-uvC" secondAttribute="leading" id="47R-L8-iCW"/>
+                            <constraint firstItem="jnY-Uy-jyb" firstAttribute="centerX" secondItem="b05-9y-q9r" secondAttribute="centerX" id="5of-Lq-kPA"/>
                             <constraint firstItem="E4d-M1-W5Z" firstAttribute="leading" secondItem="o3i-J5-uvC" secondAttribute="leading" id="80j-kP-Cuu"/>
                             <constraint firstItem="ttl-sl-9AY" firstAttribute="leading" secondItem="o3i-J5-uvC" secondAttribute="leading" constant="20" id="AUC-wD-U3G"/>
+                            <constraint firstItem="jnY-Uy-jyb" firstAttribute="centerY" secondItem="b05-9y-q9r" secondAttribute="centerY" id="F5r-Ah-0JY"/>
                             <constraint firstItem="E4d-M1-W5Z" firstAttribute="trailing" secondItem="o3i-J5-uvC" secondAttribute="trailing" id="GMg-90-Dfu"/>
                             <constraint firstItem="u0M-He-frf" firstAttribute="centerX" secondItem="b05-9y-q9r" secondAttribute="centerX" id="LaQ-3X-6yR"/>
                             <constraint firstItem="ttl-sl-9AY" firstAttribute="bottom" secondItem="o3i-J5-uvC" secondAttribute="bottom" id="MF0-mj-Sii"/>
@@ -449,6 +454,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="jnY-Uy-jyb" id="cd8-GH-5bc"/>
                         <outlet property="addFriendButton" destination="ttl-sl-9AY" id="rf4-HV-Ija"/>
                         <outlet property="nameLabel" destination="u0M-He-frf" id="gti-zR-Pdk"/>
                         <outlet property="noResultLabel" destination="05O-vh-qK2" id="tsD-ly-f7d"/>
