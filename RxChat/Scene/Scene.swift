@@ -79,7 +79,6 @@ extension Scene {
             guard var findUserVC = storyboard.instantiateViewController(withIdentifier: "FindUserVC") as? FindUserViewController else {
                 fatalError()
             }
-            
             findUserVC.bind(viewModel: viewModel)
             return findUserVC
         }

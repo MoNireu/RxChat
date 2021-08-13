@@ -20,6 +20,7 @@ class FindUserViewController: UIViewController, ViewModelBindableType {
     @IBOutlet weak var noResultView: UIView!
     @IBOutlet weak var noResultLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var modalBar: UIView!
     
     
     override func viewDidLoad() {
@@ -30,6 +31,9 @@ class FindUserViewController: UIViewController, ViewModelBindableType {
         
         addFriendButton.clipsToBounds = true
         addFriendButton.layer.cornerRadius = addFriendButton.frame.size.height * 0.35
+        
+        modalBar.clipsToBounds = true
+        modalBar.layer.cornerRadius = modalBar.frame.size.height * 0.5
         
         noResultLabel.isHidden = true
         noResultView.isHidden = false

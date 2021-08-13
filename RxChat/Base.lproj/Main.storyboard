@@ -382,7 +382,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" placeholder="이메일을 입력하세요." translatesAutoresizingMaskIntoConstraints="NO" id="E4d-M1-W5Z">
-                                <rect key="frame" x="0.0" y="44" width="414" height="51"/>
+                                <rect key="frame" x="0.0" y="94" width="414" height="51"/>
                                 <textInputTraits key="textInputTraits" textContentType="email"/>
                                 <scopeButtonTitles>
                                     <string>Title</string>
@@ -413,10 +413,10 @@
                                 </state>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fdE-dM-eCC">
-                                <rect key="frame" x="0.0" y="95" width="414" height="801"/>
+                                <rect key="frame" x="0.0" y="145" width="414" height="751"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="검색된 결과가 없습니다." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="05O-vh-qK2">
-                                        <rect key="frame" x="126.5" y="390" width="161" height="21"/>
+                                        <rect key="frame" x="126.5" y="365" width="161" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -431,12 +431,21 @@
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="jnY-Uy-jyb">
                                 <rect key="frame" x="197" y="438" width="20" height="20"/>
                             </activityIndicatorView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Kn-7j-9Mr">
+                                <rect key="frame" x="157" y="64" width="100" height="10"/>
+                                <color key="backgroundColor" systemColor="systemGrayColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="Tao-PT-0MV"/>
+                                    <constraint firstAttribute="height" constant="10" id="dwU-bg-V05"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="o3i-J5-uvC"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="fdE-dM-eCC" firstAttribute="leading" secondItem="o3i-J5-uvC" secondAttribute="leading" id="47R-L8-iCW"/>
                             <constraint firstItem="jnY-Uy-jyb" firstAttribute="centerX" secondItem="b05-9y-q9r" secondAttribute="centerX" id="5of-Lq-kPA"/>
+                            <constraint firstItem="E4d-M1-W5Z" firstAttribute="top" secondItem="9Kn-7j-9Mr" secondAttribute="bottom" constant="20" id="766-t7-AcQ"/>
                             <constraint firstItem="E4d-M1-W5Z" firstAttribute="leading" secondItem="o3i-J5-uvC" secondAttribute="leading" id="80j-kP-Cuu"/>
                             <constraint firstItem="ttl-sl-9AY" firstAttribute="leading" secondItem="o3i-J5-uvC" secondAttribute="leading" constant="20" id="AUC-wD-U3G"/>
                             <constraint firstItem="jnY-Uy-jyb" firstAttribute="centerY" secondItem="b05-9y-q9r" secondAttribute="centerY" id="F5r-Ah-0JY"/>
@@ -447,15 +456,17 @@
                             <constraint firstItem="o3i-J5-uvC" firstAttribute="trailing" secondItem="ttl-sl-9AY" secondAttribute="trailing" constant="20" id="SjB-nt-due"/>
                             <constraint firstItem="fdE-dM-eCC" firstAttribute="top" secondItem="E4d-M1-W5Z" secondAttribute="bottom" id="WTz-LS-5Ou"/>
                             <constraint firstItem="Ka0-Ri-kiy" firstAttribute="centerY" secondItem="b05-9y-q9r" secondAttribute="centerY" constant="-75" id="a2g-SM-nC4"/>
+                            <constraint firstItem="9Kn-7j-9Mr" firstAttribute="centerX" secondItem="b05-9y-q9r" secondAttribute="centerX" id="ax3-tN-3BA"/>
                             <constraint firstAttribute="bottom" secondItem="fdE-dM-eCC" secondAttribute="bottom" id="oZh-Tf-7Zh"/>
-                            <constraint firstItem="E4d-M1-W5Z" firstAttribute="top" secondItem="o3i-J5-uvC" secondAttribute="top" id="oaD-ZL-TI6"/>
                             <constraint firstItem="fdE-dM-eCC" firstAttribute="trailing" secondItem="o3i-J5-uvC" secondAttribute="trailing" id="sHH-6t-LsJ"/>
+                            <constraint firstItem="9Kn-7j-9Mr" firstAttribute="top" secondItem="o3i-J5-uvC" secondAttribute="top" constant="20" id="vQj-61-bse"/>
                             <constraint firstItem="u0M-He-frf" firstAttribute="top" secondItem="Ka0-Ri-kiy" secondAttribute="bottom" constant="30" id="zY9-bC-1Mj"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="activityIndicator" destination="jnY-Uy-jyb" id="cd8-GH-5bc"/>
                         <outlet property="addFriendButton" destination="ttl-sl-9AY" id="rf4-HV-Ija"/>
+                        <outlet property="modalBar" destination="9Kn-7j-9Mr" id="GTV-ZQ-40i"/>
                         <outlet property="nameLabel" destination="u0M-He-frf" id="gti-zR-Pdk"/>
                         <outlet property="noResultLabel" destination="05O-vh-qK2" id="tsD-ly-f7d"/>
                         <outlet property="noResultView" destination="fdE-dM-eCC" id="g55-5J-noj"/>
