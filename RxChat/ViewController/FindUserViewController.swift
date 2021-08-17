@@ -31,6 +31,10 @@ class FindUserViewController: UIViewController, ViewModelBindableType {
         
         addFriendButton.clipsToBounds = true
         addFriendButton.layer.cornerRadius = addFriendButton.frame.size.height * 0.35
+        addFriendButton.setTitle("+ 친구추가", for: .normal)
+        addFriendButton.setBackgroundColor(UIColor.systemBlue, for: .normal)
+        addFriendButton.setBackgroundColor(UIColor.systemGray, for: .disabled)
+        
         
         modalBar.clipsToBounds = true
         modalBar.layer.cornerRadius = modalBar.frame.size.height * 0.5
@@ -44,28 +48,44 @@ class FindUserViewController: UIViewController, ViewModelBindableType {
     func bindViewModel() {
         searchBar.rx.textDidBeginEditing
             .subscribe(onNext: { _ in
+                print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
+                print("text edit started")
+                print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
                 self.noResultLabel.isHidden = true
             }).disposed(by: disposeBag)
         
         
         searchBar.rx.searchButtonClicked
             .subscribe(onNext: { _ in
+                self.searchBar.resignFirstResponder()
                 self.activityIndicator.startAnimating()
                 guard let text = self.searchBar.text else { return }
                 self.viewModel.findUser.execute(text)
                     .subscribe(onNext: { user in
                         self.activityIndicator.stopAnimating()
-                        if let user = user {
-                            self.noResultView.isHidden = true
-                            self.noResultLabel.isHidden = true
+                        if let user = user { // user found
+                            self.hideNoResultView(true)
                             self.profileImageView.image = user.profileImg
                             self.nameLabel.text = user.id
+                            if user.email == self.viewModel.ownerInfo.email {
+                                self.addFriendButton.setTitle("나의 프로필 입니다", for: .disabled)
+                                self.addFriendButton.isEnabled = false
+                                self.addFriendButton.backgroundColor = UIColor.systemGray
+                            }
+                            else {
+                                self.addFriendButton.titleLabel?.text = "+ 친구추가"
+                                self.addFriendButton.isEnabled = true
+                            }
                         }
-                        else {
-                            self.noResultView.isHidden = false
-                            self.noResultLabel.isHidden = false
+                        else { // user not found
+                            self.hideNoResultView(false)
                         }
                     }).disposed(by: self.disposeBag)
             }).disposed(by: disposeBag)
+    }
+    
+    func hideNoResultView(_ hide: Bool) {
+        self.noResultView.isHidden = hide
+        self.noResultLabel.isHidden = hide
     }
 }

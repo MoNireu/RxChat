@@ -28,7 +28,7 @@ class FriendListViewModel: CommonViewModel {
     
     lazy var presentFindUserView: CocoaAction = {
         return Action { _ in
-            let findUserViewModel = FindUserViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
+            let findUserViewModel = FindUserViewModel(ownerInfo: self.myInfo, sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
             let findUserScene = Scene.findUser(findUserViewModel)
             self.sceneCoordinator.transition(to: findUserScene, using: .modal, animated: true)
             return Observable.empty()

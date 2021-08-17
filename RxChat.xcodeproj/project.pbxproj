@@ -46,6 +46,7 @@
 		E1A76A2026A7FD0D00C8F783 /* UIImagePickerController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A76A1E26A7FD0D00C8F783 /* UIImagePickerController+Rx.swift */; };
 		E1A76A2226A8091E00C8F783 /* RxImagePickerDelegateProxy.swift .swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A76A2126A8091E00C8F783 /* RxImagePickerDelegateProxy.swift .swift */; };
 		E1A76A3426A8211A00C8F783 /* Action in Frameworks */ = {isa = PBXBuildFile; productRef = E1A76A3326A8211A00C8F783 /* Action */; };
+		E1D8ADB926CBA7DF001586D3 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D8ADB826CBA7DF001586D3 /* UIButtonExtension.swift */; };
 		E1E11E3C269C1E2D000CE221 /* FirebaseUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E11E3B269C1E2D000CE221 /* FirebaseUtil.swift */; };
 		E1E11E3F269C1F19000CE221 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E11E3E269C1F19000CE221 /* User.swift */; };
 		EF3F0F7073D67AC3E62C09CC /* Pods_RxChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F50357890A961669CEBCE4E /* Pods_RxChat.framework */; };
@@ -112,6 +113,7 @@
 		E1A76A1D26A7FD0D00C8F783 /* UIImagePickerController+RxCreate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+RxCreate.swift"; sourceTree = "<group>"; };
 		E1A76A1E26A7FD0D00C8F783 /* UIImagePickerController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+Rx.swift"; sourceTree = "<group>"; };
 		E1A76A2126A8091E00C8F783 /* RxImagePickerDelegateProxy.swift .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RxImagePickerDelegateProxy.swift .swift"; sourceTree = "<group>"; };
+		E1D8ADB826CBA7DF001586D3 /* UIButtonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
 		E1E11E3B269C1E2D000CE221 /* FirebaseUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUtil.swift; sourceTree = "<group>"; };
 		E1E11E3E269C1F19000CE221 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		F63C573E14C177FC06527979 /* Pods_RxChatTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RxChatTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -186,6 +188,7 @@
 		E15B2D0A2696E8B2005D1C3F = {
 			isa = PBXGroup;
 			children = (
+				E1D8ADB726CBA7C7001586D3 /* Extension */,
 				E15B2D152696E8B2005D1C3F /* RxChat */,
 				E15B2D142696E8B2005D1C3F /* Products */,
 				2DBC425059E5F8133BD11B03 /* Pods */,
@@ -253,6 +256,14 @@
 				E1A76A2126A8091E00C8F783 /* RxImagePickerDelegateProxy.swift .swift */,
 			);
 			path = RxExtension;
+			sourceTree = "<group>";
+		};
+		E1D8ADB726CBA7C7001586D3 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				E1D8ADB826CBA7DF001586D3 /* UIButtonExtension.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		E1D933992696ED0D007ECA6B /* ViewModel */ = {
@@ -565,6 +576,7 @@
 				E1E11E3C269C1E2D000CE221 /* FirebaseUtil.swift in Sources */,
 				E18BE13026BA6D19000B29FA /* FriendListFriendTableViewCell.swift in Sources */,
 				E170DF6426A0255100A5BAAF /* CommonViewModel.swift in Sources */,
+				E1D8ADB926CBA7DF001586D3 /* UIButtonExtension.swift in Sources */,
 				E170DF5826A01B2900A5BAAF /* TransitionModel.swift in Sources */,
 				E18BE13226BA81ED000B29FA /* Owner.swift in Sources */,
 				E170DF6626A02B1400A5BAAF /* SignInViewModel.swift in Sources */,

@@ -13,6 +13,12 @@ import Action
 
 class FindUserViewModel: CommonViewModel {
     let disposeBag = DisposeBag()
+    var ownerInfo: Owner
+    
+    init(ownerInfo: Owner, sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil) {
+        self.ownerInfo = ownerInfo
+        super.init(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
+    }
     
     
     lazy var findUser: Action<String, User?> = {
