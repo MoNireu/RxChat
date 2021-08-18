@@ -20,7 +20,6 @@ class FindUserViewModel: CommonViewModel {
         super.init(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
     }
     
-    
     lazy var findUser: Action<String, User?> = {
         return Action<String, User?> { email in
             return Observable.create { observer in

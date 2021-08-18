@@ -9,6 +9,13 @@ import UIKit
 import RxSwift
 import RxCocoa
 
+
+enum AddFriendButtonState {
+    case myProfile
+    case alreadyFriend
+    case addFriend
+}
+
 class FindUserViewController: UIViewController, ViewModelBindableType {
     var viewModel: FindUserViewModel!
     let disposeBag = DisposeBag()
@@ -31,7 +38,6 @@ class FindUserViewController: UIViewController, ViewModelBindableType {
         
         addFriendButton.clipsToBounds = true
         addFriendButton.layer.cornerRadius = addFriendButton.frame.size.height * 0.35
-        addFriendButton.setTitle("+ 친구추가", for: .normal)
         addFriendButton.setBackgroundColor(UIColor.systemBlue, for: .normal)
         addFriendButton.setBackgroundColor(UIColor.systemGray, for: .disabled)
         
@@ -68,13 +74,13 @@ class FindUserViewController: UIViewController, ViewModelBindableType {
                             self.profileImageView.image = user.profileImg
                             self.nameLabel.text = user.id
                             if user.email == self.viewModel.ownerInfo.email {
-                                self.addFriendButton.setTitle("나의 프로필 입니다", for: .disabled)
-                                self.addFriendButton.isEnabled = false
-                                self.addFriendButton.backgroundColor = UIColor.systemGray
+                                self.changeAddFriendButtonState(state: .myProfile)
+                            }
+                            else if self.viewModel.ownerInfo.friendList.contains(user) {
+                                self.changeAddFriendButtonState(state: .alreadyFriend)
                             }
                             else {
-                                self.addFriendButton.titleLabel?.text = "+ 친구추가"
-                                self.addFriendButton.isEnabled = true
+                                self.changeAddFriendButtonState(state: .addFriend)
                             }
                         }
                         else { // user not found
@@ -87,5 +93,22 @@ class FindUserViewController: UIViewController, ViewModelBindableType {
     func hideNoResultView(_ hide: Bool) {
         self.noResultView.isHidden = hide
         self.noResultLabel.isHidden = hide
+    }
+    
+    func changeAddFriendButtonState(state: AddFriendButtonState) {
+        switch state {
+        case .myProfile:
+            self.addFriendButton.setTitle("나의 프로필 입니다", for: .disabled)
+            self.addFriendButton.isEnabled = false
+            return
+        case .alreadyFriend:
+            self.addFriendButton.setTitle("이미 나의 친구입니다", for: .disabled)
+            self.addFriendButton.isEnabled = false
+            return
+        case .addFriend:
+            self.addFriendButton.setTitle("+ 친구추가", for: .normal)
+            self.addFriendButton.isEnabled = true
+            return
+        }
     }
 }
