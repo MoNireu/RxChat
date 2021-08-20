@@ -17,9 +17,9 @@ enum FirebaseUtilError: Error {
 
 class FirebaseUtil {
     private let db = Firestore.firestore()
-    private let disposeBag = DisposeBag()
     private let STORAGE_BUCKET = "gs://rxchat-f485a.appspot.com"
     
+    private let disposeBag = DisposeBag()
     
     func downloadMyData(_ uid: String) -> Observable<Owner?> {
         return Observable.create { observer in
@@ -215,6 +215,30 @@ class FirebaseUtil {
                 .setData(["lastUpdateTime" : Date()])
                 .subscribe(onCompleted: {
                     observer.onCompleted()
+                }).disposed(by: self.disposeBag)
+            
+            return Disposables.create()
+        }
+    }
+    
+    
+    func addFriend(ownerUID: String, newFriend: User) -> Observable<User> {
+        return Observable.create { observer in
+            let docRef = self.db.collection("Users").document(ownerUID).collection("Friends").document(newFriend.email)
+            docRef.rx
+                .setData([
+                    "isFriend": true,
+                    "lastUpdateRef": self.db.document("/UserLastProfileUpdate/" + newFriend.email)
+                ])
+                .subscribe(onError: { err in
+                    print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
+                    print("Error: Problem adding friend to firestore")
+                    print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
+                }, onCompleted: {
+                    observer.onCompleted()
+                    print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
+                    print("Add friend to firestore complete")
+                    print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
                 }).disposed(by: self.disposeBag)
             
             return Disposables.create()

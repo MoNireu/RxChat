@@ -51,6 +51,7 @@ class FindUserViewController: UIViewController, ViewModelBindableType {
         self.activityIndicator.stopAnimating()
     }
     
+    // MARK: Bind View
     func bindViewModel() {
         searchBar.rx.textDidBeginEditing
             .subscribe(onNext: { _ in
@@ -60,6 +61,48 @@ class FindUserViewController: UIViewController, ViewModelBindableType {
                 self.noResultLabel.isHidden = true
             }).disposed(by: disposeBag)
         
+        addFriendButton.rx.tap
+            .subscribe(onNext: { _ in
+                self.activityIndicator.startAnimating()
+                self.viewModel.addFriend.execute()
+                    .subscribe(onCompleted: {
+                        self.activityIndicator.stopAnimating()
+                        let alert = UIAlertController(title: "친구추가를 완료했습니다.", message: nil, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "확인", style: .cancel) { _ in
+                            self.changeAddFriendButtonState(state: .alreadyFriend)
+                        })
+                        self.present(alert, animated: true)
+                    }).disposed(by: self.disposeBag)
+            }).disposed(by: self.disposeBag)
+        
+        
+        viewModel.foundUserSubject
+            .subscribe(onNext: { user in
+                self.activityIndicator.stopAnimating()
+                // user found
+                if let user = user {
+                    self.hideNoResultView(true)
+                    self.profileImageView.image = user.profileImg
+                    self.nameLabel.text = user.id
+                    // found user is owner
+                    if user.email == self.viewModel.ownerInfo.email {
+                        self.changeAddFriendButtonState(state: .myProfile)
+                    }
+                    // found user is already friend
+                    else if self.viewModel.ownerInfo.friendList.contains(user) {
+                        self.changeAddFriendButtonState(state: .alreadyFriend)
+                    }
+                    // found user is not friend
+                    else {
+                        self.changeAddFriendButtonState(state: .addFriend)
+                    }
+                }
+                // user not found
+                else {
+                    self.hideNoResultView(false)
+                }
+            }).disposed(by: disposeBag)
+        
         
         searchBar.rx.searchButtonClicked
             .subscribe(onNext: { _ in
@@ -67,29 +110,11 @@ class FindUserViewController: UIViewController, ViewModelBindableType {
                 self.activityIndicator.startAnimating()
                 guard let text = self.searchBar.text else { return }
                 self.viewModel.findUser.execute(text)
-                    .subscribe(onNext: { user in
-                        self.activityIndicator.stopAnimating()
-                        if let user = user { // user found
-                            self.hideNoResultView(true)
-                            self.profileImageView.image = user.profileImg
-                            self.nameLabel.text = user.id
-                            if user.email == self.viewModel.ownerInfo.email {
-                                self.changeAddFriendButtonState(state: .myProfile)
-                            }
-                            else if self.viewModel.ownerInfo.friendList.contains(user) {
-                                self.changeAddFriendButtonState(state: .alreadyFriend)
-                            }
-                            else {
-                                self.changeAddFriendButtonState(state: .addFriend)
-                            }
-                        }
-                        else { // user not found
-                            self.hideNoResultView(false)
-                        }
-                    }).disposed(by: self.disposeBag)
             }).disposed(by: disposeBag)
     }
     
+    
+    // MARK: ViewControl Methods
     func hideNoResultView(_ hide: Bool) {
         self.noResultView.isHidden = hide
         self.noResultLabel.isHidden = hide
