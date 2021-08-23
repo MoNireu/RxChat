@@ -51,6 +51,13 @@ class FindUserViewController: UIViewController, ViewModelBindableType {
         self.activityIndicator.stopAnimating()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        viewModel.friendListDelegate.refresh()
+        print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
+        print("refresh")
+        print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
+    }
+    
     // MARK: Bind View
     func bindViewModel() {
         searchBar.rx.textDidBeginEditing

@@ -14,12 +14,13 @@ import Action
 class FindUserViewModel: CommonViewModel {
     let disposeBag = DisposeBag()
     var ownerInfo: Owner
-    
+    let friendListDelegate: FriendListViewModel
     var foundUser: User?
     lazy var foundUserSubject: BehaviorSubject<User?> = BehaviorSubject<User?>(value: foundUser)
     
-    init(ownerInfo: Owner, sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil) {
-        self.ownerInfo = ownerInfo
+    init(friendListDelegate: FriendListViewModel, sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil) {
+        self.friendListDelegate = friendListDelegate
+        self.ownerInfo = friendListDelegate.myInfo
         super.init(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
     }
     
@@ -50,6 +51,8 @@ class FindUserViewModel: CommonViewModel {
                         // TODO: TODO
                         // if add friend to firestore complete
                         // Add Friend to FriendListVC Tableview.
+                        self.friendListDelegate.myInfo.friendList.append(self.foundUser!)
+                        self.friendListDelegate.profileInfoList.append(self.foundUser!)
                         
                     }).disposed(by: self.disposeBag)
                 
@@ -57,4 +60,7 @@ class FindUserViewModel: CommonViewModel {
             }
         }
     }()
+    
+    
+    
 }
