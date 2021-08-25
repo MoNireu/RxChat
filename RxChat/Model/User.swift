@@ -13,7 +13,7 @@ class User: Equatable {
         return lhs.email == rhs.email
     }
     
-    let email: String
+    var email: String
     var id: String?
     var profileImg: UIImage?
     

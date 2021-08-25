@@ -15,14 +15,13 @@ import RxFirebase
 class EditProfileViewModel: CommonViewModel {
     let disposeBag = DisposeBag()
     
-    var myInfo: Owner
+    var myInfo: Owner = Owner.shared
     var myId: BehaviorSubject<String>
     var myProfileImg: BehaviorSubject<UIImage>
     let uploadingProfile = BehaviorSubject<Bool>(value: false)
     var profileImageChanged = false
     
-    init(myInfo: Owner, sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil) {
-        self.myInfo = myInfo
+    override init(sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil) {
         myId = BehaviorSubject<String>(value: myInfo.id ?? "")
         
         var profileImg: UIImage
@@ -48,7 +47,7 @@ class EditProfileViewModel: CommonViewModel {
                             self.uploadingProfile.onNext(false)
                             
                             // change to scene "FriendList"
-                            let friendListVM = FriendListViewModel(myInfo: self.myInfo, sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
+                            let friendListVM = FriendListViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
                             let privateChatListVM = PrivateChatListViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
                             let groupChatListVM = GroupChatListViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
                             let chatListScene = Scene.chatList(friendListVM, privateChatListVM, groupChatListVM)
