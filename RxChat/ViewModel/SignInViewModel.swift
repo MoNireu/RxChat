@@ -53,17 +53,24 @@ class SignInViewModel: CommonViewModel {
                     let firebaseUtil = self.firebaseUtil
                     firebaseUtil.downloadMyData(uid)
                         .subscribe(onNext: { user in
-                            let myInfo: Owner
                             if user != nil {
-                                myInfo = user!
+                                Owner.shared.uid = user!.uid
+                                Owner.shared.email = user!.email
+                                Owner.shared.id = user!.id
+                                Owner.shared.profileImg = user!.profileImg
+                                Owner.shared.friendList = user!.friendList
                                 print("User exist")
                             }
                             else {
-                                myInfo = Owner(uid: uid, email: email!, id: nil, profileImg: nil, friendList: [])
+                                Owner.shared.uid = user!.uid
+                                Owner.shared.email = user!.email
+                                Owner.shared.id = nil
+                                Owner.shared.profileImg = nil
+                                Owner.shared.friendList = []
                                 print("User not exist")
                             }
                             
-                            let editProfileViewModel = EditProfileViewModel(myInfo: myInfo, sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
+                            let editProfileViewModel = EditProfileViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
                             let editProfileScene = Scene.editProfile(editProfileViewModel)
                             self.sceneCoordinator.transition(to: editProfileScene, using: .fullScreen, animated: true)
                         })

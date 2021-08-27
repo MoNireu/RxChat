@@ -14,12 +14,11 @@ import UIKit
 
 class FriendListViewModel: CommonViewModel {
     
-    let myInfo: Owner
+    let myInfo: Owner = Owner.shared
     var profileInfoList: [User]
     var profileInfoSubject: BehaviorSubject<[User]>
     
-    init(myInfo: Owner, sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil) {
-        self.myInfo = myInfo
+    override init(sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil) {
         profileInfoList = myInfo.friendList
         profileInfoList.insert(myInfo, at: 0)
         profileInfoSubject = BehaviorSubject<[User]>(value: profileInfoList)

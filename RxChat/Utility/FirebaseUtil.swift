@@ -40,14 +40,16 @@ class FirebaseUtil {
                                         print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
                                         print("\(friendList.count)")
                                         print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
-                                        let owner = Owner(uid: uid, email: email, id: id, profileImg: UIImage(data: imgData), friendList: friendList)
+                                        let owner = Owner.shared
+                                        Owner.sharedInit(uid: uid, email: email, id: id, profileImg: UIImage(data: imgData), friendList: friendList)
                                         observer.onNext(owner)
                                         observer.onCompleted()
                                     }).disposed(by: self.disposeBag)
                             }, onError: { err in
                                 self.downloadMyFriendList(uid)
                                     .subscribe(onNext: { friendList in
-                                        let owner = Owner(uid: uid, email: email, id: id, profileImg: UIImage(named: "defaultProfileImage.png"), friendList: friendList)
+                                        let owner = Owner.shared
+                                        Owner.sharedInit(uid: uid, email: email, id: id, profileImg: UIImage(named: "defaultProfileImage.png"), friendList: friendList)
                                         observer.onNext(owner)
                                         observer.onCompleted()
                                     }).disposed(by: self.disposeBag)
