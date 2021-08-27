@@ -10,18 +10,44 @@ import RxSwift
 import RxCocoa
 import Action
 import UIKit
+import RxDataSources
 
 
 class FriendListViewModel: CommonViewModel {
     
     let myInfo: Owner = Owner.shared
-    var profileInfoList: [User]
-    var profileInfoSubject: BehaviorSubject<[User]>
+    var profileInfoSubject: BehaviorSubject<[SectionOfUserData]>
+    let dataSource = RxTableViewSectionedReloadDataSource<SectionOfUserData>(
+        configureCell: { dataSource, tableView, indexPath, item in
+            switch indexPath.section {
+            case 0:
+                let myInfoCell = tableView.dequeueReusableCell(withIdentifier: "MyProfileCell", for: indexPath) as! FriendListMyTableViewCell
+                myInfoCell.profileImageView.image = item.profileImg
+                myInfoCell.profileName.text = item.id
+                myInfoCell.profileStatMsg.text = "This is test MSG"
+                return myInfoCell
+            case 1:
+                let friendInfoCell = tableView.dequeueReusableCell(withIdentifier: "FriendProfileCell", for: indexPath) as! FriendListFriendTableViewCell
+                friendInfoCell.profileImageView.image = item.profileImg
+                friendInfoCell.profileName.text = item.id
+                friendInfoCell.profileStatMsg.text = "This is test MSG"
+                return friendInfoCell
+            default:
+                return UITableViewCell()
+            }
+        })
+    
+    var friendListTableData = [
+        SectionOfUserData(header: "나", items: [Owner.shared as User]),
+        SectionOfUserData(header: "친구(\(Owner.shared.friendList.count))", items: Owner.shared.friendList)
+    ]
     
     override init(sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil) {
-        profileInfoList = myInfo.friendList
-        profileInfoList.insert(myInfo, at: 0)
-        profileInfoSubject = BehaviorSubject<[User]>(value: profileInfoList)
+        profileInfoSubject = BehaviorSubject<[SectionOfUserData]>(value: friendListTableData)
+        
+        dataSource.titleForHeaderInSection = {dataSource, index in
+            return dataSource.sectionModels[index].header
+        }
         super.init(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
     }
     
@@ -36,7 +62,15 @@ class FriendListViewModel: CommonViewModel {
     }()
     
     func refresh() {
-        profileInfoSubject.onNext(profileInfoList)
+        setFriendListTableData()
+        profileInfoSubject.onNext(friendListTableData)
+    }
+    
+    func setFriendListTableData() {
+        friendListTableData = [
+            SectionOfUserData(header: "나", items: [Owner.shared as User]),
+            SectionOfUserData(header: "친구(\(Owner.shared.friendList.count))", items: Owner.shared.friendList)
+        ]
     }
     
     

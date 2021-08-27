@@ -52,7 +52,6 @@ class FindUserViewModel: CommonViewModel {
                         // if add friend to firestore complete
                         // Add Friend to FriendListVC Tableview.
                         self.friendListDelegate.myInfo.friendList.append(self.foundUser!)
-                        self.friendListDelegate.profileInfoList.append(self.foundUser!)
                         
                     }).disposed(by: self.disposeBag)
                 

@@ -25,30 +25,11 @@ class FriendListViewController: UIViewController, ViewModelBindableType {
     }
     
     func bindViewModel() {
-        print("FriendList Binded!")
         
         viewModel.profileInfoSubject
-            .bind(to: tableView.rx.items) { tableView, row, info in
+            .bind(to: tableView.rx.items(dataSource: viewModel.dataSource))
+            .disposed(by: disposeBag)
                 
-                switch row {
-                case 0:
-                    let myInfoCell = tableView.dequeueReusableCell(withIdentifier: "MyProfileCell") as! FriendListMyTableViewCell
-                    myInfoCell.profileImageView.image = info.profileImg
-                    myInfoCell.profileName.text = info.id
-                    myInfoCell.profileStatMsg.text = "This is test MSG"
-                    
-                    return myInfoCell
-                default:
-                    let friendInfoCell = tableView.dequeueReusableCell(withIdentifier: "FriendProfileCell") as! FriendListFriendTableViewCell
-                    friendInfoCell.profileImageView.image = info.profileImg
-                    friendInfoCell.profileName.text = info.id
-                    friendInfoCell.profileStatMsg.text = "This is test MSG"
-                    
-                    return friendInfoCell
-                }
-                
-            }.disposed(by: disposeBag)
-        
         findUserButton.rx.action = self.viewModel.presentFindUserView
     }
 }
