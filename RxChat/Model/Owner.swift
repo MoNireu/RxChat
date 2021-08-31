@@ -7,23 +7,27 @@
 
 import Foundation
 import UIKit
+import Firebase
 
 class Owner: User {
     var uid: String
     var friendList: [User]
-    static let shared = Owner(uid: "", email: "", id: "", profileImg: nil, friendList: [])
+    var lastFriendListUpdateTime: Timestamp?
+    static let shared = Owner(uid: "", email: "", id: "", lastFriendListUpdateTime: nil, profileImg: nil, friendList: [])
     
-    private init(uid: String, email: String, id: String?, profileImg: UIImage?, friendList: [User]) {
+    private init(uid: String, email: String, id: String?, lastFriendListUpdateTime: Timestamp?, profileImg: UIImage?, friendList: [User]) {
         self.uid = uid
         self.friendList = friendList
+        self.lastFriendListUpdateTime = lastFriendListUpdateTime
         
         super.init(email: email, id: id, profileImg: profileImg)
     }
     
-    class func sharedInit(uid: String, email: String, id: String?, profileImg: UIImage?, friendList: [User]) {
+    class func sharedInit(uid: String, email: String, id: String?, lastFriendListUpdateTime: Timestamp?, profileImg: UIImage?, friendList: [User]) {
         self.shared.uid = uid
         self.shared.email = email
         self.shared.id = id
+        self.shared.lastFriendListUpdateTime = lastFriendListUpdateTime
         self.shared.profileImg = profileImg
         self.shared.friendList = friendList
     }

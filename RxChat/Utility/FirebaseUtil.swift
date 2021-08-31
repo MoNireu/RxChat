@@ -32,25 +32,37 @@ class FirebaseUtil {
                         let data = doc.data()
                         let email = data!["email"] as! String
                         let id = data!["id"] as! String
+                        let lastFriendListUpdateTime = data!["lastFriendListUpdateTime"] as! Timestamp?
+                        
+                        Owner.shared.uid = uid
+                        Owner.shared.email = email
+                        Owner.shared.id = id
+                        Owner.shared.lastFriendListUpdateTime = lastFriendListUpdateTime
+                        
+                        
                         
                         self.downloadProfileImage(email)
                             .subscribe(onNext: { imgData in
+                                Owner.shared.profileImg = UIImage(data: imgData)
+                                
                                 self.downloadMyFriendList(uid)
                                     .subscribe(onNext: { friendList in
                                         print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
-                                        print("\(friendList.count)")
+                                        print("Friend Amount: \(friendList.count)")
                                         print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
-                                        let owner = Owner.shared
-                                        Owner.sharedInit(uid: uid, email: email, id: id, profileImg: UIImage(data: imgData), friendList: friendList)
-                                        observer.onNext(owner)
+                                        
+                                        Owner.shared.friendList = friendList
+                                        observer.onNext(Owner.shared)
                                         observer.onCompleted()
                                     }).disposed(by: self.disposeBag)
+                            // my profile image not found
                             }, onError: { err in
+                                Owner.shared.profileImg = UIImage(named: "defaultProfileImage.png")
+                                
                                 self.downloadMyFriendList(uid)
                                     .subscribe(onNext: { friendList in
-                                        let owner = Owner.shared
-                                        Owner.sharedInit(uid: uid, email: email, id: id, profileImg: UIImage(named: "defaultProfileImage.png"), friendList: friendList)
-                                        observer.onNext(owner)
+                                        Owner.shared.friendList = friendList
+                                        observer.onNext(Owner.shared)
                                         observer.onCompleted()
                                     }).disposed(by: self.disposeBag)
                                 
@@ -76,8 +88,8 @@ class FirebaseUtil {
                         observer.onNext([])
                         return
                     }
+                    var friendCount = docs.count
                     var friendList: [User] = []
-                    var notFoundCnt = 0
                     
                     let docObservable = Observable.from(docs)
                     docObservable.subscribe(onNext: { doc in
@@ -86,15 +98,33 @@ class FirebaseUtil {
                         let isFriend = friendData["isFriend"] as? Bool
                         let lastUpdateRef = friendData["lastUpdateRef"] as? DocumentReference
                         
-                        self.findUser(friendEmail)
-                            .subscribe(onNext: { user in
-                                friendList.append(user)
-                                if friendList.count + notFoundCnt == docs.count { observer.onNext(friendList) }
-                            }, onError: { _ in
-                                notFoundCnt += 1
-                                print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
-                                print("Could not find friend(email: \(friendEmail))")
-                                print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
+                        
+                        //Download update required friends
+                        self.friendUpdateRequired(userLastUpdateReference: lastUpdateRef!)
+                            .subscribe(onNext: { needUpdate in
+                                func checkFriendListComplete() {
+                                    friendCount -= 1
+                                    if friendCount == 0 {
+                                        observer.onNext(friendList)
+                                        observer.onCompleted()
+                                    }
+                                }
+                                
+                                if needUpdate {
+                                    self.findUser(friendEmail)
+                                        .subscribe(onNext: { user in
+                                            friendList.append(user)
+                                            checkFriendListComplete()
+                                        }, onError: { _ in
+                                            print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
+                                            print("Could not find friend(email: \(friendEmail))")
+                                            print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
+                                            checkFriendListComplete()
+                                        }).disposed(by: self.disposeBag)
+                                }
+                                else {
+                                    checkFriendListComplete()
+                                }
                             }).disposed(by: self.disposeBag)
                     }).disposed(by: self.disposeBag)
                 }).disposed(by: self.disposeBag)
@@ -130,20 +160,20 @@ class FirebaseUtil {
     
     
     
-    func uploadMyData(_ myInfo: Owner, uploadProfileImage: Bool) -> Observable<Owner> {
+    func uploadMyData(_ myInfo: Owner, isProfileImageChanged: Bool) -> Observable<Owner> {
         return Observable.create { observer in
             let docRef = self.db.collection("Users").document(myInfo.uid)
             docRef.rx
                 .setData([
                     "email" : myInfo.email,
-                    "id" : myInfo.id!
+                    "id" : myInfo.id!,
                 ])
                 .subscribe(
                     onError: { err in
                         print("Error setting user data: \(err.localizedDescription)")
                     },
                     onCompleted: {
-                        guard uploadProfileImage else {return observer.onNext(myInfo)}
+                        guard isProfileImageChanged else {return observer.onNext(myInfo)}
                         self.uploadProfileImage(myInfo.email, myInfo.profileImg!)
                             .subscribe(
                                 onNext: { data in
@@ -214,7 +244,7 @@ class FirebaseUtil {
         return Observable.create { observer in
             let docRef = self.db.collection("UserProfileLastUpdate").document(email)
             docRef.rx
-                .setData(["lastUpdateTime" : Date()])
+                .setData(["lastUpdateTime" : Timestamp(date: Date())])
                 .subscribe(onCompleted: {
                     observer.onCompleted()
                 }).disposed(by: self.disposeBag)
@@ -230,7 +260,7 @@ class FirebaseUtil {
             docRef.rx
                 .setData([
                     "isFriend": true,
-                    "lastUpdateRef": self.db.document("/UserLastProfileUpdate/" + newFriend.email)
+                    "lastUpdateRef": self.db.document("/UserProfileLastUpdate/" + newFriend.email)
                 ])
                 .subscribe(onError: { err in
                     print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
@@ -242,7 +272,60 @@ class FirebaseUtil {
                     print("Add friend to firestore complete")
                     print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
                 }).disposed(by: self.disposeBag)
-            
+            //
+            return Disposables.create()
+        }
+    }
+    
+    func friendUpdateRequired(userLastUpdateReference: DocumentReference) -> Observable<Bool> {
+        return Observable.create { observer in
+            guard let lastFriendListUpdateTime = Owner.shared.lastFriendListUpdateTime else {
+                observer.onNext(true)
+                return Disposables.create()
+            }
+        
+            userLastUpdateReference.rx.getDocument()
+                .subscribe(onNext: { info in
+                    if let data = info.data() {
+                        let lastUpdateTime = data["lastUpdateTime"] as! Timestamp
+                        let compare = lastUpdateTime.compare(lastFriendListUpdateTime)
+                        switch compare {
+                        case .orderedDescending:
+                            print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
+                            print("True")
+                            print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
+                            
+                            observer.onNext(true)
+                        default:
+                            print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
+                            print("False")
+                            print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
+                            
+                            observer.onNext(false)
+                        }
+                    }
+                    else {
+                        observer.onNext(false)
+                    }
+                }).disposed(by: self.disposeBag)
+            return Disposables.create()
+        }
+    }
+    
+    
+    
+    func updateFriendListRefreshTime() -> Observable<Void> {
+        return Observable.create { observer in
+            let docRef = self.db.document("/Users/\(Owner.shared.uid)")
+            docRef.rx
+                .setData(["lastFriendListUpdateTime" : Timestamp.init(date: Date())])
+                .subscribe(onError: { err in
+                    print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
+                    print("Error: LastFriendListUpdateTime error!")
+                    print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
+                }, onCompleted: {
+                    observer.onCompleted()
+                }).disposed(by: self.disposeBag)
             return Disposables.create()
         }
     }

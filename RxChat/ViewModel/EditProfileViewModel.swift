@@ -38,7 +38,7 @@ class EditProfileViewModel: CommonViewModel {
             // start activity indicator
             self.uploadingProfile.onNext(true)
             // upload my data & profile image
-            self.firebaseUtil.uploadMyData(self.myInfo, uploadProfileImage: self.profileImageChanged)
+            self.firebaseUtil.uploadMyData(self.myInfo, isProfileImageChanged: self.profileImageChanged)
                 .subscribe(onNext: { uploadedUser in
                     // upload profile update time
                     self.firebaseUtil.uploadProfileUpdateTime(uploadedUser.email)
