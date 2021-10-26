@@ -49,4 +49,14 @@ class RealmUtil {
             realm.add(friendListRealm, update: .modified)
         }
     }
+    
+    
+    func writeSingleFriend(friendInfo: User) {
+        try! realm.write {
+            let userRealm = convertUserClassToUserRealm(user: friendInfo)
+            realm.add(userRealm, update: .modified)
+        }
+    }
+    
+    
 }

@@ -53,6 +53,9 @@ class FindUserViewModel: CommonViewModel {
                         // Add Friend to FriendListVC Tableview.
                         self.friendListDelegate.myInfo.friendList.append(self.foundUser!)
                         
+                        let realmUtil = RealmUtil()
+                        realmUtil.writeSingleFriend(friendInfo: self.foundUser!)
+                        
                     }).disposed(by: self.disposeBag)
                 
                 return Disposables.create()
