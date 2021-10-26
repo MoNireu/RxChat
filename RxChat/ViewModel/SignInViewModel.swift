@@ -62,8 +62,8 @@ class SignInViewModel: CommonViewModel {
                                 print("User exist")
                             }
                             else {
-                                Owner.shared.uid = user!.uid
-                                Owner.shared.email = user!.email
+                                Owner.shared.uid = uid
+                                Owner.shared.email = email!
                                 Owner.shared.id = nil
                                 Owner.shared.profileImg = nil
                                 Owner.shared.friendList = []

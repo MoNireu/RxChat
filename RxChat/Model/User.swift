@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import RealmSwift
 
 
 class User: Equatable {
@@ -21,6 +22,17 @@ class User: Equatable {
     init(email: String, id: String?, profileImg: UIImage?) {
         self.email = email
         self.id = id
-        self.profileImg = profileImg   
+        self.profileImg = profileImg
+    }
+}
+
+
+class UserRealm: Object {
+    @Persisted var email: String?
+    @Persisted var id: String?
+    @Persisted var profileImg: Data?
+    
+    override static func primaryKey() -> String? {
+        return "email"
     }
 }
