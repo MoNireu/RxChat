@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import Firebase
+import RealmSwift
 
 class Owner: User {
     var uid: String
@@ -30,5 +31,17 @@ class Owner: User {
         self.shared.lastFriendListUpdateTime = lastFriendListUpdateTime
         self.shared.profileImg = profileImg
         self.shared.friendList = friendList
+    }
+}
+
+
+class OwnerRealm: Object {
+    @Persisted(primaryKey: true) var uid: String
+    @Persisted var lastFriendListUpdateTime: Date?
+    
+    convenience init(owner: Owner) {
+        self.init()
+        self.uid = owner.uid
+        self.lastFriendListUpdateTime = (owner.lastFriendListUpdateTime?.dateValue())
     }
 }

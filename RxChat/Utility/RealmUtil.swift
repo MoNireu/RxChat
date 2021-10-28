@@ -7,6 +7,7 @@
 
 import Foundation
 import RealmSwift
+import Firebase
 
 class RealmUtil {
     
@@ -17,6 +18,8 @@ class RealmUtil {
         print("Realm is located at:", realm.configuration.fileURL!)
     }
     
+    
+    // MARK: - Class Convert Functions
     private func convertUserClassToUserRealm(user: User) -> UserRealm {
         let userRealm = UserRealm()
         userRealm.email = user.email
@@ -27,6 +30,7 @@ class RealmUtil {
     }
     
     
+    // MARK: - Friend CRUD
     func readFriendList() -> [User] {
         let friendListRealm = realm.objects(UserRealm.self)
         var friendList: [User] = []
@@ -58,5 +62,30 @@ class RealmUtil {
         }
     }
     
+    
+    
+    // MARK: - Owner CRUD
+    
+    func ownerRealmExist() -> Bool {
+        if realm.objects(OwnerRealm.self).count == 0 { return false }
+        else { return true }
+    }
+    
+    
+    func writeOwner(owner: Owner) {
+        try! realm.write {
+            let ownerRealm = OwnerRealm(owner: owner)
+            realm.add(ownerRealm, update: .modified)
+        }
+    }
+    
+    
+    func readOwner() -> Owner {
+        let OwnerRealm = realm.objects(OwnerRealm.self).first
+        if let lastUpdateTime = OwnerRealm?.lastFriendListUpdateTime {
+            Owner.shared.lastFriendListUpdateTime = Timestamp.init(date: lastUpdateTime)
+        }
+        return Owner.shared
+    }
     
 }

@@ -10,6 +10,7 @@ import Firebase
 import GoogleSignIn
 import RxSwift
 import Action
+import RealmSwift
 
 class SignInViewModel: CommonViewModel {
     
@@ -46,6 +47,19 @@ class SignInViewModel: CommonViewModel {
                     let uid = authResult!.user.uid
                     let email = authResult!.user.email
                     
+                    Owner.shared.uid = uid
+                    
+                    // TODO: 유저 초기 저장하고 Edit완료시 Update 시간 Realm에 저장하기.
+                    if RealmUtil().ownerRealmExist() {
+                        print("Owner Realm exist")
+                        Owner.shared.lastFriendListUpdateTime = RealmUtil().readOwner().lastFriendListUpdateTime
+                        print("Owner lastFriendListUpdateTime = \(Owner.shared.lastFriendListUpdateTime)")
+                    }
+                    else {
+                        print("Owner Realm does not exist")
+                    }
+                    
+                    
                     print("UID: " + uid)
                     print("Email: " + email!)
                     
@@ -54,7 +68,6 @@ class SignInViewModel: CommonViewModel {
                     firebaseUtil.downloadMyData(uid)
                         .subscribe(onNext: { user in
                             if user != nil {
-                                Owner.shared.uid = user!.uid
                                 Owner.shared.email = user!.email
                                 Owner.shared.id = user!.id
                                 Owner.shared.profileImg = user!.profileImg

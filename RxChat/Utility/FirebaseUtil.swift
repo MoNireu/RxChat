@@ -326,6 +326,9 @@ class FirebaseUtil {
     func friendUpdateRequired(userLastUpdateReference: DocumentReference) -> Observable<Bool> {
         return Observable.create { observer in
             guard let lastFriendListUpdateTime = Owner.shared.lastFriendListUpdateTime else {
+                print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
+                print("Update Required?: True")
+                print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
                 observer.onNext(true)
                 return Disposables.create()
             }
@@ -338,13 +341,13 @@ class FirebaseUtil {
                         switch compare {
                         case .orderedDescending:
                             print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
-                            print("True")
+                            print("Update Required?: True")
                             print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
                             
                             observer.onNext(true)
                         default:
                             print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
-                            print("False")
+                            print("Update Required?: False")
                             print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
                             
                             observer.onNext(false)
@@ -352,7 +355,7 @@ class FirebaseUtil {
                     }
                     else {
                         print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
-                        print("False2")
+                        print("Update Required?: False")
                         print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
                         
                         observer.onNext(false)
