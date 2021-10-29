@@ -25,72 +25,103 @@ class SignInViewModel: CommonViewModel {
     }
     
     
-    lazy var signInComplete: CocoaAction = {
-        return Action { _ in
-            GIDSignIn.sharedInstance.signIn(with: self.signInConfig, presenting: self.sceneCoordinator.getCurrentVC()) { user, error in
-                guard error == nil else { return }
-                
-                print("GoogleSign-in Suceed!")
+    func restorePreviousSignIn() {
+        GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
+            if error == nil && user != nil {
+                // Show the app's signed-out state.
+                print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
+                print("GID: SignIn Succeed!")
+                print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
                 
                 guard let authentication = user?.authentication else { return }
-                let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken!,
-                                                               accessToken: authentication.accessToken)
-                Auth.auth().signIn(with: credential) { authResult, error in
-                    guard error == nil else {
-                        print("Error: Firebase Sign-in Failed")
-                        print(error?.localizedDescription)
-                        return
-                    }
-                    
-                    print("Firebase Sign-in Suceed!")
-                    
-                    let uid = authResult!.user.uid
-                    let email = authResult!.user.email
-                    
-                    Owner.shared.uid = uid
-                    
-                    // TODO: 유저 초기 저장하고 Edit완료시 Update 시간 Realm에 저장하기.
-                    if RealmUtil().ownerRealmExist() {
-                        print("Owner Realm exist")
-                        Owner.shared.lastFriendListUpdateTime = RealmUtil().readOwner().lastFriendListUpdateTime
-                        print("Owner lastFriendListUpdateTime = \(Owner.shared.lastFriendListUpdateTime)")
-                    }
-                    else {
-                        print("Owner Realm does not exist")
-                    }
-                    
-                    
-                    print("UID: " + uid)
-                    print("Email: " + email!)
-                    
-                    
-                    let firebaseUtil = self.firebaseUtil
-                    firebaseUtil.downloadMyData(uid)
-                        .subscribe(onNext: { user in
-                            if user != nil {
-                                Owner.shared.email = user!.email
-                                Owner.shared.id = user!.id
-                                Owner.shared.profileImg = user!.profileImg
-                                Owner.shared.friendList = user!.friendList
-                                print("User exist")
-                            }
-                            else {
-                                Owner.shared.uid = uid
-                                Owner.shared.email = email!
-                                Owner.shared.id = nil
-                                Owner.shared.profileImg = nil
-                                Owner.shared.friendList = []
-                                print("User not exist")
-                            }
-                            
-                            let editProfileViewModel = EditProfileViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
-                            let editProfileScene = Scene.editProfile(editProfileViewModel)
-                            self.sceneCoordinator.transition(to: editProfileScene, using: .fullScreen, animated: true)
-                        })
-                        .disposed(by: self.disposeBag)
-                }
+                self.ownerSignIn(authentication: authentication)
             }
+        }
+    }
+    
+    
+    lazy var signInComplete: CocoaAction = {
+        return Action { _ in
+            
+            GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
+                    // Show the app's signed-in state.
+                    print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
+                    print("GID: SignIn Failed: \(error?.localizedDescription)")
+                    print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
+                    
+                    GIDSignIn.sharedInstance.signIn(with: self.signInConfig, presenting: self.sceneCoordinator.getCurrentVC()) { user, error in
+                        guard error == nil else { return }
+                        
+                        print("GoogleSign-in Suceed!")
+                        
+                        guard let authentication = user?.authentication else { return }
+                        self.ownerSignIn(authentication: authentication)
+                    }
+            }
+            
             return Observable.empty()
         }
     }()
+    
+    
+    
+    func ownerSignIn(authentication: GIDAuthentication) {
+        let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken!,
+                                                       accessToken: authentication.accessToken)
+        Auth.auth().signIn(with: credential) { authResult, error in
+            guard error == nil else {
+                print("Error: Firebase Sign-in Failed")
+                print(error?.localizedDescription)
+                return
+            }
+            
+            print("Firebase Sign-in Suceed!")
+            
+            let uid = authResult!.user.uid
+            let email = authResult!.user.email
+            
+            Owner.shared.uid = uid
+            
+            // TODO: 유저 초기 저장하고 Edit완료시 Update 시간 Realm에 저장하기.
+            if RealmUtil().ownerRealmExist() {
+                print("Owner Realm exist")
+                Owner.shared.lastFriendListUpdateTime = RealmUtil().readOwner().lastFriendListUpdateTime
+                print("Owner lastFriendListUpdateTime = \(Owner.shared.lastFriendListUpdateTime)")
+            }
+            else {
+                print("Owner Realm does not exist")
+            }
+            
+            
+            print("UID: " + uid)
+            print("Email: " + email!)
+            
+            
+            let firebaseUtil = self.firebaseUtil
+            firebaseUtil.downloadMyData(uid)
+                .subscribe(onNext: { user in
+                    if user != nil {
+                        Owner.shared.email = user!.email
+                        Owner.shared.id = user!.id
+                        Owner.shared.profileImg = user!.profileImg
+                        Owner.shared.friendList = user!.friendList
+                        print("User exist")
+                    }
+                    else {
+                        Owner.shared.uid = uid
+                        Owner.shared.email = email!
+                        Owner.shared.id = nil
+                        Owner.shared.profileImg = nil
+                        Owner.shared.friendList = []
+                        print("User not exist")
+                    }
+                    
+                    let editProfileViewModel = EditProfileViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
+                    let editProfileScene = Scene.editProfile(editProfileViewModel)
+                    self.sceneCoordinator.transition(to: editProfileScene, using: .fullScreen, animated: true)
+                })
+                .disposed(by: self.disposeBag)
+        }
+    }
+    
 }

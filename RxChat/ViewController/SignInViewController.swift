@@ -18,6 +18,7 @@ class SignInViewController: UIViewController, ViewModelBindableType {
     override func viewDidLoad() {
         super.viewDidLoad()
         signInButtonBackGround.style = .wide
+        viewModel.restorePreviousSignIn()
     }
     
     @IBAction func signIn(_ sender: Any) {
