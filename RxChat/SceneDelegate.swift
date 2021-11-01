@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import GoogleSignIn
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -22,12 +23,39 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = window
         window.makeKeyAndVisible()
         
-        let sceneCoordinator = SceneCoordinator(window: window)
-        let firebaseUtil = FirebaseUtil()
-        self.signInViewModel = SignInViewModel(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
-        let signInScene = Scene.signIn(self.signInViewModel!)
-        sceneCoordinator.transition(to: signInScene, using: .root, animated: true)
         
+        
+        // 기존 로그인 체크
+        GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
+            
+            let firebaseUtil = FirebaseUtil()
+            let sceneCoordinator = SceneCoordinator(window: window)
+            
+            // 기존 로그인 존재시
+            if error == nil && user != nil {
+                print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
+                print("GID: SignIn Succeed!")
+                print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
+                
+                // FriendList로 이동
+                guard let authentication = user?.authentication else { return }
+                firebaseUtil.ownerSignIn(authentication: authentication) {
+                    // change to scene "FriendList"
+                    let friendListVM = FriendListViewModel(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
+                    let privateChatListVM = PrivateChatListViewModel(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
+                    let groupChatListVM = GroupChatListViewModel(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
+                    let chatListScene = Scene.chatList(friendListVM, privateChatListVM, groupChatListVM)
+                    sceneCoordinator.transition(to: chatListScene, using: .root, animated: true)
+                }
+            }
+            // 기존 로그인 존재하지 않을 시
+            else {
+                // SignIn으로 이동.
+                self.signInViewModel = SignInViewModel(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
+                let signInScene = Scene.signIn(self.signInViewModel!)
+                sceneCoordinator.transition(to: signInScene, using: .root, animated: true)
+            }
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

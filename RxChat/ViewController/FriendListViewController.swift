@@ -15,6 +15,7 @@ class FriendListViewController: UIViewController, ViewModelBindableType {
     var viewModel: FriendListViewModel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var findUserButton: UIBarButtonItem!
+    @IBOutlet weak var signOutButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +31,8 @@ class FriendListViewController: UIViewController, ViewModelBindableType {
             .bind(to: tableView.rx.items(dataSource: viewModel.dataSource))
             .disposed(by: disposeBag)
                 
-        findUserButton.rx.action = self.viewModel.presentFindUserView
+        findUserButton.rx.action = viewModel.presentFindUserView
+        
+        signOutButton.rx.action = viewModel.signOut
     }
 }

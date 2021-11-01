@@ -11,6 +11,8 @@ import RxCocoa
 import Action
 import UIKit
 import RxDataSources
+import GoogleSignIn
+import FirebaseAuth
 
 
 class FriendListViewModel: CommonViewModel {
@@ -57,6 +59,24 @@ class FriendListViewModel: CommonViewModel {
             let findUserViewModel = FindUserViewModel(friendListDelegate: self, sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
             let findUserScene = Scene.findUser(findUserViewModel)
             self.sceneCoordinator.transition(to: findUserScene, using: .modal, animated: true)
+            return Observable.empty()
+        }
+    }()
+    
+    
+    lazy var signOut: CocoaAction = {
+        return Action { _ in
+            let firebaseAuth = Auth.auth()
+            do {
+              try firebaseAuth.signOut()
+            } catch let signOutError as NSError {
+              print("Error signing out: %@", signOutError)
+            }
+            GIDSignIn.sharedInstance.signOut()
+            
+            let signInViewModel = SignInViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
+            let signInScene = Scene.signIn(signInViewModel)
+            self.sceneCoordinator.transition(to: signInScene, using: .root, animated: true)
             return Observable.empty()
         }
     }()
