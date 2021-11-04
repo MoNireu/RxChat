@@ -48,6 +48,8 @@
 		E1A76A2226A8091E00C8F783 /* RxImagePickerDelegateProxy.swift .swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A76A2126A8091E00C8F783 /* RxImagePickerDelegateProxy.swift .swift */; };
 		E1A76A3426A8211A00C8F783 /* Action in Frameworks */ = {isa = PBXBuildFile; productRef = E1A76A3326A8211A00C8F783 /* Action */; };
 		E1D8ADB926CBA7DF001586D3 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D8ADB826CBA7DF001586D3 /* UIButtonExtension.swift */; };
+		E1D994682733AEAA00352547 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D994672733AEAA00352547 /* LaunchViewController.swift */; };
+		E1D9946A2733AED500352547 /* LaunchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D994692733AED500352547 /* LaunchViewModel.swift */; };
 		E1E11E3C269C1E2D000CE221 /* FirebaseUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E11E3B269C1E2D000CE221 /* FirebaseUtil.swift */; };
 		E1E11E3F269C1F19000CE221 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E11E3E269C1F19000CE221 /* User.swift */; };
 		E1F7B5DC26D8830800B9A9FC /* SectionOfUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F7B5DB26D8830800B9A9FC /* SectionOfUserData.swift */; };
@@ -117,6 +119,8 @@
 		E1A76A1E26A7FD0D00C8F783 /* UIImagePickerController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+Rx.swift"; sourceTree = "<group>"; };
 		E1A76A2126A8091E00C8F783 /* RxImagePickerDelegateProxy.swift .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RxImagePickerDelegateProxy.swift .swift"; sourceTree = "<group>"; };
 		E1D8ADB826CBA7DF001586D3 /* UIButtonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
+		E1D994672733AEAA00352547 /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
+		E1D994692733AED500352547 /* LaunchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewModel.swift; sourceTree = "<group>"; };
 		E1E11E3B269C1E2D000CE221 /* FirebaseUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUtil.swift; sourceTree = "<group>"; };
 		E1E11E3E269C1F19000CE221 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E1F7B5DB26D8830800B9A9FC /* SectionOfUserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionOfUserData.swift; sourceTree = "<group>"; };
@@ -280,6 +284,7 @@
 				E1232F2226AFE6C100A9EA31 /* PrivateChatListViewModel.swift */,
 				E1232F2826AFE74000A9EA31 /* GroupChatListViewModel.swift */,
 				E180E3E926C277D1000F4CEA /* FindUserViewModel.swift */,
+				E1D994692733AED500352547 /* LaunchViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -294,6 +299,7 @@
 				E1232F2026AFE6A700A9EA31 /* PrivateChatListViewController.swift */,
 				E1232F2626AFE73500A9EA31 /* GroupChatListViewController.swift */,
 				E180E3E726C277BB000F4CEA /* FindUserViewController.swift */,
+				E1D994672733AEAA00352547 /* LaunchViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -584,6 +590,7 @@
 				E14BD599270C381C00B48DA6 /* RealmUtil.swift in Sources */,
 				E18BE13026BA6D19000B29FA /* FriendListFriendTableViewCell.swift in Sources */,
 				E170DF6426A0255100A5BAAF /* CommonViewModel.swift in Sources */,
+				E1D994682733AEAA00352547 /* LaunchViewController.swift in Sources */,
 				E1D8ADB926CBA7DF001586D3 /* UIButtonExtension.swift in Sources */,
 				E170DF5826A01B2900A5BAAF /* TransitionModel.swift in Sources */,
 				E18BE13226BA81ED000B29FA /* Owner.swift in Sources */,
@@ -597,6 +604,7 @@
 				E1232F2326AFE6C100A9EA31 /* PrivateChatListViewModel.swift in Sources */,
 				E1232F1F26AFE5EF00A9EA31 /* FriendListViewController.swift in Sources */,
 				E1A76A2026A7FD0D00C8F783 /* UIImagePickerController+Rx.swift in Sources */,
+				E1D9946A2733AED500352547 /* LaunchViewModel.swift in Sources */,
 				E1E11E3F269C1F19000CE221 /* User.swift in Sources */,
 				E1232F2926AFE74000A9EA31 /* GroupChatListViewModel.swift in Sources */,
 				E15B2D192696E8B2005D1C3F /* SceneDelegate.swift in Sources */,

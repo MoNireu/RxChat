@@ -9,6 +9,7 @@ import UIKit
 
 
 enum Scene {
+    case launch(LaunchViewModel)
     case signIn(SignInViewModel)
     case editProfile(EditProfileViewModel)
     case chatList(FriendListViewModel, PrivateChatListViewModel, GroupChatListViewModel)
@@ -20,6 +21,16 @@ extension Scene {
         let storyboard = UIStoryboard(name: storyboard, bundle: nil)
         
         switch self {
+          
+        case .launch(let viewModel):
+            guard var launchVC = storyboard.instantiateViewController(withIdentifier: "LaunchVC") as? LaunchViewController else {
+                fatalError()
+            }
+            launchVC.bind(viewModel: viewModel)
+            
+            return launchVC
+            
+            
         case .signIn(let viewModel):
             guard var signInVC = storyboard.instantiateViewController(withIdentifier: "SignInVC") as? SignInViewController else {
                 fatalError()
