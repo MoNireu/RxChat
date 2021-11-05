@@ -12,6 +12,7 @@ class LaunchViewController: UIViewController, ViewModelBindableType {
     
     var viewModel: LaunchViewModel!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

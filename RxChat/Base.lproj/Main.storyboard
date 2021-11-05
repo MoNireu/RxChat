@@ -25,11 +25,16 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="rhd-7K-Orq">
+                                <rect key="frame" x="313" y="429.5" width="37" height="37"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Aab-tC-FSO"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="rhd-7K-Orq" firstAttribute="leading" secondItem="6sC-4k-QCZ" secondAttribute="trailing" constant="20" id="a1f-YY-DhA"/>
                             <constraint firstItem="6sC-4k-QCZ" firstAttribute="centerY" secondItem="blb-Ti-bO7" secondAttribute="centerY" id="cVr-rg-O7z"/>
+                            <constraint firstItem="rhd-7K-Orq" firstAttribute="centerY" secondItem="blb-Ti-bO7" secondAttribute="centerY" id="dDb-Wh-Mj3"/>
                             <constraint firstItem="6sC-4k-QCZ" firstAttribute="centerX" secondItem="blb-Ti-bO7" secondAttribute="centerX" id="gKg-qk-owM"/>
                         </constraints>
                     </view>
