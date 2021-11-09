@@ -12,8 +12,10 @@ import GoogleSignIn
 class SignInViewController: UIViewController, ViewModelBindableType {
     
     var viewModel: SignInViewModel!
+    var disposeBag = DisposeBag()
     @IBOutlet weak var signInButtonBackGround: GIDSignInButton!
-        
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +28,9 @@ class SignInViewController: UIViewController, ViewModelBindableType {
     
     
     func bindViewModel() {
+        viewModel.actIndicatorSubject
+            .bind(to: activityIndicator.rx.isAnimating)
+            .disposed(by: disposeBag)
     }
     
 }

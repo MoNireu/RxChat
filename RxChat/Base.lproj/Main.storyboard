@@ -71,6 +71,9 @@
                                     <action selector="signIn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ngr-EC-Dvc"/>
                                 </connections>
                             </view>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="d5E-Fg-0t6">
+                                <rect key="frame" x="188.5" y="429.5" width="37" height="37"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -80,6 +83,8 @@
                             <constraint firstItem="271-iK-OCr" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Cmo-9V-GYW"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="271-iK-OCr" secondAttribute="trailing" constant="20" id="DfG-6B-pAt"/>
                             <constraint firstItem="tLD-Fa-2b6" firstAttribute="top" secondItem="271-iK-OCr" secondAttribute="bottom" constant="50" id="Eg9-6K-aTJ"/>
+                            <constraint firstItem="d5E-Fg-0t6" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="GZQ-bt-zdK"/>
+                            <constraint firstItem="d5E-Fg-0t6" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="NfN-L3-50L"/>
                             <constraint firstItem="271-iK-OCr" firstAttribute="top" secondItem="lpQ-9i-GS9" secondAttribute="bottom" constant="20" id="S5K-Sq-KgO"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="tLD-Fa-2b6" secondAttribute="trailing" constant="20" id="a6m-5s-cTA"/>
                             <constraint firstItem="tLD-Fa-2b6" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="dJP-Rx-nsk"/>
@@ -88,6 +93,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="d5E-Fg-0t6" id="aKa-iY-npM"/>
                         <outlet property="signInButtonBackGround" destination="tLD-Fa-2b6" id="uUE-mG-7qC"/>
                     </connections>
                 </viewController>
