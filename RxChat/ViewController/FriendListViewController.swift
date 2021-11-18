@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import NSObject_Rx
 
 class FriendListViewController: UIViewController, ViewModelBindableType {
     
@@ -34,5 +35,14 @@ class FriendListViewController: UIViewController, ViewModelBindableType {
         findUserButton.rx.action = viewModel.presentFindUserView
         
         signOutButton.rx.action = viewModel.signOut
+        
+        tableView.rx.itemDeleted
+            .bind(to: viewModel.deleteFriendAt.inputs)
+            .disposed(by: disposeBag)
+        
+        
+//        tableView.rx.modelDeleted(User.self)
+//            .bind(to: viewModel.deleteFriend.inputs)
+//            .disposed(by: disposeBag)
     }
 }

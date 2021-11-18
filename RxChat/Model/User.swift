@@ -8,9 +8,15 @@
 import Foundation
 import UIKit
 import RealmSwift
+import Differentiator
 
 
-class User: Equatable {
+class User: Equatable, IdentifiableType {
+    typealias Identity = String
+    var identity: String {
+        return email
+    }
+    
     static func == (lhs: User, rhs: User) -> Bool {
         return lhs.email == rhs.email
     }
