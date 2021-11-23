@@ -42,7 +42,7 @@ class SignInViewModel: CommonViewModel {
                 self.firebaseUtil.ownerSignIn(authentication: authentication)
                     .subscribe(onCompleted: {
                         self.actIndicatorSubject.onCompleted()
-                        let editProfileViewModel = EditProfileViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
+                        let editProfileViewModel = CreateProfileViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
                         let editProfileScene = Scene.editProfile(editProfileViewModel)
                         self.sceneCoordinator.transition(to: editProfileScene, using: .fullScreen, animated: true)
                     }).disposed(by: self.disposeBag)

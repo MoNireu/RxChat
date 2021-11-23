@@ -12,7 +12,7 @@ import Action
 import Firebase
 import RxFirebase
 
-class EditProfileViewModel: CommonViewModel {
+class CreateProfileViewModel: CommonViewModel {
     let disposeBag = DisposeBag()
     
     var myInfo: Owner = Owner.shared

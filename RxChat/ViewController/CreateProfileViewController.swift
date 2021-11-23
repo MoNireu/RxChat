@@ -11,11 +11,11 @@ import RxSwift
 import Action
 
 
-class EditProfileViewController: UIViewController, ViewModelBindableType {
+class CreateProfileViewController: UIViewController, ViewModelBindableType {
     
     
     var disposeBag = DisposeBag()
-    var viewModel: EditProfileViewModel!
+    var viewModel: CreateProfileViewModel!
     
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var idTextField: UITextField!
@@ -102,7 +102,7 @@ class EditProfileViewController: UIViewController, ViewModelBindableType {
 }
 
 
-extension EditProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension CreateProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[.originalImage] as? UIImage {
             viewModel.myInfo.profileImg = image

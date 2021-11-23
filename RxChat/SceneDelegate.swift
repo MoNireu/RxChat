@@ -41,7 +41,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
         print("Scene Did Disconnect")
         print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
-        if sceneCoordinator?.getCurrentVC().sceneViewController.restorationIdentifier == "EditProfileVC" {
+        if sceneCoordinator?.getCurrentVC().sceneViewController.restorationIdentifier == "CreateProfileVC" {
             let firebaseAuth = Auth.auth()
             do {
               try firebaseAuth.signOut()

@@ -28,8 +28,8 @@
 		E15B2D1E2696E8B2005D1C3F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E15B2D1C2696E8B2005D1C3F /* Main.storyboard */; };
 		E15B2D202696E8B3005D1C3F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E15B2D1F2696E8B3005D1C3F /* Assets.xcassets */; };
 		E15B2D232696E8B3005D1C3F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E15B2D212696E8B3005D1C3F /* LaunchScreen.storyboard */; };
-		E1613B32269D7F9300F4E359 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1613B31269D7F9300F4E359 /* EditProfileViewController.swift */; };
-		E1613B35269D7FBA00F4E359 /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1613B34269D7FBA00F4E359 /* EditProfileViewModel.swift */; };
+		E1613B32269D7F9300F4E359 /* CreateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1613B31269D7F9300F4E359 /* CreateProfileViewController.swift */; };
+		E1613B35269D7FBA00F4E359 /* CreateProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1613B34269D7FBA00F4E359 /* CreateProfileViewModel.swift */; };
 		E1613B37269D824600F4E359 /* defaultProfileImage.png in Resources */ = {isa = PBXBuildFile; fileRef = E1613B36269D824600F4E359 /* defaultProfileImage.png */; };
 		E170DF5826A01B2900A5BAAF /* TransitionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E170DF5726A01B2900A5BAAF /* TransitionModel.swift */; };
 		E170DF5C26A01DAD00A5BAAF /* ViewModelBindableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E170DF5B26A01DAD00A5BAAF /* ViewModelBindableType.swift */; };
@@ -100,8 +100,8 @@
 		E15B2D242696E8B3005D1C3F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E15B2D292696E8B3005D1C3F /* RxChatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RxChatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E15B2D342696E8B3005D1C3F /* RxChatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RxChatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E1613B31269D7F9300F4E359 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
-		E1613B34269D7FBA00F4E359 /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
+		E1613B31269D7F9300F4E359 /* CreateProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProfileViewController.swift; sourceTree = "<group>"; };
+		E1613B34269D7FBA00F4E359 /* CreateProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProfileViewModel.swift; sourceTree = "<group>"; };
 		E1613B36269D824600F4E359 /* defaultProfileImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultProfileImage.png; sourceTree = "<group>"; };
 		E170DF5726A01B2900A5BAAF /* TransitionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionModel.swift; sourceTree = "<group>"; };
 		E170DF5B26A01DAD00A5BAAF /* ViewModelBindableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelBindableType.swift; sourceTree = "<group>"; };
@@ -279,7 +279,7 @@
 			children = (
 				E170DF6326A0255100A5BAAF /* CommonViewModel.swift */,
 				E170DF6526A02B1400A5BAAF /* SignInViewModel.swift */,
-				E1613B34269D7FBA00F4E359 /* EditProfileViewModel.swift */,
+				E1613B34269D7FBA00F4E359 /* CreateProfileViewModel.swift */,
 				E1232F1C26AFE5E000A9EA31 /* FriendListViewModel.swift */,
 				E1232F2226AFE6C100A9EA31 /* PrivateChatListViewModel.swift */,
 				E1232F2826AFE74000A9EA31 /* GroupChatListViewModel.swift */,
@@ -293,7 +293,7 @@
 			isa = PBXGroup;
 			children = (
 				E15B2D1A2696E8B2005D1C3F /* SignInViewController.swift */,
-				E1613B31269D7F9300F4E359 /* EditProfileViewController.swift */,
+				E1613B31269D7F9300F4E359 /* CreateProfileViewController.swift */,
 				E170DF5B26A01DAD00A5BAAF /* ViewModelBindableType.swift */,
 				E1232F1E26AFE5EF00A9EA31 /* FriendListViewController.swift */,
 				E1232F2026AFE6A700A9EA31 /* PrivateChatListViewController.swift */,
@@ -585,7 +585,7 @@
 				E180E3EA26C277D1000F4CEA /* FindUserViewModel.swift in Sources */,
 				E170DF6226A0203A00A5BAAF /* SceneCoordinator.swift in Sources */,
 				E10D16E826B91942003DD5D3 /* FriendListMyTableViewCell.swift in Sources */,
-				E1613B32269D7F9300F4E359 /* EditProfileViewController.swift in Sources */,
+				E1613B32269D7F9300F4E359 /* CreateProfileViewController.swift in Sources */,
 				E1E11E3C269C1E2D000CE221 /* FirebaseUtil.swift in Sources */,
 				E14BD599270C381C00B48DA6 /* RealmUtil.swift in Sources */,
 				E18BE13026BA6D19000B29FA /* FriendListFriendTableViewCell.swift in Sources */,
@@ -599,7 +599,7 @@
 				E170DF5C26A01DAD00A5BAAF /* ViewModelBindableType.swift in Sources */,
 				E170DF6026A01FC700A5BAAF /* SceneCoordinatorType.swift in Sources */,
 				E180E3E826C277BB000F4CEA /* FindUserViewController.swift in Sources */,
-				E1613B35269D7FBA00F4E359 /* EditProfileViewModel.swift in Sources */,
+				E1613B35269D7FBA00F4E359 /* CreateProfileViewModel.swift in Sources */,
 				E1232F1D26AFE5E000A9EA31 /* FriendListViewModel.swift in Sources */,
 				E1232F2326AFE6C100A9EA31 /* PrivateChatListViewModel.swift in Sources */,
 				E1232F1F26AFE5EF00A9EA31 /* FriendListViewController.swift in Sources */,

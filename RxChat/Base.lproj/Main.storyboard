@@ -101,10 +101,10 @@
             </objects>
             <point key="canvasLocation" x="131.8840579710145" y="115.84821428571428"/>
         </scene>
-        <!--Edit Profile View Controller-->
+        <!--Create Profile View Controller-->
         <scene sceneID="Iaw-Qa-bN7">
             <objects>
-                <viewController storyboardIdentifier="EditProfileVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="UoT-TX-Rb7" customClass="EditProfileViewController" customModule="RxChat" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CreateProfileVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="UoT-TX-Rb7" customClass="CreateProfileViewController" customModule="RxChat" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="w1H-c3-Yev">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

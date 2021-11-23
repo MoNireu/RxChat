@@ -11,7 +11,7 @@ import UIKit
 enum Scene {
     case launch(LaunchViewModel)
     case signIn(SignInViewModel)
-    case editProfile(EditProfileViewModel)
+    case editProfile(CreateProfileViewModel)
     case chatList(FriendListViewModel, PrivateChatListViewModel, GroupChatListViewModel)
     case findUser(FindUserViewModel)
 }
@@ -41,13 +41,13 @@ extension Scene {
             return signInVC
             
         case .editProfile(let viewModel):
-            guard var editProfileVC = storyboard.instantiateViewController(withIdentifier: "EditProfileVC") as? EditProfileViewController else {
+            guard var createProfileVC = storyboard.instantiateViewController(withIdentifier: "CreateProfileVC") as? CreateProfileViewController else {
                 fatalError()
             }
             
-            editProfileVC.bind(viewModel: viewModel)
+            createProfileVC.bind(viewModel: viewModel)
             
-            return editProfileVC
+            return createProfileVC
             
             
         case .chatList(let viewModel1, let viewModel2, let viewModel3):
