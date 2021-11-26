@@ -50,14 +50,19 @@ class SceneCoordinator: SceneCoordinatorType {
             currentVC.present(target, animated: true) {
                 subject.onCompleted()
             }
-            
             currentVC = target.sceneViewController
+            
         case .push:
+            let currentNAV = currentVC as? UINavigationController
+            currentNAV?.pushViewController(target, animated: true)
             subject.onCompleted()
+            currentVC = target.sceneViewController
+        
         case .modal:
             currentVC.present(target, animated: true) {
                 subject.onCompleted()
             }
+            currentVC = target.sceneViewController
         }
         
         return subject.ignoreElements().asCompletable()
@@ -77,6 +82,19 @@ class SceneCoordinator: SceneCoordinatorType {
             }
             
             return Disposables.create()
+        }
+    }
+    
+    
+    func closed() {
+        if let presentingVC = self.currentVC.presentingViewController {
+            self.currentVC = presentingVC.sceneViewController
+        }
+        else if let parentNAV = self.currentVC.navigationController?.parent {
+            self.currentVC = parentNAV.sceneViewController
+        }
+        else {
+            print("close error")
         }
     }
 }

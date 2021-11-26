@@ -108,8 +108,26 @@ class FriendListViewModel: CommonViewModel {
             guard var sections = try? self.profileInfoSubject.value() else {return Observable.empty()}
             
             let currentSection = sections[indexPath.section]
+            let deletedFriend = currentSection.items[indexPath.row] as User
             
-            print(currentSection.items[indexPath.row].email)
+            print(deletedFriend.email)
+            
+            return Observable.empty()
+        }
+    }()
+    
+    
+    lazy var chatFriendAt: Action<IndexPath, Void> = {
+        return Action { indexPath in
+            
+            guard var sections = try? self.profileInfoSubject.value() else {return Observable.empty()}
+            
+            let currentSection = sections[indexPath.section]
+            let selectedFriend = currentSection.items[indexPath.row] as User
+            
+            let chatRoomViewModel = ChatRoomViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
+            let chatRoomScene = Scene.chatRoom(chatRoomViewModel)
+            self.sceneCoordinator.transition(to: chatRoomScene, using: .push, animated: true)
             
             return Observable.empty()
         }

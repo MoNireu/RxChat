@@ -40,9 +40,8 @@ class FriendListViewController: UIViewController, ViewModelBindableType {
             .bind(to: viewModel.deleteFriendAt.inputs)
             .disposed(by: disposeBag)
         
-        
-//        tableView.rx.modelDeleted(User.self)
-//            .bind(to: viewModel.deleteFriend.inputs)
-//            .disposed(by: disposeBag)
+        tableView.rx.itemSelected
+            .bind(to: viewModel.chatFriendAt.inputs)
+            .disposed(by: disposeBag)
     }
 }
