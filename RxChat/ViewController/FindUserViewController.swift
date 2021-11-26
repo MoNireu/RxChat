@@ -53,6 +53,7 @@ class FindUserViewController: UIViewController, ViewModelBindableType {
     
     override func viewWillDisappear(_ animated: Bool) {
         viewModel.friendListDelegate.refresh()
+        viewModel.sceneCoordinator.closed()
         print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
         print("refresh")
         print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
