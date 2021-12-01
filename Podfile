@@ -10,6 +10,9 @@ target 'RxChat' do
   pod 'RxDataSources'
   pod 'RxCoreData'
   pod 'RealmSwift'
+  pod 'Action'
+  pod 'RxSwift'
+  pod 'RxCocoa'
 
   pod 'Firebase/Auth'
   pod 'Firebase/Analytics'

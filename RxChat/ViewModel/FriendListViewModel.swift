@@ -12,15 +12,18 @@ import Action
 import UIKit
 import RxDataSources
 import GoogleSignIn
+import Firebase
 import FirebaseAuth
 
 
 class FriendListViewModel: CommonViewModel {
     
     let myInfo: Owner = Owner.shared
-    var profileInfoSubject: BehaviorSubject<[SectionOfUserData]> 
-    
-//    typealias SectionOfUserData = AnimatableSectionModel<Int, User>
+    var profileInfoSubject: BehaviorSubject<[SectionOfUserData]>
+    var disposeBag = DisposeBag()
+    lazy var chatUtil = {
+        return ChatUtility()
+    }()
     
     let dataSource: RxTableViewSectionedAnimatedDataSource<SectionOfUserData> = {
         let ds = RxTableViewSectionedAnimatedDataSource<SectionOfUserData>(
@@ -50,7 +53,7 @@ class FriendListViewModel: CommonViewModel {
         SectionOfUserData(uniqueId: "Owner", header: "나", items: [Owner.shared as User]),
         SectionOfUserData(uniqueId: "Friend", header: "친구(\(Owner.shared.friendList.count))", items: Owner.shared.friendList)
     ]
-
+    
     override init(sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil) {
         profileInfoSubject = BehaviorSubject<[SectionOfUserData]>(value: friendListTableData)
         
@@ -77,9 +80,9 @@ class FriendListViewModel: CommonViewModel {
         return Action { _ in
             let firebaseAuth = Auth.auth()
             do {
-              try firebaseAuth.signOut()
+                try firebaseAuth.signOut()
             } catch let signOutError as NSError {
-              print("Error signing out: %@", signOutError)
+                print("Error signing out: %@", signOutError)
             }
             GIDSignIn.sharedInstance.signOut()
             
@@ -118,20 +121,43 @@ class FriendListViewModel: CommonViewModel {
     
     
     lazy var chatFriendAt: Action<IndexPath, Void> = {
-        return Action { indexPath in
+        return Action { [self] indexPath in
             
             guard var sections = try? self.profileInfoSubject.value() else {return Observable.empty()}
             
             let currentSection = sections[indexPath.section]
             let selectedFriend = currentSection.items[indexPath.row] as User
             
-            let chatRoomViewModel = ChatRoomViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
-            let chatRoomScene = Scene.chatRoom(chatRoomViewModel)
-            self.sceneCoordinator.transition(to: chatRoomScene, using: .push, animated: true)
+            
+            
+            
+            chatUtil.createPrivateChatRoom(friendEmail: selectedFriend.email)
+                .subscribe(onNext: { a in
+                    let chatRoomViewModel = ChatRoomViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
+                    let chatRoomScene = Scene.chatRoom(chatRoomViewModel)
+                    self.sceneCoordinator.transition(to: chatRoomScene, using: .push, animated: true)
+                }).disposed(by: self.disposeBag)
+            
+//            self.ref.child("users")
+//                .child(Owner.shared.email.removeDotFromEmail())
+//                .child("personalChat")
+//                .child(selectedFriend.email.removeDotFromEmail())
+//                .observeSingleEvent(of: .value, with: { snapshot in
+//                print("Value: \(snapshot.value)")
+//            }) { error in
+//                print(error.localizedDescription)
+//            }
             
             return Observable.empty()
         }
     }()
     
     
+}
+
+
+extension String {
+    func removeDotFromEmail() -> String {
+        return self.replacingOccurrences(of: ".", with: "")
+    }
 }

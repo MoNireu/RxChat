@@ -212,6 +212,9 @@ PODS:
     - abseil/base/base_internal
     - abseil/base/config
     - abseil/meta/type_traits
+  - Action (4.2.0):
+    - RxCocoa (< 7.0, >= 5.0)
+    - RxSwift (< 7.0, >= 5.0)
   - AppAuth (1.4.0):
     - AppAuth/Core (= 1.4.0)
     - AppAuth/ExternalUserAgent (= 1.4.0)
@@ -354,7 +357,7 @@ PODS:
   - GTMAppAuth (1.2.2):
     - AppAuth/Core (~> 1.4)
     - GTMSessionFetcher/Core (~> 1.5)
-  - GTMSessionFetcher/Core (1.6.1)
+  - GTMSessionFetcher/Core (1.7.0)
   - leveldb-library (1.22.1)
   - nanopb (1.30906.0):
     - nanopb/decode (= 1.30906.0)
@@ -364,12 +367,12 @@ PODS:
   - "NSObject+Rx (5.1.0)":
     - RxSwift (~> 5.1)
   - PromisesObjC (1.2.12)
-  - Realm (10.11.0):
-    - Realm/Headers (= 10.11.0)
-  - Realm/Headers (10.11.0)
-  - RealmSwift (10.11.0):
-    - Realm (= 10.11.0)
-  - RxCocoa (5.1.1):
+  - Realm (10.20.0):
+    - Realm/Headers (= 10.20.0)
+  - Realm/Headers (10.20.0)
+  - RealmSwift (10.20.0):
+    - Realm (= 10.20.0)
+  - RxCocoa (5.1.3):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
   - RxCoreData (1.0.0):
@@ -409,11 +412,12 @@ PODS:
     - FirebaseStorage (~> 3)
     - RxCocoa (~> 5)
     - RxSwift (~> 5)
-  - RxRelay (5.1.1):
+  - RxRelay (5.1.3):
     - RxSwift (~> 5)
-  - RxSwift (5.1.2)
+  - RxSwift (5.1.3)
 
 DEPENDENCIES:
+  - Action
   - Firebase/Analytics
   - Firebase/Auth
   - Firebase/Firestore
@@ -421,6 +425,7 @@ DEPENDENCIES:
   - GoogleSignIn (= 6.0.0)
   - "NSObject+Rx"
   - RealmSwift
+  - RxCocoa
   - RxCoreData
   - RxDataSources
   - RxFirebase/Database
@@ -428,10 +433,12 @@ DEPENDENCIES:
   - RxFirebase/Functions
   - RxFirebase/RemoteConfig
   - RxFirebase/Storage
+  - RxSwift
 
 SPEC REPOS:
   trunk:
     - abseil
+    - Action
     - AppAuth
     - BoringSSL-GRPC
     - Differentiator
@@ -476,6 +483,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
+  Action: 5dc2194f7a0b77857c82a677b0da655f197c005f
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
   BoringSSL-GRPC: 8edf627ee524575e2f8d19d56f068b448eea3879
   Differentiator: 886080237d9f87f322641dedbc5be257061b0602
@@ -499,14 +507,14 @@ SPEC CHECKSUMS:
   "gRPC-C++": 13d8ccef97d5c3c441b7e3c529ef28ebee86fad2
   gRPC-Core: 4afa11bfbedf7cdecd04de535a9e046893404ed5
   GTMAppAuth: ad5c2b70b9a8689e1a04033c9369c4915bfcbe89
-  GTMSessionFetcher: 36689134877faeb055b27dfa4ccc9ceaa42e029e
+  GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   nanopb: 59317e09cf1f1a0af72f12af412d54edf52603fc
   "NSObject+Rx": fa6bbcc1ab1faa06b01466bc09b1e0692bbc5946
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
-  Realm: 39ff23f0f709cd4ed93eb47ee6593c2158945b38
-  RealmSwift: 42713e09a8631070d6c12c3c5fb22b8edc1daa41
-  RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
+  Realm: ae32bdc1da7d19c7617e0400201a77acd4a211b9
+  RealmSwift: c95eec6a712924870b2e36c4c081d63ec07e5414
+  RxCocoa: e2ed092d5432e4296aa818021d27de4090ac0354
   RxCoreData: 1ed5f83e80facccc90fc054eb7f39a44177de56a
   RxDataSources: efee07fa4de48477eca0a4611e6d11e2da9c1114
   RxFirebase: 45e6448c69c7212e21f8ba89144443f916437861
@@ -515,9 +523,9 @@ SPEC CHECKSUMS:
   RxFirebaseFunctions: c32622f9bb7c75c01a2489a38e376b5038e2d6f3
   RxFirebaseRemoteConfig: 0ed07be283650b572cb07bb8b940f08546c4b792
   RxFirebaseStorage: 271184ff8f8d3660bfc751dcafdbb4dd01d0b8a1
-  RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
-  RxSwift: 1e2e1f9570186967f617e49128ed26ccf1bafc8e
+  RxRelay: 5a18c2eb2d68326ebaf0112f80d837ae41b92b97
+  RxSwift: 915abbdfb62214aa89ccd0b194d44fb478019b27
 
-PODFILE CHECKSUM: 09f1795dafb1a07a8429930d0ea36416403baa9f
+PODFILE CHECKSUM: f3564ee223a8404a59dd4c4b6d0304d4f95fed2f
 
 COCOAPODS: 1.10.1

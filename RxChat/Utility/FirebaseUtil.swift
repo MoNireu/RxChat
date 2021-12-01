@@ -21,7 +21,7 @@ class FirebaseUtil {
     private let db = Firestore.firestore()
     private let STORAGE_BUCKET = "gs://rxchat-f485a.appspot.com"
     let realmUtil = RealmUtil()
-    private let disposeBag = DisposeBag()
+    private var disposeBag = DisposeBag()
     
     func downloadMyData(_ uid: String) -> Observable<Owner?> {
         return Observable.create { observer in

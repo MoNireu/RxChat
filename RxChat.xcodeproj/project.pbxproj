@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -19,10 +19,6 @@
 		E13D44702750AA91005EECB9 /* ChatRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13D446F2750AA91005EECB9 /* ChatRoomViewModel.swift */; };
 		E13D44722750AAB4005EECB9 /* ChatRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13D44712750AAB4005EECB9 /* ChatRoomViewController.swift */; };
 		E14BD599270C381C00B48DA6 /* RealmUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14BD598270C381C00B48DA6 /* RealmUtil.swift */; };
-		E159B03F26A94CFA00071C52 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E159B03E26A94CFA00071C52 /* RxSwift */; };
-		E159B04126A94CFA00071C52 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = E159B04026A94CFA00071C52 /* RxRelay */; };
-		E159B04326A94CFA00071C52 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = E159B04226A94CFA00071C52 /* RxCocoa */; };
-		E159B04526A94CFA00071C52 /* RxBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = E159B04426A94CFA00071C52 /* RxBlocking */; };
 		E159B04726A95C4600071C52 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = E159B04626A95C4600071C52 /* plus.png */; };
 		E15B2D172696E8B2005D1C3F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B2D162696E8B2005D1C3F /* AppDelegate.swift */; };
 		E15B2D192696E8B2005D1C3F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B2D182696E8B2005D1C3F /* SceneDelegate.swift */; };
@@ -48,12 +44,12 @@
 		E1A76A1F26A7FD0D00C8F783 /* UIImagePickerController+RxCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A76A1D26A7FD0D00C8F783 /* UIImagePickerController+RxCreate.swift */; };
 		E1A76A2026A7FD0D00C8F783 /* UIImagePickerController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A76A1E26A7FD0D00C8F783 /* UIImagePickerController+Rx.swift */; };
 		E1A76A2226A8091E00C8F783 /* RxImagePickerDelegateProxy.swift .swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A76A2126A8091E00C8F783 /* RxImagePickerDelegateProxy.swift .swift */; };
-		E1A76A3426A8211A00C8F783 /* Action in Frameworks */ = {isa = PBXBuildFile; productRef = E1A76A3326A8211A00C8F783 /* Action */; };
 		E1D8ADB926CBA7DF001586D3 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D8ADB826CBA7DF001586D3 /* UIButtonExtension.swift */; };
 		E1D994682733AEAA00352547 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D994672733AEAA00352547 /* LaunchViewController.swift */; };
 		E1D9946A2733AED500352547 /* LaunchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D994692733AED500352547 /* LaunchViewModel.swift */; };
 		E1E11E3C269C1E2D000CE221 /* FirebaseUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E11E3B269C1E2D000CE221 /* FirebaseUtil.swift */; };
 		E1E11E3F269C1F19000CE221 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E11E3E269C1F19000CE221 /* User.swift */; };
+		E1F141E6275754AF0098BB99 /* ChatUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F141E5275754AE0098BB99 /* ChatUtility.swift */; };
 		E1F7B5DC26D8830800B9A9FC /* SectionOfUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F7B5DB26D8830800B9A9FC /* SectionOfUserData.swift */; };
 		EF3F0F7073D67AC3E62C09CC /* Pods_RxChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F50357890A961669CEBCE4E /* Pods_RxChat.framework */; };
 /* End PBXBuildFile section */
@@ -127,6 +123,7 @@
 		E1D994692733AED500352547 /* LaunchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewModel.swift; sourceTree = "<group>"; };
 		E1E11E3B269C1E2D000CE221 /* FirebaseUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUtil.swift; sourceTree = "<group>"; };
 		E1E11E3E269C1F19000CE221 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		E1F141E5275754AE0098BB99 /* ChatUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUtility.swift; sourceTree = "<group>"; };
 		E1F7B5DB26D8830800B9A9FC /* SectionOfUserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionOfUserData.swift; sourceTree = "<group>"; };
 		F63C573E14C177FC06527979 /* Pods_RxChatTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RxChatTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF1247D48F8992F3717EF95A /* Pods-RxChatTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxChatTests.debug.xcconfig"; path = "Target Support Files/Pods-RxChatTests/Pods-RxChatTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -137,11 +134,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E159B03F26A94CFA00071C52 /* RxSwift in Frameworks */,
-				E159B04526A94CFA00071C52 /* RxBlocking in Frameworks */,
-				E1A76A3426A8211A00C8F783 /* Action in Frameworks */,
-				E159B04326A94CFA00071C52 /* RxCocoa in Frameworks */,
-				E159B04126A94CFA00071C52 /* RxRelay in Frameworks */,
 				EF3F0F7073D67AC3E62C09CC /* Pods_RxChat.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -325,6 +317,7 @@
 			children = (
 				E1E11E3B269C1E2D000CE221 /* FirebaseUtil.swift */,
 				E14BD598270C381C00B48DA6 /* RealmUtil.swift */,
+				E1F141E5275754AE0098BB99 /* ChatUtility.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -348,11 +341,6 @@
 			);
 			name = RxChat;
 			packageProductDependencies = (
-				E1A76A3326A8211A00C8F783 /* Action */,
-				E159B03E26A94CFA00071C52 /* RxSwift */,
-				E159B04026A94CFA00071C52 /* RxRelay */,
-				E159B04226A94CFA00071C52 /* RxCocoa */,
-				E159B04426A94CFA00071C52 /* RxBlocking */,
 			);
 			productName = RxChat;
 			productReference = E15B2D132696E8B2005D1C3F /* RxChat.app */;
@@ -429,8 +417,6 @@
 			);
 			mainGroup = E15B2D0A2696E8B2005D1C3F;
 			packageReferences = (
-				E1A76A3226A8211A00C8F783 /* XCRemoteSwiftPackageReference "Action" */,
-				E159B03D26A94CFA00071C52 /* XCRemoteSwiftPackageReference "RxSwift" */,
 			);
 			productRefGroup = E15B2D142696E8B2005D1C3F /* Products */;
 			projectDirPath = "";
@@ -593,6 +579,7 @@
 				E170DF6226A0203A00A5BAAF /* SceneCoordinator.swift in Sources */,
 				E10D16E826B91942003DD5D3 /* FriendListMyTableViewCell.swift in Sources */,
 				E1613B32269D7F9300F4E359 /* CreateProfileViewController.swift in Sources */,
+				E1F141E6275754AF0098BB99 /* ChatUtility.swift in Sources */,
 				E1E11E3C269C1E2D000CE221 /* FirebaseUtil.swift in Sources */,
 				E14BD599270C381C00B48DA6 /* RealmUtil.swift in Sources */,
 				E18BE13026BA6D19000B29FA /* FriendListFriendTableViewCell.swift in Sources */,
@@ -954,53 +941,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		E159B03D26A94CFA00071C52 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 6.2.0;
-			};
-		};
-		E1A76A3226A8211A00C8F783 /* XCRemoteSwiftPackageReference "Action" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/RxSwiftCommunity/Action.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.3.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		E159B03E26A94CFA00071C52 /* RxSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E159B03D26A94CFA00071C52 /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxSwift;
-		};
-		E159B04026A94CFA00071C52 /* RxRelay */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E159B03D26A94CFA00071C52 /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxRelay;
-		};
-		E159B04226A94CFA00071C52 /* RxCocoa */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E159B03D26A94CFA00071C52 /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxCocoa;
-		};
-		E159B04426A94CFA00071C52 /* RxBlocking */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E159B03D26A94CFA00071C52 /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxBlocking;
-		};
-		E1A76A3326A8211A00C8F783 /* Action */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E1A76A3226A8211A00C8F783 /* XCRemoteSwiftPackageReference "Action" */;
-			productName = Action;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E15B2D0B2696E8B2005D1C3F /* Project object */;
 }
