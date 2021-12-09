@@ -14,20 +14,20 @@ import Differentiator
 class User: Equatable, IdentifiableType {
     typealias Identity = String
     var identity: String {
-        return email
+        return id ?? ""
     }
     
     static func == (lhs: User, rhs: User) -> Bool {
-        return lhs.email == rhs.email
+        return lhs.id == rhs.id
     }
     
-    var email: String
     var id: String?
+    var email: String
     var profileImg: UIImage?
     
-    init(email: String, id: String?, profileImg: UIImage?) {
-        self.email = email
+    init(id: String?, email: String, profileImg: UIImage?) {
         self.id = id
+        self.email = email
         self.profileImg = profileImg
     }
 }
@@ -39,6 +39,6 @@ class UserRealm: Object {
     @Persisted var profileImg: Data?
     
     override static func primaryKey() -> String? {
-        return "email"
+        return "id"
     }
 }

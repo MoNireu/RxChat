@@ -36,7 +36,7 @@ class RealmUtil {
         var friendList: [User] = []
         
         for friendRealm in friendListRealm {
-            friendList.append(User(email: friendRealm.email!, id: friendRealm.id, profileImg: UIImage(data: friendRealm.profileImg!)))
+            friendList.append(User(id: friendRealm.id, email: friendRealm.email!, profileImg: UIImage(data: friendRealm.profileImg!)))
         }
         
         return friendList

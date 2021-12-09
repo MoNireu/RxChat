@@ -93,7 +93,7 @@ class FindUserViewController: UIViewController, ViewModelBindableType {
                     self.profileImageView.image = user.profileImg
                     self.nameLabel.text = user.id
                     // found user is owner
-                    if user.email == self.viewModel.ownerInfo.email {
+                    if user.id == self.viewModel.ownerInfo.id {
                         self.changeAddFriendButtonState(state: .myProfile)
                     }
                     // found user is already friend

@@ -22,6 +22,7 @@ class CreateProfileViewModel: CommonViewModel {
     var profileImageChanged = false
     
     override init(sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil) {
+        print("Create Profile View Model Load")
         myId = BehaviorSubject<String>(value: myInfo.id ?? "")
         
         var profileImg: UIImage
@@ -41,7 +42,7 @@ class CreateProfileViewModel: CommonViewModel {
             self.firebaseUtil.uploadMyData(self.myInfo, isProfileImageChanged: self.profileImageChanged)
                 .subscribe(onNext: { uploadedUser in
                     // upload profile update time
-                    self.firebaseUtil.uploadProfileUpdateTime(uploadedUser.email)
+                    self.firebaseUtil.uploadProfileUpdateTime(uploadedUser.id!)
                         .subscribe(onCompleted: {
                             // save last friend list update time on Realm
                             Owner.shared.lastFriendListUpdateTime = Timestamp(date: Date())

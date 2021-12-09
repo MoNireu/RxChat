@@ -129,8 +129,12 @@ class FriendListViewModel: CommonViewModel {
             let selectedFriend = currentSection.items[indexPath.row] as User
             
             
+            // 기존 채팅룸이 있는지 확인
+            
+            // 기존 채팅룸이 있을 경우 해당 채팅방으로 연결
             
             
+            // 기존 채팅룸이 없을 경우 방을 새로 만듬.
             chatUtil.createPrivateChatRoom(friendEmail: selectedFriend.email)
                 .subscribe(onNext: { a in
                     let chatRoomViewModel = ChatRoomViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
@@ -138,15 +142,6 @@ class FriendListViewModel: CommonViewModel {
                     self.sceneCoordinator.transition(to: chatRoomScene, using: .push, animated: true)
                 }).disposed(by: self.disposeBag)
             
-//            self.ref.child("users")
-//                .child(Owner.shared.email.removeDotFromEmail())
-//                .child("personalChat")
-//                .child(selectedFriend.email.removeDotFromEmail())
-//                .observeSingleEvent(of: .value, with: { snapshot in
-//                print("Value: \(snapshot.value)")
-//            }) { error in
-//                print(error.localizedDescription)
-//            }
             
             return Observable.empty()
         }

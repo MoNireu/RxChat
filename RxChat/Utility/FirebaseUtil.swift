@@ -23,6 +23,7 @@ class FirebaseUtil {
     let realmUtil = RealmUtil()
     private var disposeBag = DisposeBag()
     
+    // Download my base info from firebase
     func downloadMyData(_ uid: String) -> Observable<Owner?> {
         return Observable.create { observer in
             let generalInfoDocRef = self.db.collection("Users").document(uid)
@@ -36,7 +37,7 @@ class FirebaseUtil {
                         let id = data!["id"] as! String
                         
                         
-                        let myLastUpdateTime = self.db.collection("UserProfileLastUpdate").document(email)
+                        let myLastUpdateTime = self.db.collection("UserProfileLastUpdate").document(id)
                         myLastUpdateTime.rx
                             .getDocument()
                             .subscribe(onNext: {doc in
@@ -56,7 +57,7 @@ class FirebaseUtil {
                                 
                                 
                                 
-                                self.downloadProfileImage(email)
+                                self.downloadProfileImage(id)
                                     .subscribe(onNext: { imgData in
                                         Owner.shared.profileImg = UIImage(data: imgData)
                                         
@@ -125,7 +126,7 @@ class FirebaseUtil {
                     let docObservable = Observable.from(docs)
                     docObservable.subscribe(onNext: { doc in
                         let friendData = doc.data()
-                        let friendEmail = doc.documentID
+                        let friendID = doc.documentID
                         let isFriend = friendData["isFriend"] as? Bool
                         let lastUpdateRef = friendData["lastUpdateRef"] as? DocumentReference
                         
@@ -145,7 +146,7 @@ class FirebaseUtil {
                                 if isFriendEmpty { needUpdate = true }
                                 
                                 if needUpdate {
-                                    self.findUser(friendEmail)
+                                    self.findUser(friendID)
                                         .subscribe(onNext: { user in
                                             if let index = friendList.firstIndex(of: user) {
                                                 friendList[index] = user
@@ -162,7 +163,7 @@ class FirebaseUtil {
                                             checkFriendListComplete()
                                         }, onError: { _ in
                                             print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
-                                            print("Could not find friend(email: \(friendEmail))")
+                                            print("Could not find friend(ID: \(friendID))")
                                             print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
                                             checkFriendListComplete()
                                         }).disposed(by: self.disposeBag)
@@ -177,21 +178,21 @@ class FirebaseUtil {
         }
     }
     
-    func findUser(_ email: String) -> Observable<User> {
+    func findUser(_ id: String) -> Observable<User> {
         return Observable.create { observer in
-            let query = self.db.collection("Users").whereField("email", isEqualTo: email)
+            let query = self.db.collection("Users").whereField("id", isEqualTo: id)
             query.rx.getDocuments()
                 .subscribe(onNext: { doc in
                     if doc.count != 0 {
                         let data = doc.documents.first!.data()
-                        let id = data["id"] as? String
+                        let email = data["email"] as? String
                         
-                        self.downloadProfileImage(email)
+                        self.downloadProfileImage(id)
                             .subscribe(onNext: { data in
-                                let user = User(email: email, id: id, profileImg: UIImage(data: data))
+                                let user = User(id: id, email: email!, profileImg: UIImage(data: data))
                                 observer.onNext(user)
                             }, onError: { _ in
-                                let user = User(email: email, id: id, profileImg: UIImage(named: "defaultProfileImage.png"))
+                                let user = User(id: id, email: email!, profileImg: UIImage(named: "defaultProfileImage.png"))
                                 observer.onNext(user)
                             }).disposed(by: self.disposeBag)
                     }
@@ -210,8 +211,8 @@ class FirebaseUtil {
             let docRef = self.db.collection("Users").document(myInfo.uid)
             docRef.rx
                 .setData([
+                    "id" : myInfo.id,
                     "email" : myInfo.email,
-                    "id" : myInfo.id!,
                 ])
                 .subscribe(
                     onError: { err in
@@ -219,7 +220,7 @@ class FirebaseUtil {
                     },
                     onCompleted: {
                         guard isProfileImageChanged else {return observer.onNext(myInfo)}
-                        self.uploadProfileImage(myInfo.email, myInfo.profileImg!)
+                        self.uploadProfileImage(myInfo.id!, myInfo.profileImg!)
                             .subscribe(
                                 onNext: { data in
                                     observer.onNext(myInfo)
@@ -232,23 +233,23 @@ class FirebaseUtil {
     }
     
     
-    func uploadProfileImage(_ email: String, _ image: UIImage) -> Observable<Data> {
+    func uploadProfileImage(_ id: String, _ image: UIImage) -> Observable<Data> {
         return Observable.create { observer in
             let ref = Storage.storage()
-                .reference(forURL: "\(self.STORAGE_BUCKET)/images/profile/\(email).jpg")
+                .reference(forURL: "\(self.STORAGE_BUCKET)/images/profile/\(id).jpg")
                 .rx
             
             let imageData = image.jpegData(compressionQuality: 0.5)!
             ref.putData(imageData)
                 .subscribe(onNext: { metaData in
                     print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
-                    print("profile img upload success! (email: \(email))")
+                    print("profile img upload success! (email: \(id))")
                     print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
                     observer.onNext(imageData)
                     observer.onCompleted()
                 }, onError: { err in
                     print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
-                    print("profile img upload failed (email: \(email))")
+                    print("profile img upload failed (email: \(id))")
                     print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
                     observer.onError(err)
                 }).disposed(by: self.disposeBag)
@@ -258,22 +259,22 @@ class FirebaseUtil {
     }
     
     
-    func downloadProfileImage(_ email: String) -> Observable<Data> {
+    func downloadProfileImage(_ id: String) -> Observable<Data> {
         return Observable.create { observer in
             let ref = Storage.storage()
-                .reference(forURL: "\(self.STORAGE_BUCKET)/images/profile/\(email).jpg")
+                .reference(forURL: "\(self.STORAGE_BUCKET)/images/profile/\(id).jpg")
                 .rx
             
             ref.getData(maxSize: 1 * 1024 * 1024)
                 .subscribe(onNext: { data in
                     print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
-                    print("profile img download success! (email: \(email))")
+                    print("profile img download success! (id: \(id))")
                     print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
                     observer.onNext(data)
                     observer.onCompleted()
                 }, onError: { err in
                     print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
-                    print("Error: profile img download failed (email: \(email))")
+                    print("Error: profile img download failed (id: \(id))")
                     print(err.localizedDescription)
                     print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
                     observer.onError(err)
@@ -286,10 +287,10 @@ class FirebaseUtil {
     }
     
     
-    func uploadProfileUpdateTime(_ email: String) -> Observable<Void> {
+    func uploadProfileUpdateTime(_ id: String) -> Observable<Void> {
         return Observable.create { observer in
             // Upload on UserProfileLastUpdate Collection
-            let profileLastUpdateDocRef = self.db.collection("UserProfileLastUpdate").document(email)
+            let profileLastUpdateDocRef = self.db.collection("UserProfileLastUpdate").document(id)
             profileLastUpdateDocRef.rx
                 .setData(["lastUpdateTime" : Timestamp(date: Date())])
                 .subscribe(onCompleted: {
@@ -303,11 +304,11 @@ class FirebaseUtil {
     
     func addFriend(ownerUID: String, newFriend: User) -> Observable<User> {
         return Observable.create { observer in
-            let docRef = self.db.collection("Users").document(ownerUID).collection("Friends").document(newFriend.email)
+            let docRef = self.db.collection("Users").document(ownerUID).collection("Friends").document(newFriend.id!)
             docRef.rx
                 .setData([
                     "isFriend": true,
-                    "lastUpdateRef": self.db.document("/UserProfileLastUpdate/" + newFriend.email)
+                    "lastUpdateRef": self.db.document("/UserProfileLastUpdate/" + newFriend.id!)
                 ])
                 .subscribe(onError: { err in
                     print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")

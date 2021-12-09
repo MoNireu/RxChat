@@ -21,7 +21,7 @@ class Owner: User {
         self.friendList = friendList
         self.lastFriendListUpdateTime = lastFriendListUpdateTime
         
-        super.init(email: email, id: id, profileImg: profileImg)
+        super.init(id: id, email: email, profileImg: profileImg)
     }
     
     class func sharedInit(uid: String, email: String, id: String?, lastFriendListUpdateTime: Timestamp?, profileImg: UIImage?, friendList: [User]) {

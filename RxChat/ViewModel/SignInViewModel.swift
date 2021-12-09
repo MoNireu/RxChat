@@ -38,12 +38,12 @@ class SignInViewModel: CommonViewModel {
                 
                 print("GoogleSign-in Suceed!")
                 
-                guard let authentication = user?.authentication else { return }
+                guard let authentication = user?.authentication else { print("fuck"); return}
                 self.firebaseUtil.ownerSignIn(authentication: authentication)
                     .subscribe(onCompleted: {
                         self.actIndicatorSubject.onCompleted()
-                        let editProfileViewModel = CreateProfileViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
-                        let editProfileScene = Scene.editProfile(editProfileViewModel)
+                        let createProfileViewModel = CreateProfileViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
+                        let editProfileScene = Scene.editProfile(createProfileViewModel)
                         self.sceneCoordinator.transition(to: editProfileScene, using: .fullScreen, animated: true)
                     }).disposed(by: self.disposeBag)
             }
