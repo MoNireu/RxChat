@@ -38,7 +38,7 @@ class SignInViewModel: CommonViewModel {
                 
                 print("GoogleSign-in Suceed!")
                 
-                guard let authentication = user?.authentication else { print("fuck"); return}
+                guard let authentication = user?.authentication else { return }
                 self.firebaseUtil.ownerSignIn(authentication: authentication)
                     .subscribe(onCompleted: {
                         self.actIndicatorSubject.onCompleted()

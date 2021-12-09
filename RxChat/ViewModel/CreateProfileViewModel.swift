@@ -18,20 +18,24 @@ class CreateProfileViewModel: CommonViewModel {
     var myInfo: Owner = Owner.shared
     var myId: BehaviorSubject<String>
     var myProfileImg: BehaviorSubject<UIImage>
+    //    var userAlreadyExist = true
+    var userAlreadyExistSubject: BehaviorSubject<Bool>
     let uploadingProfile = BehaviorSubject<Bool>(value: false)
     var profileImageChanged = false
     
     override init(sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil) {
         print("Create Profile View Model Load")
         myId = BehaviorSubject<String>(value: myInfo.id ?? "")
+        userAlreadyExistSubject = BehaviorSubject<Bool>(value: true)
         
         var profileImg: UIImage
         if let _profileImg = myInfo.profileImg { profileImg = _profileImg }
         else { profileImg = UIImage(named: "defaultProfileImage.png")! }
         
         self.myProfileImg = BehaviorSubject<UIImage>(value: profileImg)
-        
         super.init(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
+        
+        onValueChange()
     }
     
     lazy var profileEditDone: CocoaAction = {
@@ -63,6 +67,24 @@ class CreateProfileViewModel: CommonViewModel {
         }
     }()
     
+    func onValueChange() {
+        myId.subscribe(onNext: { id in
+            self.myInfo.id = id
+            
+        }).disposed(by: self.disposeBag)
+        
+    }
     
+    func doesUserAlreadyExist(id: String) -> Observable<Bool> {
+        return Observable.create { observer in
+            self.firebaseUtil.findUser(id)
+                .subscribe(onNext: { _ in
+                    observer.onNext(true)
+                }, onError: { _ in
+                    observer.onNext(false)
+                }).disposed(by: self.disposeBag)
+            return Disposables.create()
+        }
+    }
     
 }
