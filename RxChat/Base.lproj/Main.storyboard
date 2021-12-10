@@ -115,7 +115,7 @@
                                     <constraint firstAttribute="width" constant="150" id="Zlz-Ba-GUq"/>
                                 </constraints>
                             </imageView>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" toolTip="asdfasdf" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="jxP-FM-sc5">
+                            <textField toolTip="asdfasdf" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="jxP-FM-sc5">
                                 <rect key="frame" x="50" y="481" width="314" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
@@ -193,10 +193,10 @@
             </objects>
             <point key="canvasLocation" x="983" y="116"/>
         </scene>
-        <!--Title-->
+        <!--ChatRoomViewController-->
         <scene sceneID="eE1-7a-VdW">
             <objects>
-                <viewController storyboardIdentifier="ChatRoomVC" id="eBP-He-aF3" customClass="ChatRoomViewController" customModule="RxChat" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChatRoomVC" id="eBP-He-aF3" userLabel="ChatRoomViewController" customClass="ChatRoomViewController" customModule="RxChat" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Scs-Zl-cLV">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

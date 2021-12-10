@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+import NSObject_Rx
 
 class ChatRoomViewController: UIViewController, ViewModelBindableType {
     
@@ -14,14 +17,20 @@ class ChatRoomViewController: UIViewController, ViewModelBindableType {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        viewModel.sceneCoordinator.getCurrentVC().tabBarController?.tabBar.isHidden = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        viewModel.sceneCoordinator.getCurrentVC().tabBarController?.tabBar.isHidden = false
         viewModel.sceneCoordinator.closed()
     }
 
     func bindViewModel() {
+        viewModel.chatRoomTitleSubject
+            .drive(self.navigationItem.rx.title)
+            .disposed(by: rx.disposeBag)
+            
+        
         return
     }
 

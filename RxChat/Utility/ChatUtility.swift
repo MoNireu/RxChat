@@ -108,8 +108,14 @@ class ChatUtility {
 //    }
     
     
-    //MARK: - Private
+    //MARK: - Private Functions
     
+    
+    /// Find chat room by UUID and returns chat room members
+    /// - Parameters:
+    ///   - UUID: UUID of chat room
+    ///   - chatRoomType: Type of chat room
+    /// - Returns: List of chat room memeber's Id
     private func getChatRoomMembers(UUID: String, chatRoomType: ChatRoomType) -> Single<[String]> {
         return Single.create { observer in
             self.ref.child("\(chatRoomType.rawValue)/\(UUID)/members")

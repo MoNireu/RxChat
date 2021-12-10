@@ -136,6 +136,9 @@ class FriendListViewModel: CommonViewModel {
                         // 기존 채팅방이 있을 경우 해당 채팅방으로 연결
                         chatUtil.createChatRoomObjectBy(UUID: privateChatRoomUUID, chatRoomType: .privateRoom)
                             .subscribe(onSuccess: { chatRoom in
+                                let chatRoomViewModel = ChatRoomViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil, chatRoom: chatRoom)
+                                let chatRoomScene = Scene.chatRoom(chatRoomViewModel)
+                                self.sceneCoordinator.transition(to: chatRoomScene, using: .push, animated: true)
                                 print("Connecting to room number: \(chatRoom.UUID)")
                             }).disposed(by: self.disposeBag)
                     }
@@ -143,9 +146,15 @@ class FriendListViewModel: CommonViewModel {
                         // 기존 채팅룸이 없을 경우 방을 새로 만듬.
                         chatUtil.createPrivateChatRoom(friendId: selectedFriend.id!)
                             .subscribe(onNext: { chatRoomUUID in
-                                let chatRoomViewModel = ChatRoomViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
-                                let chatRoomScene = Scene.chatRoom(chatRoomViewModel)
-                                self.sceneCoordinator.transition(to: chatRoomScene, using: .push, animated: true)
+                                
+                                // 기존 채팅방이 있을 경우 해당 채팅방으로 연결
+                                chatUtil.createChatRoomObjectBy(UUID: chatRoomUUID, chatRoomType: .privateRoom)
+                                    .subscribe(onSuccess: { chatRoom in
+                                        let chatRoomViewModel = ChatRoomViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil, chatRoom: chatRoom)
+                                        let chatRoomScene = Scene.chatRoom(chatRoomViewModel)
+                                        self.sceneCoordinator.transition(to: chatRoomScene, using: .push, animated: true)
+                                        print("Connecting to room number: \(chatRoom.UUID)")
+                                    }).disposed(by: self.disposeBag)
                             }).disposed(by: self.disposeBag)
                     }
                 }).disposed(by: self.disposeBag)
