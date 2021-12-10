@@ -129,12 +129,15 @@ class FriendListViewModel: CommonViewModel {
             let selectedFriend = currentSection.items[indexPath.row] as User
             
             
-            // 기존 채팅룸이 있는지 확인
+            // 기존 채팅방이 있는지 확인
             chatUtil.getPrivateChatRoomUUID(friendId: selectedFriend.id!)
                 .subscribe(onNext: { retrivedChatRoomUUID in
                     if let privateChatRoomUUID = retrivedChatRoomUUID {
-                        // 기존 채팅룸이 있을 경우 해당 채팅방으로 연결
-                        print("Connecting to room number: \(privateChatRoomUUID)")
+                        // 기존 채팅방이 있을 경우 해당 채팅방으로 연결
+                        chatUtil.createChatRoomObjectBy(UUID: privateChatRoomUUID, chatRoomType: .privateRoom)
+                            .subscribe(onSuccess: { chatRoom in
+                                print("Connecting to room number: \(chatRoom.UUID)")
+                            }).disposed(by: self.disposeBag)
                     }
                     else {
                         // 기존 채팅룸이 없을 경우 방을 새로 만듬.
@@ -145,11 +148,7 @@ class FriendListViewModel: CommonViewModel {
                                 self.sceneCoordinator.transition(to: chatRoomScene, using: .push, animated: true)
                             }).disposed(by: self.disposeBag)
                     }
-                })
-            
-            
-            
-            
+                }).disposed(by: self.disposeBag)
             return Observable.empty()
         }
     }()

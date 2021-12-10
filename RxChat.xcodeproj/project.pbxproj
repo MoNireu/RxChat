@@ -44,6 +44,8 @@
 		E1A76A1F26A7FD0D00C8F783 /* UIImagePickerController+RxCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A76A1D26A7FD0D00C8F783 /* UIImagePickerController+RxCreate.swift */; };
 		E1A76A2026A7FD0D00C8F783 /* UIImagePickerController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A76A1E26A7FD0D00C8F783 /* UIImagePickerController+Rx.swift */; };
 		E1A76A2226A8091E00C8F783 /* RxImagePickerDelegateProxy.swift .swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A76A2126A8091E00C8F783 /* RxImagePickerDelegateProxy.swift .swift */; };
+		E1D89ECB2762EF260068D333 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D89ECA2762EF260068D333 /* Chat.swift */; };
+		E1D89ECD2762EFF50068D333 /* ChatRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D89ECC2762EFF50068D333 /* ChatRoom.swift */; };
 		E1D8ADB926CBA7DF001586D3 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D8ADB826CBA7DF001586D3 /* UIButtonExtension.swift */; };
 		E1D994682733AEAA00352547 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D994672733AEAA00352547 /* LaunchViewController.swift */; };
 		E1D9946A2733AED500352547 /* LaunchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D994692733AED500352547 /* LaunchViewModel.swift */; };
@@ -118,6 +120,8 @@
 		E1A76A1D26A7FD0D00C8F783 /* UIImagePickerController+RxCreate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+RxCreate.swift"; sourceTree = "<group>"; };
 		E1A76A1E26A7FD0D00C8F783 /* UIImagePickerController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+Rx.swift"; sourceTree = "<group>"; };
 		E1A76A2126A8091E00C8F783 /* RxImagePickerDelegateProxy.swift .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RxImagePickerDelegateProxy.swift .swift"; sourceTree = "<group>"; };
+		E1D89ECA2762EF260068D333 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
+		E1D89ECC2762EFF50068D333 /* ChatRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoom.swift; sourceTree = "<group>"; };
 		E1D8ADB826CBA7DF001586D3 /* UIButtonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
 		E1D994672733AEAA00352547 /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
 		E1D994692733AED500352547 /* LaunchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewModel.swift; sourceTree = "<group>"; };
@@ -308,6 +312,8 @@
 				E1E11E3E269C1F19000CE221 /* User.swift */,
 				E18BE13126BA81ED000B29FA /* Owner.swift */,
 				E1F7B5DB26D8830800B9A9FC /* SectionOfUserData.swift */,
+				E1D89ECA2762EF260068D333 /* Chat.swift */,
+				E1D89ECC2762EFF50068D333 /* ChatRoom.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -567,6 +573,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1D89ECD2762EFF50068D333 /* ChatRoom.swift in Sources */,
 				E1232F2126AFE6A700A9EA31 /* PrivateChatListViewController.swift in Sources */,
 				E1F7B5DC26D8830800B9A9FC /* SectionOfUserData.swift in Sources */,
 				E15B2D1B2696E8B2005D1C3F /* SignInViewController.swift in Sources */,
@@ -583,6 +590,7 @@
 				E1E11E3C269C1E2D000CE221 /* FirebaseUtil.swift in Sources */,
 				E14BD599270C381C00B48DA6 /* RealmUtil.swift in Sources */,
 				E18BE13026BA6D19000B29FA /* FriendListFriendTableViewCell.swift in Sources */,
+				E1D89ECB2762EF260068D333 /* Chat.swift in Sources */,
 				E170DF6426A0255100A5BAAF /* CommonViewModel.swift in Sources */,
 				E1D994682733AEAA00352547 /* LaunchViewController.swift in Sources */,
 				E1D8ADB926CBA7DF001586D3 /* UIButtonExtension.swift in Sources */,

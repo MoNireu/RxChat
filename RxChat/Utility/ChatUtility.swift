@@ -30,7 +30,6 @@ class ChatUtility {
                 .rx
                 .updateChildValues([friendId: chatUUID])
                 .subscribe(onSuccess: { _ in
-                    print("1")
                     // 상대 개인채팅 목록에 나를 추가
                     self.ref.child("users")
                         .child(friendId)
@@ -38,11 +37,10 @@ class ChatUtility {
                         .rx
                         .updateChildValues([self.myId: chatUUID])
                         .subscribe(onSuccess: {  _ in
-                            print("2")
                             // 채팅방 만들고 해당 인원 추가.
                             self.ref.child("privateChat")
                                 .child(chatUUID)
-                                .child("member")
+                                .child("members")
                                 .rx
                                 .setValue([self.myId: true,
                                           friendId: true])
@@ -89,7 +87,54 @@ class ChatUtility {
     }
     
     
+    func createChatRoomObjectBy(UUID: String, chatRoomType: ChatRoomType) -> Single<ChatRoom> {
+        return Single.create { observer in
+            self.getChatRoomMembers(UUID: UUID, chatRoomType: chatRoomType)
+                .subscribe(onSuccess: { members in
+                    let membersToString: String = members.joined(separator: ", ")
+                    self.getChatContexts(UUID: UUID, chatRoomType: chatRoomType)
+                        .subscribe(onSuccess: { chats in
+                            let chatRoom = ChatRoom(UUID: UUID, title: membersToString, chatRoomType: chatRoomType, members: members, chats: chats)
+                            observer(.success(chatRoom))
+                        }).disposed(by: self.disposeBag)
+                }).disposed(by: self.disposeBag)
+            return Disposables.create()
+        }
+    }
+    
+    
 //    func connectToChatRoom(_ UUID: String) {
 //
 //    }
+    
+    
+    //MARK: - Private
+    
+    private func getChatRoomMembers(UUID: String, chatRoomType: ChatRoomType) -> Single<[String]> {
+        return Single.create { observer in
+            self.ref.child("\(chatRoomType.rawValue)/\(UUID)/members")
+                .observeSingleEvent(of: .value) { snapshot in
+                    let members = snapshot.value as! Dictionary<String, Any>
+                    let membersOrderedList = Array(members.keys).sorted()
+                    observer(.success(membersOrderedList))
+                }
+            return Disposables.create()
+        }
+    }
+    
+    private func getChatContexts(UUID: String, chatRoomType: ChatRoomType) -> Single<[Chat]> {
+        return Single.create { observer in
+            self.ref.child("\(chatRoomType.rawValue)/\(UUID)/chat")
+                .observeSingleEvent(of: .value) { snapshot in
+                    if snapshot.exists() {
+                        // TODO: Chat Object를 만들어서 반환
+                    }
+                    else {
+                        observer(.success([]))
+                    }
+                }
+            
+            return Disposables.create()
+        }
+    }
 }
