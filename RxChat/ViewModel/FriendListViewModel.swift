@@ -130,11 +130,11 @@ class FriendListViewModel: CommonViewModel {
             
             
             // 기존 채팅룸이 있는지 확인
-            chatUtil.checkPrivateChatRoomExist(friendId: selectedFriend.id!)
-                .subscribe(onNext: { exist in
-                    if exist {
+            chatUtil.getPrivateChatRoomUUID(friendId: selectedFriend.id!)
+                .subscribe(onNext: { retrivedChatRoomUUID in
+                    if let privateChatRoomUUID = retrivedChatRoomUUID {
                         // 기존 채팅룸이 있을 경우 해당 채팅방으로 연결
-                        
+                        print("Connecting to room number: \(privateChatRoomUUID)")
                     }
                     else {
                         // 기존 채팅룸이 없을 경우 방을 새로 만듬.

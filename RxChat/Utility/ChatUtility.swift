@@ -64,18 +64,24 @@ class ChatUtility {
     }
     
     
-    func checkPrivateChatRoomExist(friendId: String) -> Observable<Bool> {
+    func getPrivateChatRoomUUID(friendId: String) -> Observable<String?> {
         return Observable.create { observer in
             self.ref.child("users")
                 .child(self.myId)
                 .child("privateChat")
-                .queryEqual(toValue: friendId)
                 .rx
                 .observeSingleEvent(.value)
-                .subscribe(onSuccess: { _ in
-                    observer.onNext(true)
+                .subscribe(onSuccess: { snapshot in
+                    if snapshot.hasChild(friendId) {
+                        if let retrivedChatRoomUUID = snapshot.childSnapshot(forPath: friendId).value as? String {
+                            observer.onNext(retrivedChatRoomUUID)
+                        }
+                    }
+                    else {
+                        observer.onNext(nil)
+                    }
                 }, onError: { err in
-                    observer.onNext(false)
+                    observer.onError(err)
                 }).disposed(by: self.disposeBag)
             
             return Disposables.create()
