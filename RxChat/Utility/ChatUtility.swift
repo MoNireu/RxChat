@@ -87,15 +87,15 @@ class ChatUtility {
     }
     
     
-    func createChatRoomObjectBy(UUID: String, chatRoomType: ChatRoomType) -> Single<ChatRoom> {
-        return Single.create { observer in
+    func createChatRoomObjectBy(UUID: String, chatRoomType: ChatRoomType) -> Observable<ChatRoom> {
+        return Observable.create { observer in
             self.getChatRoomMembers(UUID: UUID, chatRoomType: chatRoomType)
                 .subscribe(onSuccess: { members in
                     let membersToString: String = members.joined(separator: ", ")
                     self.getChatContexts(UUID: UUID, chatRoomType: chatRoomType)
                         .subscribe(onSuccess: { chats in
                             let chatRoom = ChatRoom(UUID: UUID, title: membersToString, chatRoomType: chatRoomType, members: members, chats: chats)
-                            observer(.success(chatRoom))
+                            observer.onNext(chatRoom)
                         }).disposed(by: self.disposeBag)
                 }).disposed(by: self.disposeBag)
             return Disposables.create()

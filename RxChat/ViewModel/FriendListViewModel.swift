@@ -134,9 +134,9 @@ class FriendListViewModel: CommonViewModel {
             chatUtil.getPrivateChatRoomUUID(friendId: selectedFriend.id!)
                 .subscribe(onNext: { retrivedChatRoomUUID in
                     if let privateChatRoomUUID = retrivedChatRoomUUID {
-                        // 기존 채팅방이 있을 경우 해당 채팅방으로 연결
+                        // 기존 채팅방이 있을 경우 해당 채팅방으로 이동
                         chatUtil.createChatRoomObjectBy(UUID: privateChatRoomUUID, chatRoomType: .privateRoom)
-                            .subscribe(onSuccess: { chatRoom in
+                            .subscribe(onNext: { chatRoom in
                                 let chatRoomViewModel = ChatRoomViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil, chatRoom: chatRoom)
                                 let chatRoomScene = Scene.chatRoom(chatRoomViewModel)
                                 self.sceneCoordinator.transition(to: chatRoomScene, using: .push, animated: true)
@@ -147,10 +147,9 @@ class FriendListViewModel: CommonViewModel {
                         // 기존 채팅룸이 없을 경우 방을 새로 만듬.
                         chatUtil.createPrivateChatRoom(friendId: selectedFriend.id!)
                             .subscribe(onNext: { chatRoomUUID in
-                                
-                                // 기존 채팅방이 있을 경우 해당 채팅방으로 연결
+                                // 채팅방으로 이동.
                                 chatUtil.createChatRoomObjectBy(UUID: chatRoomUUID, chatRoomType: .privateRoom)
-                                    .subscribe(onSuccess: { chatRoom in
+                                    .subscribe(onNext: { chatRoom in
                                         let chatRoomViewModel = ChatRoomViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil, chatRoom: chatRoom)
                                         let chatRoomScene = Scene.chatRoom(chatRoomViewModel)
                                         self.sceneCoordinator.transition(to: chatRoomScene, using: .push, animated: true)
