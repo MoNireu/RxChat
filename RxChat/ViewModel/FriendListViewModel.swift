@@ -85,6 +85,7 @@ class FriendListViewModel: CommonViewModel {
                 print("Error signing out: %@", signOutError)
             }
             GIDSignIn.sharedInstance.signOut()
+            RealmUtil().deleteAll()
             
             let signInViewModel = SignInViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
             let signInScene = Scene.signIn(signInViewModel)

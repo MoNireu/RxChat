@@ -89,4 +89,9 @@ class RealmUtil {
     }
     
     
+    func deleteAll() {
+            try! realm.write {
+                realm.deleteAll()
+            }
+        }
 }
