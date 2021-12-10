@@ -17,28 +17,26 @@ class ChatUtility {
     var disposeBag = DisposeBag()
     private var ref = Database.database(url: "https://rxchat-f485a-default-rtdb.asia-southeast1.firebasedatabase.app/").reference()
     
-    
-    func createPrivateChatRoom(friendEmail: String) -> Observable<Void> {
+    func createPrivateChatRoom(friendId: String) -> Observable<Void> {
         return Observable.create { observer in
             let chatUUID = UUID().uuidString
             
-            let myModifiedEmail = Owner.shared.email.removeDotFromEmail()
-            let friendModifiedEmail = friendEmail.removeDotFromEmail()
+            let myId = Owner.shared.id!
             
             // 내 개인채팅 목록에 상대 추가
             self.ref.child("users")
-                .child(myModifiedEmail)
+                .child(myId)
                 .child("privateChat")
                 .rx
-                .updateChildValues([friendModifiedEmail: chatUUID])
+                .updateChildValues([friendId: chatUUID])
                 .subscribe(onSuccess: { _ in
                     print("1")
                     // 상대 개인채팅 목록에 나를 추가
                     self.ref.child("users")
-                        .child(friendModifiedEmail)
+                        .child(friendId)
                         .child("privateChat")
                         .rx
-                        .updateChildValues([myModifiedEmail: chatUUID])
+                        .updateChildValues([myId: chatUUID])
                         .subscribe(onSuccess: {  _ in
                             print("2")
                             // 채팅방 만들고 해당 인원 추가.
@@ -46,8 +44,8 @@ class ChatUtility {
                                 .child(chatUUID)
                                 .child("member")
                                 .rx
-                                .setValue([myModifiedEmail: true,
-                                          friendModifiedEmail: true])
+                                .setValue([myId: true,
+                                          friendId: true])
                                 .subscribe(onSuccess: { _ in
                                     print("Success")
                                     observer.onNext(())

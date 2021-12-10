@@ -135,7 +135,7 @@ class FriendListViewModel: CommonViewModel {
             
             
             // 기존 채팅룸이 없을 경우 방을 새로 만듬.
-            chatUtil.createPrivateChatRoom(friendEmail: selectedFriend.email)
+            chatUtil.createPrivateChatRoom(friendId: selectedFriend.id!)
                 .subscribe(onNext: { a in
                     let chatRoomViewModel = ChatRoomViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
                     let chatRoomScene = Scene.chatRoom(chatRoomViewModel)
