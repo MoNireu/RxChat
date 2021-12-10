@@ -386,7 +386,10 @@ class FirebaseUtil {
     }
     
     
-    func ownerSignIn(authentication: GIDAuthentication) -> Observable<Void> {
+    /// SignIn Google and Firebase by GIDAuthentication. Then Returns if user is new or not.
+    /// - Parameter authentication: GIDAuthentication
+    /// - Returns: True: User is new to this service / False: User already exist
+    func ownerSignIn(authentication: GIDAuthentication) -> Observable<Bool> {
         return Observable.create { observer in
             let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken!,
                                                            accessToken: authentication.accessToken)
@@ -426,6 +429,7 @@ class FirebaseUtil {
                             Owner.shared.id = user!.id
                             Owner.shared.profileImg = user!.profileImg
                             Owner.shared.friendList = user!.friendList
+                            observer.onNext(false)
                             print("User exist")
                         }
                         else {
@@ -434,10 +438,9 @@ class FirebaseUtil {
                             Owner.shared.id = nil
                             Owner.shared.profileImg = nil
                             Owner.shared.friendList = []
+                            observer.onNext(true)
                             print("User not exist")
                         }
-                        
-                        observer.onCompleted()
                     }).disposed(by: self.disposeBag)
             }
             return Disposables.create()

@@ -7,11 +7,12 @@
 
 import UIKit
 import GoogleSignIn
+import RxSwift
 
 class LaunchViewController: UIViewController, ViewModelBindableType {
     
     var viewModel: LaunchViewModel!
-    
+    var disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,14 +32,14 @@ class LaunchViewController: UIViewController, ViewModelBindableType {
                 // FriendList로 이동
                 guard let authentication = user?.authentication else { return }
                 self.viewModel.firebaseUtil.ownerSignIn(authentication: authentication)
-                    .subscribe(onCompleted: {
+                    .subscribe(onNext: { _ in
                         // change to scene "FriendList"
                         let friendListVM = FriendListViewModel(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
                         let privateChatListVM = PrivateChatListViewModel(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
                         let groupChatListVM = GroupChatListViewModel(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
                         let chatListScene = Scene.chatList(friendListVM, privateChatListVM, groupChatListVM)
                         sceneCoordinator.transition(to: chatListScene, using: .root, animated: true)
-                    })
+                    }).disposed(by: self.disposeBag)
             }
             // 기존 로그인 존재하지 않을 시
             else {

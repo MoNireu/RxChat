@@ -40,11 +40,24 @@ class SignInViewModel: CommonViewModel {
                 
                 guard let authentication = user?.authentication else { return }
                 self.firebaseUtil.ownerSignIn(authentication: authentication)
-                    .subscribe(onCompleted: {
-                        self.actIndicatorSubject.onCompleted()
-                        let createProfileViewModel = CreateProfileViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
-                        let editProfileScene = Scene.editProfile(createProfileViewModel)
-                        self.sceneCoordinator.transition(to: editProfileScene, using: .fullScreen, animated: true)
+                    .subscribe(onNext: { isNewUser in
+                        if isNewUser {
+                            // 이미 가입된 유저가 아닐 경우
+                            // Create Profile로 이동
+                            self.actIndicatorSubject.onCompleted()
+                            let createProfileViewModel = CreateProfileViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
+                            let createProfileScene = Scene.editProfile(createProfileViewModel)
+                            self.sceneCoordinator.transition(to: createProfileScene, using: .fullScreen, animated: true)
+                        }
+                        else {
+                            // 이미 가입된 유저일 경우
+                            // FriendList로 이동
+                            let friendListVM = FriendListViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
+                            let privateChatListVM = PrivateChatListViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
+                            let groupChatListVM = GroupChatListViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
+                            let chatListScene = Scene.chatList(friendListVM, privateChatListVM, groupChatListVM)
+                            self.sceneCoordinator.transition(to: chatListScene, using: .fullScreen, animated: true)
+                        }
                     }).disposed(by: self.disposeBag)
             }
             

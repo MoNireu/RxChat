@@ -11,7 +11,7 @@ import Firebase
 
 class RealmUtil {
     
-    let realm = try! Realm()
+    private let realm = try! Realm()
     
     // Test
     init() {
