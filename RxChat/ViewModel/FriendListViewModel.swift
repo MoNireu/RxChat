@@ -130,17 +130,24 @@ class FriendListViewModel: CommonViewModel {
             
             
             // 기존 채팅룸이 있는지 확인
+            chatUtil.checkPrivateChatRoomExist(friendId: selectedFriend.id!)
+                .subscribe(onNext: { exist in
+                    if exist {
+                        // 기존 채팅룸이 있을 경우 해당 채팅방으로 연결
+                        
+                    }
+                    else {
+                        // 기존 채팅룸이 없을 경우 방을 새로 만듬.
+                        chatUtil.createPrivateChatRoom(friendId: selectedFriend.id!)
+                            .subscribe(onNext: { chatRoomUUID in
+                                let chatRoomViewModel = ChatRoomViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
+                                let chatRoomScene = Scene.chatRoom(chatRoomViewModel)
+                                self.sceneCoordinator.transition(to: chatRoomScene, using: .push, animated: true)
+                            }).disposed(by: self.disposeBag)
+                    }
+                })
             
-            // 기존 채팅룸이 있을 경우 해당 채팅방으로 연결
             
-            
-            // 기존 채팅룸이 없을 경우 방을 새로 만듬.
-            chatUtil.createPrivateChatRoom(friendId: selectedFriend.id!)
-                .subscribe(onNext: { a in
-                    let chatRoomViewModel = ChatRoomViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
-                    let chatRoomScene = Scene.chatRoom(chatRoomViewModel)
-                    self.sceneCoordinator.transition(to: chatRoomScene, using: .push, animated: true)
-                }).disposed(by: self.disposeBag)
             
             
             return Observable.empty()

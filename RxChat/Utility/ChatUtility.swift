@@ -10,22 +10,22 @@ import FirebaseDatabase
 import RxFirebaseDatabase
 import RxSwift
 import NSObject_Rx
+import RealmSwift
 
 
 class ChatUtility {
     
     var disposeBag = DisposeBag()
     private var ref = Database.database(url: "https://rxchat-f485a-default-rtdb.asia-southeast1.firebasedatabase.app/").reference()
+    let myId = Owner.shared.id!
     
-    func createPrivateChatRoom(friendId: String) -> Observable<Void> {
+    func createPrivateChatRoom(friendId: String) -> Observable<String> {
         return Observable.create { observer in
             let chatUUID = UUID().uuidString
             
-            let myId = Owner.shared.id!
-            
             // 내 개인채팅 목록에 상대 추가
             self.ref.child("users")
-                .child(myId)
+                .child(self.myId)
                 .child("privateChat")
                 .rx
                 .updateChildValues([friendId: chatUUID])
@@ -36,7 +36,7 @@ class ChatUtility {
                         .child(friendId)
                         .child("privateChat")
                         .rx
-                        .updateChildValues([myId: chatUUID])
+                        .updateChildValues([self.myId: chatUUID])
                         .subscribe(onSuccess: {  _ in
                             print("2")
                             // 채팅방 만들고 해당 인원 추가.
@@ -44,13 +44,13 @@ class ChatUtility {
                                 .child(chatUUID)
                                 .child("member")
                                 .rx
-                                .setValue([myId: true,
+                                .setValue([self.myId: true,
                                           friendId: true])
                                 .subscribe(onSuccess: { _ in
                                     print("Success")
-                                    observer.onNext(())
+                                    observer.onNext(chatUUID)
                                 }, onError: { err in
-                                    
+                                    print("Error creatingPrivateChatRoom")
                                 }).disposed(by: self.disposeBag)
                         }, onError: { err in
                             
@@ -62,5 +62,28 @@ class ChatUtility {
             return Disposables.create()
         }
     }
-
+    
+    
+    func checkPrivateChatRoomExist(friendId: String) -> Observable<Bool> {
+        return Observable.create { observer in
+            self.ref.child("users")
+                .child(self.myId)
+                .child("privateChat")
+                .queryEqual(toValue: friendId)
+                .rx
+                .observeSingleEvent(.value)
+                .subscribe(onSuccess: { _ in
+                    observer.onNext(true)
+                }, onError: { err in
+                    observer.onNext(false)
+                }).disposed(by: self.disposeBag)
+            
+            return Disposables.create()
+        }
+    }
+    
+    
+//    func connectToChatRoom(_ UUID: String) {
+//
+//    }
 }
