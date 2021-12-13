@@ -20,6 +20,7 @@ class FriendListViewModel: CommonViewModel {
     
     let myInfo: Owner = Owner.shared
     var profileInfoSubject: BehaviorSubject<[SectionOfUserData]>
+    var isTransToChatRoomComplete: BehaviorSubject<IndexPath>
     var disposeBag = DisposeBag()
     lazy var chatUtil = {
         return ChatUtility()
@@ -57,10 +58,11 @@ class FriendListViewModel: CommonViewModel {
     override init(sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil) {
         profileInfoSubject = BehaviorSubject<[SectionOfUserData]>(value: friendListTableData)
         
-        
         dataSource.titleForHeaderInSection = {dataSource, section in
             return dataSource.sectionModels[section].header
         }
+        
+        isTransToChatRoomComplete = BehaviorSubject<IndexPath>(value: IndexPath(row: 0, section: 0))
         
         super.init(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
     }
@@ -123,7 +125,6 @@ class FriendListViewModel: CommonViewModel {
     
     lazy var chatFriendAt: Action<IndexPath, Void> = {
         return Action { [self] indexPath in
-            
             guard var sections = try? self.profileInfoSubject.value() else {return Observable.empty()}
             
             let currentSection = sections[indexPath.section]
@@ -140,6 +141,7 @@ class FriendListViewModel: CommonViewModel {
                                 let chatRoomViewModel = ChatRoomViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil, chatRoom: chatRoom)
                                 let chatRoomScene = Scene.chatRoom(chatRoomViewModel)
                                 self.sceneCoordinator.transition(to: chatRoomScene, using: .push, animated: true)
+                                isTransToChatRoomComplete.onNext(indexPath)
                                 print("Connecting to room number: \(chatRoom.UUID)")
                             }).disposed(by: self.disposeBag)
                     }
@@ -153,6 +155,7 @@ class FriendListViewModel: CommonViewModel {
                                         let chatRoomViewModel = ChatRoomViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil, chatRoom: chatRoom)
                                         let chatRoomScene = Scene.chatRoom(chatRoomViewModel)
                                         self.sceneCoordinator.transition(to: chatRoomScene, using: .push, animated: true)
+                                        isTransToChatRoomComplete.onNext(indexPath)
                                         print("Connecting to room number: \(chatRoom.UUID)")
                                     }).disposed(by: self.disposeBag)
                             }).disposed(by: self.disposeBag)

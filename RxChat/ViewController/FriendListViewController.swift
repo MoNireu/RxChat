@@ -9,6 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import NSObject_Rx
+import Action
 
 class FriendListViewController: UIViewController, ViewModelBindableType {
     
@@ -39,9 +40,18 @@ class FriendListViewController: UIViewController, ViewModelBindableType {
         tableView.rx.itemDeleted
             .bind(to: viewModel.deleteFriendAt.inputs)
             .disposed(by: disposeBag)
+    
+        
         
         tableView.rx.itemSelected
             .bind(to: viewModel.chatFriendAt.inputs)
+            .disposed(by: disposeBag)
+        
+        
+        viewModel.isTransToChatRoomComplete
+            .subscribe(onNext: { indexPath in
+                self.tableView.cellForRow(at: indexPath)?.isSelected = false
+            })
             .disposed(by: disposeBag)
     }
 }

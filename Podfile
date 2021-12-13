@@ -14,6 +14,7 @@ target 'RxChat' do
   pod 'RxSwift'
   pod 'RxCocoa'
 
+
   pod 'Firebase/Auth'
   pod 'Firebase/Analytics'
   pod 'GoogleSignIn', '6.0.0'
