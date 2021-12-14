@@ -289,6 +289,7 @@ class FirebaseUtil {
     
     func uploadProfileUpdateTime(_ id: String) -> Observable<Void> {
         return Observable.create { observer in
+            print("Log -", #fileID, #function, #line, id)
             // Upload on UserProfileLastUpdate Collection
             let profileLastUpdateDocRef = self.db.collection("UserProfileLastUpdate").document(id)
             profileLastUpdateDocRef.rx

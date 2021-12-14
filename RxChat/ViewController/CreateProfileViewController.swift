@@ -87,6 +87,14 @@ class CreateProfileViewController: UIViewController, ViewModelBindableType {
             .disposed(by: disposeBag)
         
         
+        idTextField
+            .rx
+            .text
+            .subscribe(onNext: { id in
+                self.viewModel.myId.onNext(id ?? "")
+            }).disposed(by: rx.disposeBag)
+        
+        
         
         idTextField
             .rx
@@ -99,7 +107,6 @@ class CreateProfileViewController: UIViewController, ViewModelBindableType {
                           self.completeButton.rx.isEnabled)
                     .disposed(by: self.rx.disposeBag)
             }).disposed(by: rx.disposeBag)
-        
         
         idTextField
             .rx
