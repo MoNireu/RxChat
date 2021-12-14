@@ -39,6 +39,8 @@ class SceneCoordinator: SceneCoordinatorType {
         
         let target = scene.instantiate()
         
+        print("Log -", #fileID, #function, #line, "from: \(getCurrentVC())")
+        
         switch style {
         case .root:
             currentVC = target.sceneViewController
@@ -65,6 +67,8 @@ class SceneCoordinator: SceneCoordinatorType {
             currentVC = target.sceneViewController
         }
         
+        print("Log -", #fileID, #function, #line, "to: \(getCurrentVC())")
+        
         return subject.ignoreElements()
     }
     
@@ -87,10 +91,13 @@ class SceneCoordinator: SceneCoordinatorType {
     
     
     func closed() {
+        print("Log -", #fileID, #function, #line, self.currentVC.presentingViewController)
         if let presentingVC = self.currentVC.presentingViewController {
+            print("Log -", #fileID, #function, #line, "VC")
             self.currentVC = presentingVC.sceneViewController
         }
         else if let parentNAV = self.currentVC.navigationController?.parent {
+            print("Log -", #fileID, #function, #line, "NAV")
             self.currentVC = parentNAV.sceneViewController
         }
         else {

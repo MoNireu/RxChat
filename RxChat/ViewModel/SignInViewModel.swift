@@ -56,7 +56,7 @@ class SignInViewModel: CommonViewModel {
                             let privateChatListVM = PrivateChatListViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
                             let groupChatListVM = GroupChatListViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
                             let chatListScene = Scene.chatList(friendListVM, privateChatListVM, groupChatListVM)
-                            self.sceneCoordinator.transition(to: chatListScene, using: .fullScreen, animated: true)
+                            self.sceneCoordinator.transition(to: chatListScene, using: .root, animated: true)
                         }
                     }).disposed(by: self.disposeBag)
             }
