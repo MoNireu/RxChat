@@ -18,6 +18,7 @@ class ChatRoomViewController: UIViewController, ViewModelBindableType {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.sceneCoordinator.getCurrentVC().tabBarController?.tabBar.isHidden = true
+        self.navigationItem.largeTitleDisplayMode = .never
     }
     
     override func viewWillDisappear(_ animated: Bool) {
