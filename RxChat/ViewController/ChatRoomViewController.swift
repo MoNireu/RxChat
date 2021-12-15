@@ -14,6 +14,12 @@ class ChatRoomViewController: UIViewController, ViewModelBindableType {
     
     var viewModel: ChatRoomViewModel!
     
+    let MAX_LINE: Int = 5
+    let BOTTOM_BAR_DEFAULT_HEIGHT: CGFloat = 80
+    
+    @IBOutlet weak var contextTextView: UITextView!
+    @IBOutlet weak var bottomBarHeightConstraint: NSLayoutConstraint!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +31,17 @@ class ChatRoomViewController: UIViewController, ViewModelBindableType {
         viewModel.sceneCoordinator.getCurrentVC().tabBarController?.tabBar.isHidden = false
         viewModel.sceneCoordinator.closed()
     }
+    
+    private func addAdditionalHeightonBottomBar() {
+        guard let font = self.contextTextView.font else { return }
+        let contextLine: Int = {
+            let contextLine = self.contextTextView.getLine()
+            if contextLine >= MAX_LINE { return MAX_LINE }
+            return contextLine
+        }()
+        let extraSpaceByLine = font.lineHeight * CGFloat(contextLine - 1)
+        self.bottomBarHeightConstraint.constant = BOTTOM_BAR_DEFAULT_HEIGHT + extraSpaceByLine
+    }
 
     func bindViewModel() {
         viewModel.chatRoomTitleSubject
@@ -32,7 +49,18 @@ class ChatRoomViewController: UIViewController, ViewModelBindableType {
             .disposed(by: rx.disposeBag)
             
         
-        return
+        contextTextView.rx.text
+            .subscribe(onNext: { text in
+                self.addAdditionalHeightonBottomBar()
+            }).disposed(by: rx.disposeBag)
     }
 
+}
+
+
+extension UITextView {
+    func getLine() -> Int {
+        guard let font = self.font else { return 1 }
+        return Int(round(self.contentSize.height / font.lineHeight)-1)
+    }
 }

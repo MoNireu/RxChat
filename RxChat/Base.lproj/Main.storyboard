@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="gxB-nU-4wk">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="gxB-nU-4wk">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -202,7 +202,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="JWQ-4r-4Wl">
-                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="772"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="ZUB-Jv-6bo">
@@ -215,6 +215,30 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mOu-Ly-zfm">
+                                <rect key="frame" x="0.0" y="816" width="414" height="80"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="3ul-0e-74s">
+                                        <rect key="frame" x="20" y="15" width="374" height="30"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="ZYh-IO-w37"/>
+                                        </constraints>
+                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                        <color key="textColor" systemColor="labelColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBrownColor"/>
+                                <constraints>
+                                    <constraint firstItem="3ul-0e-74s" firstAttribute="leading" secondItem="mOu-Ly-zfm" secondAttribute="leading" constant="20" id="7Oq-bc-RgG"/>
+                                    <constraint firstAttribute="bottom" secondItem="3ul-0e-74s" secondAttribute="bottom" constant="35" id="OMY-Js-cMF"/>
+                                    <constraint firstAttribute="trailing" secondItem="3ul-0e-74s" secondAttribute="trailing" constant="20" id="cPI-xf-Gnt"/>
+                                    <constraint firstAttribute="height" constant="80" id="eTJ-SO-JZF"/>
+                                    <constraint firstItem="3ul-0e-74s" firstAttribute="top" secondItem="mOu-Ly-zfm" secondAttribute="top" constant="15" id="qyP-mb-AkS"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="HgS-Na-djg"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -222,16 +246,23 @@
                             <constraint firstItem="JWQ-4r-4Wl" firstAttribute="top" secondItem="HgS-Na-djg" secondAttribute="top" id="Kri-rB-8KM"/>
                             <constraint firstItem="JWQ-4r-4Wl" firstAttribute="trailing" secondItem="HgS-Na-djg" secondAttribute="trailing" id="Pv3-91-9Zd"/>
                             <constraint firstItem="JWQ-4r-4Wl" firstAttribute="leading" secondItem="HgS-Na-djg" secondAttribute="leading" id="f5V-MW-eha"/>
-                            <constraint firstAttribute="bottom" secondItem="JWQ-4r-4Wl" secondAttribute="bottom" id="wcC-Vq-9cX"/>
+                            <constraint firstAttribute="bottom" secondItem="mOu-Ly-zfm" secondAttribute="bottom" id="hCT-rb-NzX"/>
+                            <constraint firstItem="mOu-Ly-zfm" firstAttribute="top" secondItem="JWQ-4r-4Wl" secondAttribute="bottom" id="mvw-C8-zvT"/>
+                            <constraint firstAttribute="trailing" secondItem="mOu-Ly-zfm" secondAttribute="trailing" id="oIW-Le-keP"/>
+                            <constraint firstItem="mOu-Ly-zfm" firstAttribute="leading" secondItem="Scs-Zl-cLV" secondAttribute="leading" id="zVw-GI-Hhc"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Title" id="RMh-pW-7Uw"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="bottomBarHeightConstraint" destination="eTJ-SO-JZF" id="SNt-T8-tBE"/>
+                        <outlet property="contextTextView" destination="3ul-0e-74s" id="ucW-f8-XUb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Co8-tT-l7O" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2780" y="1507"/>
+            <point key="canvasLocation" x="2779.7101449275365" y="1506.6964285714284"/>
         </scene>
         <!--개인채팅-->
         <scene sceneID="aRC-eQ-dX2">
@@ -601,11 +632,17 @@
     <resources>
         <image name="plus.png" width="225" height="225"/>
         <image name="rectangle.portrait.and.arrow.right" catalog="system" width="128" height="108"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBlueColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBrownColor">
+            <color red="0.63529411764705879" green="0.51764705882352946" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGrayColor">
             <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
