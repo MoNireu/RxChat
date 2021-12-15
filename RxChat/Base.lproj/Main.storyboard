@@ -219,24 +219,29 @@
                                 <rect key="frame" x="0.0" y="816" width="414" height="80"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="3ul-0e-74s">
-                                        <rect key="frame" x="20" y="15" width="374" height="30"/>
+                                        <rect key="frame" x="20" y="15" width="319" height="30"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="ZYh-IO-w37"/>
-                                        </constraints>
-                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                         <color key="textColor" systemColor="labelColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hM0-QY-f4s">
+                                        <rect key="frame" x="345" y="14" width="49" height="30"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="전송">
+                                            <fontDescription key="titleFontDescription" type="system" pointSize="12"/>
+                                        </buttonConfiguration>
+                                    </button>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBrownColor"/>
+                                <color key="backgroundColor" systemColor="systemGray6Color"/>
                                 <constraints>
                                     <constraint firstItem="3ul-0e-74s" firstAttribute="leading" secondItem="mOu-Ly-zfm" secondAttribute="leading" constant="20" id="7Oq-bc-RgG"/>
+                                    <constraint firstAttribute="trailing" secondItem="hM0-QY-f4s" secondAttribute="trailing" constant="20" id="K9k-cP-OyP"/>
                                     <constraint firstAttribute="bottom" secondItem="3ul-0e-74s" secondAttribute="bottom" constant="35" id="OMY-Js-cMF"/>
-                                    <constraint firstAttribute="trailing" secondItem="3ul-0e-74s" secondAttribute="trailing" constant="20" id="cPI-xf-Gnt"/>
+                                    <constraint firstItem="hM0-QY-f4s" firstAttribute="leading" secondItem="3ul-0e-74s" secondAttribute="trailing" constant="10" id="Rbf-N2-Olc"/>
                                     <constraint firstAttribute="height" constant="80" id="eTJ-SO-JZF"/>
                                     <constraint firstItem="3ul-0e-74s" firstAttribute="top" secondItem="mOu-Ly-zfm" secondAttribute="top" constant="15" id="qyP-mb-AkS"/>
+                                    <constraint firstItem="hM0-QY-f4s" firstAttribute="bottom" secondItem="3ul-0e-74s" secondAttribute="bottom" id="wUi-ol-1yR"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -258,6 +263,7 @@
                     <connections>
                         <outlet property="bottomBarHeightConstraint" destination="eTJ-SO-JZF" id="SNt-T8-tBE"/>
                         <outlet property="contextTextView" destination="3ul-0e-74s" id="ucW-f8-XUb"/>
+                        <outlet property="sendChatBtn" destination="hM0-QY-f4s" id="K11-iy-fDM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Co8-tT-l7O" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -641,8 +647,8 @@
         <systemColor name="systemBlueColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
-        <systemColor name="systemBrownColor">
-            <color red="0.63529411764705879" green="0.51764705882352946" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="systemGray6Color">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGrayColor">
             <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
