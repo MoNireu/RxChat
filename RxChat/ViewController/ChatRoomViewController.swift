@@ -39,6 +39,7 @@ class ChatRoomViewController: UIViewController, ViewModelBindableType {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        viewModel.removeListenerFromChatRoom()
         viewModel.sceneCoordinator.getCurrentVC().tabBarController?.tabBar.isHidden = false
         viewModel.sceneCoordinator.closed()
     }
@@ -83,6 +84,14 @@ class ChatRoomViewController: UIViewController, ViewModelBindableType {
             .bind(to: tableView.rx.items(dataSource: viewModel.dataSource))
             .disposed(by: rx.disposeBag)
         
+        viewModel.chatContextTableDataSubject
+            .subscribe(onNext: { data in
+                let dataAmount = data.first?.items.count ?? 1
+                let indexPath = IndexPath(row: dataAmount-1, section: 0)
+                self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+            })
+            .disposed(by: rx.disposeBag)
+            
         sendChatBtn.rx.tap
             .subscribe(onNext: { _ in
                 self.viewModel.sendChat(text: self.contextTextView.text)

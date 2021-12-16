@@ -10,28 +10,23 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 import Action
+import FirebaseDatabase
 
 class ChatRoomViewModel: CommonViewModel {
 
     var chatRoom: ChatRoom
     var chatRoomTitleSubject: Driver<String>
-    var chatContextItemList: [Chat]!
+    var chatContextItemList: [Chat] = []
     var chatContextTableData: [SectionOfChatData]!
-    var chatContextTableDataSubject: BehaviorSubject<[SectionOfChatData]>!
+    var chatContextTableDataSubject = PublishSubject<[SectionOfChatData]>()
     var disposeBag = DisposeBag()
-    lazy var chatUtility = ChatUtility()
+    var chatUtility = ChatUtility()
     
     init(sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil, chatRoom: ChatRoom) {
-        
         self.chatRoom = chatRoom
         chatRoomTitleSubject = Driver<String>.just(chatRoom.title)
-        
-        chatContextItemList = []
-        
-        chatContextTableData = [SectionOfChatData(header: "", items: chatContextItemList)]
-        chatContextTableDataSubject = BehaviorSubject(value: chatContextTableData)
-        
         super.init(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
+        addListenerToChatRoom()
     }
     
     
@@ -53,6 +48,19 @@ class ChatRoomViewModel: CommonViewModel {
           }
     })
     
+    func addListenerToChatRoom() {
+        chatUtility.addListenerToPrivateChatRoom(UUID: chatRoom.UUID)
+            .subscribe(onNext: { chatList in
+                print("Log -", #fileID, #function, #line, "")
+                self.chatContextItemList = chatList
+                self.refreshTableView()
+            }).disposed(by: self.disposeBag)
+    }
+    
+    func removeListenerFromChatRoom() {
+        chatUtility.removeListenerFromPrivateChatRoom(UUID: chatRoom.UUID)
+    }
+    
     
     static func convertTimeToDateFormat(timestamp: String) -> String {
         let hourStartIdx = timestamp.index(timestamp.startIndex, offsetBy: 8)
@@ -65,7 +73,7 @@ class ChatRoomViewModel: CommonViewModel {
     }
     
     
-    private func refreshTableView() {
+    func refreshTableView() {
         self.chatContextTableData = [SectionOfChatData(header: "", items: self.chatContextItemList)]
         self.chatContextTableDataSubject.onNext(self.chatContextTableData)
     }
@@ -77,15 +85,7 @@ class ChatRoomViewModel: CommonViewModel {
         refreshTableView()
         
         chatUtility.sendMessage(UUID: chatRoom.UUID, text: text)
-            .subscribe(onNext: { [self] chat in
-                self.chatContextItemList.remove(at: chatContextItemList.lastIndex(where: { oldChat in
-                    return oldChat === tmpChat
-                })!)
-                self.chatContextItemList.append(chat)
-                refreshTableView()
-            }).disposed(by: self.disposeBag)
+            .subscribe(onNext: { _ in })
+            .disposed(by: self.disposeBag)
     }
-    
-    
-    
 }

@@ -125,8 +125,39 @@ class ChatUtility {
     }
     
     
-    func listenPrivateChatRoom(UUID: String) {
-        ref.child("privateChat/\(UUID)")
+    func addListenerToPrivateChatRoom(UUID: String) -> Observable<[Chat]> {
+        return Observable.create { observer in
+            self.ref.child("privateChat/\(UUID)/chats")
+                .rx
+                .observeEvent(.value)
+                .subscribe(onNext: { snapShot in
+                    guard snapShot.exists() else {
+                        print("Log -", #fileID, #function, #line, "No Chats in ChatRoom")
+                        observer.onNext([])
+                        return
+                    }
+                    let snapShotDict = snapShot.value as? [String: Any]
+                    let chatDataList = Array<Any>(snapShotDict!.values)
+                    
+                    var chatList:Array<Chat> = []
+                    for chat in chatDataList {
+                        let chatDict = chat as! [String: String]
+                        let from = chatDict["from"]!
+                        let text = chatDict["text"]!
+                        let time = chatDict["time"]!
+                        let chat = Chat(from: from, to: nil, text: text, time: time)
+                        chatList.append(chat)
+                    }
+                    chatList.sort(by: {Int($0.time!)! < Int($1.time!)!})
+                    observer.onNext(chatList)
+                }).disposed(by: self.disposeBag)
+            return Disposables.create()
+        }
+    }
+    
+    func removeListenerFromPrivateChatRoom(UUID: String) {
+        self.ref.child("privateChat/\(UUID)/chats")
+            .removeAllObservers()
     }
     
     
