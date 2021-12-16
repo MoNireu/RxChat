@@ -44,6 +44,8 @@
 		E1A76A1F26A7FD0D00C8F783 /* UIImagePickerController+RxCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A76A1D26A7FD0D00C8F783 /* UIImagePickerController+RxCreate.swift */; };
 		E1A76A2026A7FD0D00C8F783 /* UIImagePickerController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A76A1E26A7FD0D00C8F783 /* UIImagePickerController+Rx.swift */; };
 		E1A76A2226A8091E00C8F783 /* RxImagePickerDelegateProxy.swift .swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A76A2126A8091E00C8F783 /* RxImagePickerDelegateProxy.swift .swift */; };
+		E1B4CCB02769D96500F55CB6 /* ChatRoomFromOwnerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B4CCAF2769D96500F55CB6 /* ChatRoomFromOwnerTableViewCell.swift */; };
+		E1B4CCB22769D97900F55CB6 /* ChatRoomFromFriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B4CCB12769D97900F55CB6 /* ChatRoomFromFriendTableViewCell.swift */; };
 		E1D89ECB2762EF260068D333 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D89ECA2762EF260068D333 /* Chat.swift */; };
 		E1D89ECD2762EFF50068D333 /* ChatRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D89ECC2762EFF50068D333 /* ChatRoom.swift */; };
 		E1D8ADB926CBA7DF001586D3 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D8ADB826CBA7DF001586D3 /* UIButtonExtension.swift */; };
@@ -120,6 +122,8 @@
 		E1A76A1D26A7FD0D00C8F783 /* UIImagePickerController+RxCreate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+RxCreate.swift"; sourceTree = "<group>"; };
 		E1A76A1E26A7FD0D00C8F783 /* UIImagePickerController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+Rx.swift"; sourceTree = "<group>"; };
 		E1A76A2126A8091E00C8F783 /* RxImagePickerDelegateProxy.swift .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RxImagePickerDelegateProxy.swift .swift"; sourceTree = "<group>"; };
+		E1B4CCAF2769D96500F55CB6 /* ChatRoomFromOwnerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomFromOwnerTableViewCell.swift; sourceTree = "<group>"; };
+		E1B4CCB12769D97900F55CB6 /* ChatRoomFromFriendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomFromFriendTableViewCell.swift; sourceTree = "<group>"; };
 		E1D89ECA2762EF260068D333 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		E1D89ECC2762EFF50068D333 /* ChatRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoom.swift; sourceTree = "<group>"; };
 		E1D8ADB826CBA7DF001586D3 /* UIButtonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
@@ -189,6 +193,8 @@
 			children = (
 				E10D16E726B91942003DD5D3 /* FriendListMyTableViewCell.swift */,
 				E18BE12F26BA6D19000B29FA /* FriendListFriendTableViewCell.swift */,
+				E1B4CCAF2769D96500F55CB6 /* ChatRoomFromOwnerTableViewCell.swift */,
+				E1B4CCB12769D97900F55CB6 /* ChatRoomFromFriendTableViewCell.swift */,
 			);
 			path = TableViewCell;
 			sourceTree = "<group>";
@@ -588,6 +594,7 @@
 				E1613B32269D7F9300F4E359 /* CreateProfileViewController.swift in Sources */,
 				E1F141E6275754AF0098BB99 /* ChatUtility.swift in Sources */,
 				E1E11E3C269C1E2D000CE221 /* FirebaseUtil.swift in Sources */,
+				E1B4CCB02769D96500F55CB6 /* ChatRoomFromOwnerTableViewCell.swift in Sources */,
 				E14BD599270C381C00B48DA6 /* RealmUtil.swift in Sources */,
 				E18BE13026BA6D19000B29FA /* FriendListFriendTableViewCell.swift in Sources */,
 				E1D89ECB2762EF260068D333 /* Chat.swift in Sources */,
@@ -600,6 +607,7 @@
 				E1232F2726AFE73500A9EA31 /* GroupChatListViewController.swift in Sources */,
 				E170DF5C26A01DAD00A5BAAF /* ViewModelBindableType.swift in Sources */,
 				E170DF6026A01FC700A5BAAF /* SceneCoordinatorType.swift in Sources */,
+				E1B4CCB22769D97900F55CB6 /* ChatRoomFromFriendTableViewCell.swift in Sources */,
 				E180E3E826C277BB000F4CEA /* FindUserViewController.swift in Sources */,
 				E1613B35269D7FBA00F4E359 /* CreateProfileViewModel.swift in Sources */,
 				E1232F1D26AFE5E000A9EA31 /* FriendListViewModel.swift in Sources */,

@@ -9,6 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import NSObject_Rx
+import Action
 
 class ChatRoomViewController: UIViewController, ViewModelBindableType {
     
@@ -22,6 +23,7 @@ class ChatRoomViewController: UIViewController, ViewModelBindableType {
     @IBOutlet weak var contextTextView: UITextView!
     @IBOutlet weak var bottomBarHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var sendChatBtn: UIButton!
+    @IBOutlet weak var tableView: UITableView!
     
 // MARK: - Life Cycles
     override func viewDidLoad() {
@@ -71,17 +73,23 @@ class ChatRoomViewController: UIViewController, ViewModelBindableType {
         contextTextView.rx.text
             .subscribe(onNext: { text in
                 self.sendChatBtn.isEnabled = (text != "")
-                
                 self.contextTextView.isScrollEnabled = true
                 let line = self.contextTextView.getLine()
                 self.addAdditionalHeightonBottomBar(contextLine: line)
                 self.contextTextView.isScrollEnabled = (line != 1)
             }).disposed(by: rx.disposeBag)
         
+        viewModel.chatContextTableDataSubject
+            .bind(to: tableView.rx.items(dataSource: viewModel.dataSource))
+            .disposed(by: rx.disposeBag)
+        
+        sendChatBtn.rx.tap
+            .subscribe(onNext: { _ in
+                self.viewModel.snedChat(text: self.contextTextView.text)
+                self.contextTextView.text = ""
+            }).disposed(by: rx.disposeBag)
     }
-
 }
-
 
 extension UITextView {
     func getLine() -> Int {

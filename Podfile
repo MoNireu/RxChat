@@ -28,6 +28,8 @@ target 'RxChat' do
   pod 'RxFirebase/Storage'
   pod 'RxFirebase/Functions'
 
+  pod 'IQKeyboardManagerSwift'
+
   target 'RxChatTests' do
     inherit! :search_paths
     # Pods for testing
