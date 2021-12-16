@@ -11,9 +11,13 @@ class ChatRoomFromFriendTableViewCell: UITableViewCell {
 
     @IBOutlet weak var chatBubbleLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var chatBubbleBackgroundView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        chatBubbleBackgroundView.backgroundColor = .systemGray4
+        chatBubbleBackgroundView.setCornerRadius(value: 0.03)
         // Initialization code
     }
 
