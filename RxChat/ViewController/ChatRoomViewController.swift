@@ -31,12 +31,14 @@ class ChatRoomViewController: UIViewController, ViewModelBindableType {
         viewModel.sceneCoordinator.getCurrentVC().tabBarController?.tabBar.isHidden = true
         self.navigationItem.largeTitleDisplayMode = .never
         tableView.separatorColor = .clear
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 50
         initContextTextView()
         initSendChatBtn()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        addAdditionalHeightonBottomBar(contextLine: 1)
+        addAdditionalHeightToBottomBar(line: 1)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -56,15 +58,21 @@ class ChatRoomViewController: UIViewController, ViewModelBindableType {
         contextTextView.layer.borderWidth = CGFloat(0.5)
     }
     
-    private func addAdditionalHeightonBottomBar(contextLine: Int) {
+    private func addAdditionalHeightToBottomBar(line: Int) {
         guard let font = self.contextTextView.font else { return }
-        let contextLine: Int = {
-            if contextLine >= MAX_LINE { return MAX_LINE }
-            return contextLine
+        let line: Int = {
+            if line >= MAX_LINE { return MAX_LINE }
+            return line
         }()
-        let extraSpaceByLine = font.lineHeight * CGFloat(contextLine - 1)
+        let extraSpaceByLine = font.lineHeight * CGFloat(line - 1)
         self.bottomBarHeightConstraint.constant = BOTTOM_BAR_DEFAULT_HEIGHT + extraSpaceByLine
     }
+    
+//    private func addAdditionalHeightToChatBubble(line: Int) {
+//        tableView.cell
+//        guard let font = self.contextTextView.font else { return }
+//        let extraSpaceByLine = font.lineHeight * CGFloat(line - 1)
+//    }
 
     func bindViewModel() {
         viewModel.chatRoomTitleSubject
@@ -77,7 +85,7 @@ class ChatRoomViewController: UIViewController, ViewModelBindableType {
                 self.sendChatBtn.isEnabled = (text != "")
                 self.contextTextView.isScrollEnabled = true
                 let line = self.contextTextView.getLine()
-                self.addAdditionalHeightonBottomBar(contextLine: line)
+                self.addAdditionalHeightToBottomBar(line: line)
                 self.contextTextView.isScrollEnabled = (line != 1)
             }).disposed(by: rx.disposeBag)
         
