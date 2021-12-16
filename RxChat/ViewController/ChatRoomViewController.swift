@@ -30,6 +30,7 @@ class ChatRoomViewController: UIViewController, ViewModelBindableType {
         super.viewDidLoad()
         viewModel.sceneCoordinator.getCurrentVC().tabBarController?.tabBar.isHidden = true
         self.navigationItem.largeTitleDisplayMode = .never
+        tableView.separatorColor = .clear
         initContextTextView()
         initSendChatBtn()
     }
