@@ -12,24 +12,21 @@ import RxDataSources
 import Action
 
 class ChatRoomViewModel: CommonViewModel {
-    
-    var chatRoomTitle: String
+
+    var chatRoom: ChatRoom
     var chatRoomTitleSubject: Driver<String>
     var chatContextItemList: [Chat]!
     var chatContextTableData: [SectionOfChatData]!
     var chatContextTableDataSubject: BehaviorSubject<[SectionOfChatData]>!
+    var disposeBag = DisposeBag()
+    lazy var chatUtility = ChatUtility()
     
     init(sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil, chatRoom: ChatRoom) {
         
-        chatRoomTitle = chatRoom.title
+        self.chatRoom = chatRoom
         chatRoomTitleSubject = Driver<String>.just(chatRoom.title)
         
-        chatContextItemList = [
-            Chat(from: "monireu_dev", to: "coreahr_gachon", text: "가가가", time: Date(timeIntervalSinceNow: -1)),
-            Chat(from: "coreahr_gachon", to: "monireu_dev", text: "나나나", time: Date(timeIntervalSinceNow: -2)),
-            Chat(from: "monireu_dev", to: "coreahr_gachon", text: "다다다", time: Date(timeIntervalSinceNow: -3)),
-            Chat(from: "coreahr_gachon", to: "monireu_dev", text: "라라라", time: Date(timeIntervalSinceNow: -4)),
-        ]
+        chatContextItemList = []
         
         chatContextTableData = [SectionOfChatData(header: "", items: chatContextItemList)]
         chatContextTableDataSubject = BehaviorSubject(value: chatContextTableData)
@@ -44,26 +41,50 @@ class ChatRoomViewModel: CommonViewModel {
           if (item.from == Owner.shared.id) {
               let cell = tableView.dequeueReusableCell(withIdentifier: "chatTextByOwner", for: indexPath) as? ChatRoomFromOwnerTableViewCell
               cell?.chatBubbleLabel.text = item.text
+              cell?.timeLabel.text = item.time != nil ? convertTimeToDateFormat(timestamp: (item.time)!) : ""
               return cell ?? UITableViewCell()
           }
           // 내가 받은 메시지
           else {
               let cell = tableView.dequeueReusableCell(withIdentifier: "chatTextByFriend", for: indexPath) as? ChatRoomFromFriendTableViewCell
               cell?.chatBubbleLabel.text = item.text
+              cell?.timeLabel.text = item.time != nil ? convertTimeToDateFormat(timestamp: (item.time)!) : ""
               return cell ?? UITableViewCell()
           }
     })
     
     
-    func snedChat(text: String) {
-        let chat = Chat(from: Owner.shared.id!, to: nil, text: text, time: Date(timeIntervalSinceNow: 0))
-        self.chatContextItemList.append(chat)
+    static func convertTimeToDateFormat(timestamp: String) -> String {
+        let hourStartIdx = timestamp.index(timestamp.startIndex, offsetBy: 8)
+        let hourEndIdx = timestamp.index(timestamp.startIndex, offsetBy: 9)
+        let minuteStartIdx = timestamp.index(timestamp.startIndex, offsetBy: 10)
+        let minuteEndIdx = timestamp.index(timestamp.startIndex, offsetBy: 11)
+        let hour = timestamp[hourStartIdx...hourEndIdx]
+        let minute = timestamp[minuteStartIdx...minuteEndIdx]
+        return "\(hour):\(minute)"
+    }
+    
+    
+    private func refreshTableView() {
         self.chatContextTableData = [SectionOfChatData(header: "", items: self.chatContextItemList)]
         self.chatContextTableDataSubject.onNext(self.chatContextTableData)
     }
     
     
-    
+    func sendChat(text: String) {
+        let tmpChat = Chat(from: Owner.shared.id!, to: nil, text: text, time: nil)
+        self.chatContextItemList.append(tmpChat)
+        refreshTableView()
+        
+        chatUtility.sendMessage(UUID: chatRoom.UUID, text: text)
+            .subscribe(onNext: { [self] chat in
+                self.chatContextItemList.remove(at: chatContextItemList.lastIndex(where: { oldChat in
+                    return oldChat === tmpChat
+                })!)
+                self.chatContextItemList.append(chat)
+                refreshTableView()
+            }).disposed(by: self.disposeBag)
+    }
     
     
     

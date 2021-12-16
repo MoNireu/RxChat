@@ -218,15 +218,24 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8eG-vk-O6S">
+                                                    <rect key="frame" x="269.5" y="23" width="26.5" height="12"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="tbh-AS-2lN" firstAttribute="trailing" secondItem="t8G-1t-iNQ" secondAttribute="trailingMargin" id="LjD-qP-QcL"/>
+                                                <constraint firstItem="tbh-AS-2lN" firstAttribute="leading" secondItem="8eG-vk-O6S" secondAttribute="trailing" constant="20" id="S9d-nF-8Fl"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="tbh-AS-2lN" secondAttribute="bottom" constant="4" id="kGS-WN-V5F"/>
+                                                <constraint firstItem="tbh-AS-2lN" firstAttribute="bottom" secondItem="8eG-vk-O6S" secondAttribute="bottom" id="uxw-5K-V3v"/>
                                                 <constraint firstItem="tbh-AS-2lN" firstAttribute="top" secondItem="t8G-1t-iNQ" secondAttribute="topMargin" constant="3" id="zfc-rl-xcQ"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="chatBubbleLabel" destination="tbh-AS-2lN" id="fgw-NJ-l2R"/>
+                                            <outlet property="timeLabel" destination="8eG-vk-O6S" id="bCD-q1-jcj"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="chatTextByFriend" rowHeight="50" id="HSd-AS-0gw" customClass="ChatRoomFromFriendTableViewCell" customModule="RxChat" customModuleProvider="target">
@@ -242,15 +251,24 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xek-72-Ghl">
+                                                    <rect key="frame" x="129" y="23" width="26.5" height="12"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="Xek-72-Ghl" firstAttribute="bottom" secondItem="eNa-VG-GZg" secondAttribute="bottom" id="1i8-Df-bGV"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="eNa-VG-GZg" secondAttribute="bottom" constant="4" id="8Yx-hn-Mtp"/>
                                                 <constraint firstItem="eNa-VG-GZg" firstAttribute="top" secondItem="8tx-oc-Jtu" secondAttribute="topMargin" constant="3" id="Rsn-TM-m1m"/>
+                                                <constraint firstItem="Xek-72-Ghl" firstAttribute="leading" secondItem="eNa-VG-GZg" secondAttribute="trailing" constant="20" id="WcY-Kd-M3O"/>
                                                 <constraint firstItem="eNa-VG-GZg" firstAttribute="leading" secondItem="8tx-oc-Jtu" secondAttribute="leadingMargin" id="cNu-Cb-iZ6"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="chatBubbleLabel" destination="eNa-VG-GZg" id="FvP-vb-XDR"/>
+                                            <outlet property="timeLabel" destination="Xek-72-Ghl" id="INN-lR-Ege"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

@@ -10,6 +10,7 @@ import UIKit
 class ChatRoomFromOwnerTableViewCell: UITableViewCell {
 
     @IBOutlet weak var chatBubbleLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

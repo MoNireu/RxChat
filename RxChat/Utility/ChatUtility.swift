@@ -102,10 +102,32 @@ class ChatUtility {
         }
     }
     
+    func sendMessage(UUID: String, text: String) -> Observable<Chat> {
+        return Observable.create { observer in
+            let timestamp =  DateFormatter().dateToDefaultFormat(date:Date())
+            let newChatId = timestamp + Owner.shared.id!
+            print("Log -", #fileID, #function, #line, newChatId)
+            self.ref.child("privateChat/\(UUID)")
+                .child("chats")
+                .child(newChatId)
+                .rx
+                .updateChildValues(["from": Owner.shared.id!,
+                                    "text": text,
+                                    "time": timestamp])
+                .subscribe { snapShot in
+                    observer.onNext(Chat(from: Owner.shared.id!, to: nil, text: text, time: timestamp))
+                    print("Log -", #fileID, #function, #line, "succ")
+                } onError: { err in
+                    print("Log -", #fileID, #function, #line, err.localizedDescription)
+                }
+            return Disposables.create()
+        }
+    }
     
-//    func connectToChatRoom(_ UUID: String) {
-//
-//    }
+    
+    func listenPrivateChatRoom(UUID: String) {
+        ref.child("privateChat/\(UUID)")
+    }
     
     
     //MARK: - Private Functions
@@ -142,5 +164,13 @@ class ChatUtility {
             
             return Disposables.create()
         }
+    }
+}
+
+
+extension DateFormatter {
+    func dateToDefaultFormat(date: Date) -> String {
+        self.dateFormat = "yyyyMMddHHmmssSSS"
+        return self.string(from: date)
     }
 }

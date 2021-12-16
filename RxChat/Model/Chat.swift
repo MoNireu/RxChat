@@ -12,9 +12,9 @@ class Chat {
     var from: String
     var to: String?
     var text: String
-    var time: Date
+    var time: String?
     
-    init(from: String, to: String?, text: String, time: Date) {
+    init(from: String, to: String?, text: String, time: String?) {
         self.from = from
         self.to = to
         self.text = text

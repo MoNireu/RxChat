@@ -85,7 +85,7 @@ class ChatRoomViewController: UIViewController, ViewModelBindableType {
         
         sendChatBtn.rx.tap
             .subscribe(onNext: { _ in
-                self.viewModel.snedChat(text: self.contextTextView.text)
+                self.viewModel.sendChat(text: self.contextTextView.text)
                 self.contextTextView.text = ""
             }).disposed(by: rx.disposeBag)
     }
