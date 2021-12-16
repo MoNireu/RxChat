@@ -32,7 +32,7 @@ class ChatRoomViewController: UIViewController, ViewModelBindableType {
         self.navigationItem.largeTitleDisplayMode = .never
         tableView.separatorColor = .clear
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 50
+        tableView.estimatedRowHeight = 80
         initContextTextView()
         initSendChatBtn()
     }
