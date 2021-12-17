@@ -13,14 +13,12 @@ import Action
 
 class FindUserViewModel: CommonViewModel {
     let disposeBag = DisposeBag()
-    var ownerInfo: Owner
     let friendListDelegate: FriendListViewModel
     var foundUser: User?
     lazy var foundUserSubject: BehaviorSubject<User?> = BehaviorSubject<User?>(value: foundUser)
     
     init(friendListDelegate: FriendListViewModel, sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil) {
         self.friendListDelegate = friendListDelegate
-        self.ownerInfo = friendListDelegate.myInfo
         super.init(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
     }
     
@@ -45,13 +43,14 @@ class FindUserViewModel: CommonViewModel {
         return CocoaAction { _ in
             return Observable.create { observer in
                 // Add Friend to Firestore
-                self.firebaseUtil.addFriend(ownerUID: self.ownerInfo.uid, newFriend: self.foundUser!)
+                self.firebaseUtil.addFriend(ownerUID: Owner.shared.uid, newFriend: self.foundUser!)
                     .subscribe(onCompleted: {
                         observer.onCompleted()
                         // TODO: TODO
                         // if add friend to firestore complete
                         // Add Friend to FriendListVC Tableview.
-                        self.friendListDelegate.myInfo.friendList.append(self.foundUser!)
+                        
+                        Owner.shared.friendList.updateValue(self.foundUser!, forKey: self.foundUser!.id!)
                         
                         let realmUtil = RealmUtil()
                         realmUtil.writeSingleFriend(friendInfo: self.foundUser!)

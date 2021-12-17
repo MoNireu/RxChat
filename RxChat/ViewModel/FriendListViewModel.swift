@@ -52,7 +52,7 @@ class FriendListViewModel: CommonViewModel {
     
     var friendListTableData = [
         SectionOfUserData(uniqueId: "Owner", header: "나", items: [Owner.shared as User]),
-        SectionOfUserData(uniqueId: "Friend", header: "친구(\(Owner.shared.friendList.count))", items: Owner.shared.friendList)
+        SectionOfUserData(uniqueId: "Friend", header: "친구(\(Owner.shared.friendList.count))", items: Array<User>(Owner.shared.friendList.values))
     ]
     
     override init(sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil) {
@@ -104,7 +104,7 @@ class FriendListViewModel: CommonViewModel {
     func setFriendListTableData() {
         friendListTableData = [
             SectionOfUserData(uniqueId: "Owner", header: "나", items: [Owner.shared as User]),
-            SectionOfUserData(uniqueId: "Friend", header: "친구(\(Owner.shared.friendList.count))", items: Owner.shared.friendList)
+            SectionOfUserData(uniqueId: "Friend", header: "친구(\(Owner.shared.friendList.count))", items: Array<User>(Owner.shared.friendList.values))
         ]
     }
     

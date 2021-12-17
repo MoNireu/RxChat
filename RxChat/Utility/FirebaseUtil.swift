@@ -63,12 +63,8 @@ class FirebaseUtil {
                                         
                                         self.downloadMyFriendList(uid)
                                             .subscribe(onNext: { friendList in
-                                                print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
-                                                print("Friend Amount: \(friendList.count)")
-                                                print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
-                                                
                                                 // Save friend list to Realm
-                                                self.realmUtil.writeFriendList(friendList: friendList)
+                                                self.realmUtil.writeFriendList(friendList: Array<User>(friendList.values))
                                                 
                                                 Owner.shared.friendList = friendList
                                                 observer.onNext(Owner.shared)
@@ -85,7 +81,7 @@ class FirebaseUtil {
                                                 print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
                                                 
                                                 // Save friend list to Realm
-                                                self.realmUtil.writeFriendList(friendList: friendList)
+                                                self.realmUtil.writeFriendList(friendList: Array<User>(friendList.values))
                                                 
                                                 Owner.shared.friendList = friendList
                                                 observer.onNext(Owner.shared)
@@ -104,7 +100,7 @@ class FirebaseUtil {
     }
     
     
-    func downloadMyFriendList(_ uid: String) -> Observable<[User]> {
+    func downloadMyFriendList(_ uid: String) -> Observable<[String: User]> {
         return Observable.create { observer in
             let colRef = self.db.collection("Users").document(uid).collection("Friends")
             colRef.rx
@@ -112,13 +108,19 @@ class FirebaseUtil {
                 .subscribe(onNext: { data in
                     let docs = data.documents
                     guard !docs.isEmpty else {
-                        observer.onNext([])
+                        observer.onNext([:])
                         return
                     }
                     var friendCount = docs.count
                     
                     // TODO: Get friend list from realm
-                    var friendList: [User] = self.realmUtil.readFriendList()
+                    var friendList: [String: User] = {
+                        var dict: [String: User] = [:]
+                        for user in self.realmUtil.readFriendList() {
+                            dict.updateValue(user, forKey: user.id!)
+                        }
+                        return dict
+                    }()
                     var isFriendEmpty = friendList.isEmpty
                     
                     
@@ -148,17 +150,13 @@ class FirebaseUtil {
                                 if needUpdate {
                                     self.findUser(friendID)
                                         .subscribe(onNext: { user in
-                                            if let index = friendList.firstIndex(of: user) {
-                                                friendList[index] = user
-                                                print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
-                                                print("friend already exist in realm")
-                                                print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
+                                            if friendList.keys.contains(user.id!) {
+                                                friendList[user.id!] = user
+                                                print("Log -", #fileID, #function, #line, "friend already exist in realm")
                                             }
                                             else {
-                                                friendList.append(user)
-                                                print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
-                                                print("friend does not exist in realm")
-                                                print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
+                                                friendList.updateValue(user, forKey: user.id!)
+                                                print("Log -", #fileID, #function, #line, "friend does not exist in realm")
                                             }
                                             checkFriendListComplete()
                                         }, onError: { _ in
@@ -438,7 +436,7 @@ class FirebaseUtil {
                             Owner.shared.email = email!
                             Owner.shared.id = nil
                             Owner.shared.profileImg = nil
-                            Owner.shared.friendList = []
+                            Owner.shared.friendList = [:]
                             observer.onNext(true)
                             print("User not exist")
                         }

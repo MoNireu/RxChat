@@ -34,17 +34,18 @@ class ChatRoomViewModel: CommonViewModel {
       configureCell: { dataSource, tableView, indexPath, item in
           // 내가 보낸 메시지
           if (item.from == Owner.shared.id) {
-              let cell = tableView.dequeueReusableCell(withIdentifier: "chatTextByOwner", for: indexPath) as? ChatRoomFromOwnerTableViewCell
-              cell?.chatBubbleLabel.text = item.text
-              cell?.timeLabel.text = item.time != nil ? convertTimeToDateFormat(timestamp: (item.time)!) : ""
-              return cell ?? UITableViewCell()
+              let chatTextByOwnerCell = tableView.dequeueReusableCell(withIdentifier: "chatTextByOwner", for: indexPath) as? ChatRoomFromOwnerTableViewCell
+              chatTextByOwnerCell?.chatBubbleLabel.text = item.text
+              chatTextByOwnerCell?.timeLabel.text = item.time != nil ? convertTimeToDateFormat(timestamp: (item.time)!) : ""
+              return chatTextByOwnerCell ?? UITableViewCell()
           }
           // 내가 받은 메시지
           else {
-              let cell = tableView.dequeueReusableCell(withIdentifier: "chatTextByFriend", for: indexPath) as? ChatRoomFromFriendTableViewCell
-              cell?.chatBubbleLabel.text = item.text
-              cell?.timeLabel.text = item.time != nil ? convertTimeToDateFormat(timestamp: (item.time)!) : ""
-              return cell ?? UITableViewCell()
+              let chatTextByFriendCell = tableView.dequeueReusableCell(withIdentifier: "chatTextByFriend", for: indexPath) as? ChatRoomFromFriendTableViewCell
+              chatTextByFriendCell?.chatBubbleLabel.text = item.text
+              chatTextByFriendCell?.timeLabel.text = item.time != nil ? convertTimeToDateFormat(timestamp: (item.time)!) : ""
+//              chatTextByFriendCell?.profileImage.image = Owner.shared.friendList[item.from]?.profileImg
+              return chatTextByFriendCell ?? UITableViewCell()
           }
     })
     

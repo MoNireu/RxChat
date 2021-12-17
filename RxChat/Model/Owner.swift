@@ -12,11 +12,11 @@ import RealmSwift
 
 class Owner: User {
     var uid: String
-    var friendList: [User]
+    var friendList: [String: User]
     var lastFriendListUpdateTime: Timestamp?
-    static let shared = Owner(uid: "", email: "", id: "", lastFriendListUpdateTime: nil, profileImg: nil, friendList: [])
+    static let shared = Owner(uid: "", email: "", id: "", lastFriendListUpdateTime: nil, profileImg: nil, friendList: [:])
     
-    private init(uid: String, email: String, id: String?, lastFriendListUpdateTime: Timestamp?, profileImg: UIImage?, friendList: [User]) {
+    private init(uid: String, email: String, id: String?, lastFriendListUpdateTime: Timestamp?, profileImg: UIImage?, friendList: [String: User]) {
         self.uid = uid
         self.friendList = friendList
         self.lastFriendListUpdateTime = lastFriendListUpdateTime
@@ -24,7 +24,7 @@ class Owner: User {
         super.init(id: id, email: email, profileImg: profileImg)
     }
     
-    class func sharedInit(uid: String, email: String, id: String?, lastFriendListUpdateTime: Timestamp?, profileImg: UIImage?, friendList: [User]) {
+    class func sharedInit(uid: String, email: String, id: String?, lastFriendListUpdateTime: Timestamp?, profileImg: UIImage?, friendList: [String: User]) {
         self.shared.uid = uid
         self.shared.email = email
         self.shared.id = id
