@@ -95,7 +95,8 @@ class ChatRoomViewController: UIViewController, ViewModelBindableType {
         
         viewModel.chatContextTableDataSubject
             .subscribe(onNext: { data in
-                let dataAmount = data.first?.items.count ?? 1
+                guard let dataAmount = data.first?.items.count else { return }
+                guard dataAmount != 0 else {return}
                 let indexPath = IndexPath(row: dataAmount-1, section: 0)
                 self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
             })

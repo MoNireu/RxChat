@@ -21,33 +21,49 @@ class ChatRoomViewModel: CommonViewModel {
     var chatContextTableDataSubject = PublishSubject<[SectionOfChatData]>()
     var disposeBag = DisposeBag()
     var chatUtility = ChatUtility()
+    var dataSource: RxTableViewSectionedReloadDataSource<SectionOfChatData>!
     
     init(sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil, chatRoom: ChatRoom) {
         self.chatRoom = chatRoom
         chatRoomTitleSubject = Driver<String>.just(chatRoom.title)
         super.init(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
+        setDataSource()
         addListenerToChatRoom()
     }
     
     
-    let dataSource = RxTableViewSectionedReloadDataSource<SectionOfChatData>(
-      configureCell: { dataSource, tableView, indexPath, item in
-          // 내가 보낸 메시지
-          if (item.from == Owner.shared.id) {
-              let chatTextByOwnerCell = tableView.dequeueReusableCell(withIdentifier: "chatTextByOwner", for: indexPath) as? ChatRoomFromOwnerTableViewCell
-              chatTextByOwnerCell?.chatBubbleLabel.text = item.text
-              chatTextByOwnerCell?.timeLabel.text = item.time != nil ? convertTimeToDateFormat(timestamp: (item.time)!) : ""
-              return chatTextByOwnerCell ?? UITableViewCell()
-          }
-          // 내가 받은 메시지
-          else {
-              let chatTextByFriendCell = tableView.dequeueReusableCell(withIdentifier: "chatTextByFriend", for: indexPath) as? ChatRoomFromFriendTableViewCell
-              chatTextByFriendCell?.chatBubbleLabel.text = item.text
-              chatTextByFriendCell?.timeLabel.text = item.time != nil ? convertTimeToDateFormat(timestamp: (item.time)!) : ""
-//              chatTextByFriendCell?.profileImage.image = Owner.shared.friendList[item.from]?.profileImg
-              return chatTextByFriendCell ?? UITableViewCell()
-          }
-    })
+    func setDataSource() {
+        dataSource = RxTableViewSectionedReloadDataSource<SectionOfChatData>(
+          configureCell: { dataSource, tableView, indexPath, item in
+              // 내가 보낸 메시지
+              if (item.from == Owner.shared.id) {
+                  let chatTextByOwnerCell = tableView.dequeueReusableCell(withIdentifier: "chatTextByOwner", for: indexPath) as? ChatRoomFromOwnerTableViewCell
+                  chatTextByOwnerCell?.chatBubbleLabel.text = item.text
+                  chatTextByOwnerCell?.timeLabel.text = item.time != nil ? item.time!.convertTimeToDateFormat() : ""
+                  return chatTextByOwnerCell ?? UITableViewCell()
+              }
+              // 내가 받은 메시지
+              else {
+                  let previousCellId = self.chatContextItemList[indexPath.row - 1].from
+                  let currentCellId = self.chatContextItemList[indexPath.row].from
+                  if previousCellId == currentCellId {
+                      let chatTextByFriendCell = tableView.dequeueReusableCell(withIdentifier: "chatTextByFriend", for: indexPath) as? ChatRoomFromFriendTableViewCell
+                      chatTextByFriendCell?.chatBubbleLabel.text = item.text
+                      chatTextByFriendCell?.timeLabel.text = item.time != nil ? item.time!.convertTimeToDateFormat() : ""
+                      
+                      return chatTextByFriendCell ?? UITableViewCell()
+                  }
+                  else {
+                      let chatTextByFriendWithProfileImageCell = tableView.dequeueReusableCell(withIdentifier: "chatTextByFriendWithProfileImage", for: indexPath) as? ChatRoomFromFriendWithProfileImageTableViewCell
+                      chatTextByFriendWithProfileImageCell?.chatBubbleLabel.text = item.text
+                      chatTextByFriendWithProfileImageCell?.timeLabel.text = item.time != nil ? item.time!.convertTimeToDateFormat() : ""
+                      chatTextByFriendWithProfileImageCell?.profileImage.image = Owner.shared.friendList[item.from]?.profileImg
+                      
+                      return chatTextByFriendWithProfileImageCell ?? UITableViewCell()
+                  }
+              }
+        })
+    }
     
     func addListenerToChatRoom() {
         chatUtility.addListenerToPrivateChatRoom(UUID: chatRoom.UUID)
@@ -61,6 +77,8 @@ class ChatRoomViewModel: CommonViewModel {
     func removeListenerFromChatRoom() {
         chatUtility.removeListenerFromPrivateChatRoom(UUID: chatRoom.UUID)
     }
+    
+    
     
     
     static func convertTimeToDateFormat(timestamp: String) -> String {
@@ -88,5 +106,18 @@ class ChatRoomViewModel: CommonViewModel {
         chatUtility.sendMessage(UUID: chatRoom.UUID, text: text)
             .subscribe(onNext: { _ in })
             .disposed(by: self.disposeBag)
+    }
+}
+
+
+extension String {
+    func convertTimeToDateFormat() -> String {
+        let hourStartIdx = self.index(self.startIndex, offsetBy: 8)
+        let hourEndIdx = self.index(self.startIndex, offsetBy: 9)
+        let minuteStartIdx = self.index(self.startIndex, offsetBy: 10)
+        let minuteEndIdx = self.index(self.startIndex, offsetBy: 11)
+        let hour = self[hourStartIdx...hourEndIdx]
+        let minute = self[minuteStartIdx...minuteEndIdx]
+        return "\(hour):\(minute)"
     }
 }
