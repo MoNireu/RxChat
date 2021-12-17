@@ -44,7 +44,10 @@ class ChatRoomViewModel: CommonViewModel {
               }
               // 내가 받은 메시지
               else {
-                  let previousCellId = self.chatContextItemList[indexPath.row - 1].from
+                  let previousCellId: String = {
+                      if indexPath.row == 0 {return ""}
+                      else { return self.chatContextItemList[indexPath.row - 1].from }
+                  }()
                   let currentCellId = self.chatContextItemList[indexPath.row].from
                   if previousCellId == currentCellId {
                       let chatTextByFriendCell = tableView.dequeueReusableCell(withIdentifier: "chatTextByFriend", for: indexPath) as? ChatRoomFromFriendTableViewCell
@@ -58,6 +61,7 @@ class ChatRoomViewModel: CommonViewModel {
                       chatTextByFriendWithProfileImageCell?.chatBubbleLabel.text = item.text
                       chatTextByFriendWithProfileImageCell?.timeLabel.text = item.time != nil ? item.time!.convertTimeToDateFormat() : ""
                       chatTextByFriendWithProfileImageCell?.profileImage.image = Owner.shared.friendList[item.from]?.profileImg
+                      chatTextByFriendWithProfileImageCell?.idLabel.text = item.from
                       
                       return chatTextByFriendWithProfileImageCell ?? UITableViewCell()
                   }

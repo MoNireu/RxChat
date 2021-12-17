@@ -18,7 +18,7 @@ class ChatRoomFromOwnerTableViewCell: UITableViewCell {
         
         chatBubbleBackgroundView.backgroundColor = .systemGray6
         chatBubbleBackgroundView.setCornerRadius(value: 0.03)
-        // Initialization code
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
