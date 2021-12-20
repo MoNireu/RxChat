@@ -107,6 +107,7 @@ class ChatUtility {
             let timestamp =  DateFormatter().dateToDefaultFormat(date:Date())
             let newChatId = timestamp + Owner.shared.id!
             print("Log -", #fileID, #function, #line, newChatId)
+            
             self.ref.child("privateChat/\(UUID)")
                 .child("chats")
                 .child(newChatId)
@@ -114,14 +115,27 @@ class ChatUtility {
                 .updateChildValues(["from": Owner.shared.id!,
                                     "text": text,
                                     "time": timestamp])
-                .subscribe { snapShot in
-                    observer.onNext(Chat(from: Owner.shared.id!, to: nil, text: text, time: timestamp))
+                .subscribe { _ in
+                    let chat = Chat(from: Owner.shared.id!, to: nil, text: text, time: timestamp)
+                    self.setLastMessage(UUID: UUID, chat: chat)
+                    observer.onNext(chat)
                     print("Log -", #fileID, #function, #line, "succ")
                 } onError: { err in
                     print("Log -", #fileID, #function, #line, err.localizedDescription)
                 }
             return Disposables.create()
         }
+    }
+    
+    func setLastMessage(UUID: String, chat: Chat) {
+        self.ref.child("privateLastMessage/\(UUID)")
+            .rx
+            .updateChildValues(["from": Owner.shared.id!,
+                                "text": chat.text,
+                                "time": chat.time])
+            .subscribe { _ in } onError: { _ in }
+            .disposed(by: self.disposeBag)
+
     }
     
     
