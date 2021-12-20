@@ -87,7 +87,7 @@ class FriendListViewModel: CommonViewModel {
                 print("Error signing out: %@", signOutError)
             }
             GIDSignIn.sharedInstance.signOut()
-            RealmUtil().deleteAll()
+            RealmUtil.shared.deleteAll()
             
             let signInViewModel = SignInViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
             let signInScene = Scene.signIn(signInViewModel)
@@ -136,14 +136,17 @@ class FriendListViewModel: CommonViewModel {
                 .subscribe(onNext: { retrivedChatRoomUUID in
                     if let privateChatRoomUUID = retrivedChatRoomUUID {
                         // 기존 채팅방이 있을 경우 해당 채팅방으로 이동
-                        chatUtil.createChatRoomObjectBy(UUID: privateChatRoomUUID, chatRoomType: .privateRoom)
-                            .subscribe(onNext: { chatRoom in
-                                let chatRoomViewModel = ChatRoomViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil, chatRoom: chatRoom)
-                                let chatRoomScene = Scene.chatRoom(chatRoomViewModel)
-                                self.sceneCoordinator.transition(to: chatRoomScene, using: .push, animated: true)
-                                isTransToChatRoomComplete.onNext(indexPath)
-                                print("Connecting to room number: \(chatRoom.UUID)")
-                            }).disposed(by: self.disposeBag)
+                        let chatRoom = RealmUtil.shared.readChatRoom(UUID: privateChatRoomUUID)!
+                        let chatRoomViewModel = ChatRoomViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil, chatRoom: chatRoom)
+                        let chatRoomScene = Scene.chatRoom(chatRoomViewModel)
+                        self.sceneCoordinator.transition(to: chatRoomScene, using: .push, animated: true)
+                        isTransToChatRoomComplete.onNext(indexPath)
+                        print("Connecting to room number: \(chatRoom.UUID)")
+                        
+//                        chatUtil.createChatRoomObjectBy(UUID: privateChatRoomUUID, chatRoomType: .privateRoom)
+//                            .subscribe(onNext: { chatRoom in
+//
+//                            }).disposed(by: self.disposeBag)
                     }
                     else {
                         // 기존 채팅룸이 없을 경우 방을 새로 만듬.

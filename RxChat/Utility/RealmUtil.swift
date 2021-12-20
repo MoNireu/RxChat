@@ -18,6 +18,8 @@ class RealmUtil {
         print("Realm is located at:", realm.configuration.fileURL!)
     }
     
+    static let shared = RealmUtil()
+    
     
     // MARK: - Class Convert Functions
     private func convertUserClassToUserRealm(user: User) -> UserRealm {
@@ -90,8 +92,40 @@ class RealmUtil {
     
     
     func deleteAll() {
-            try! realm.write {
-                realm.deleteAll()
-            }
+        try! realm.write {
+            realm.deleteAll()
         }
+    }
+    
+    
+    
+    // MARK: - ChatRoom CRUD
+    func readChatRoom(UUID: String) -> ChatRoom? {
+        guard let chatRoomRealm = realm.objects(ChatRoomRealm.self).where({$0.UUID == UUID}).first
+        else { return nil }
+        
+        let chatRoom = ChatRoom(chatRoomRealm: chatRoomRealm)
+        
+        return chatRoom
+    }
+    
+    
+    func writeChatRoom(chatRoom: ChatRoom) {
+        try! realm.write {
+            guard let chatRoomRealm = realm.objects(ChatRoomRealm.self).where({$0.UUID == chatRoom.UUID}).first
+            else {
+                let chatRoomRealm = ChatRoomRealm(chatRoom: chatRoom)
+                realm.add(chatRoomRealm, update: .modified)
+                return
+            }
+            chatRoomRealm.chats.append(objectsIn: chatRoom.chats)
+            realm.add(chatRoomRealm, update: .modified)
+//            let chatRoomRealm = ChatRoomRealm(chatRoom: chatRoom)
+//            realm.add(chatRoomRealm, update: .all)
+        }
+    }
+    
+    
+    // MARK: - Chat CRUD
+    
 }

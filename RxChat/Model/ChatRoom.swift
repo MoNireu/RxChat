@@ -12,6 +12,7 @@ enum ChatRoomType: String {
 
 
 import Foundation
+import RealmSwift
 
 
 class ChatRoom {
@@ -27,5 +28,38 @@ class ChatRoom {
         self.chatRoomType = chatRoomType
         self.members = members
         self.chats = chats
+    }
+    
+    init(chatRoomRealm: ChatRoomRealm) {
+        self.UUID = chatRoomRealm.UUID
+        self.title = chatRoomRealm.title
+        self.chatRoomType = ChatRoomType(rawValue: chatRoomRealm.chatRoomType)!
+        self.members = Array(chatRoomRealm.members)
+        self.chats = Array(chatRoomRealm.chats)
+    }
+}
+
+
+
+class ChatRoomRealm: Object {
+    @Persisted var UUID: String
+    @Persisted var title: String
+    @Persisted var chatRoomType: String
+    @Persisted var members: List<String>
+    @Persisted var chats: List<Chat>
+    
+    override static func primaryKey() -> String? {
+        return "UUID"
+    }
+    
+    convenience init(chatRoom: ChatRoom) {
+        self.init()
+        self.UUID = chatRoom.UUID
+        self.title = chatRoom.title
+        self.chatRoomType = chatRoom.chatRoomType.rawValue
+        self.members = List<String>()
+        self.members.append(objectsIn: chatRoom.members)
+        self.chats = List<Chat>()
+        self.chats.append(objectsIn: chatRoom.chats)
     }
 }

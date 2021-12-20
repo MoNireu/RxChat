@@ -7,19 +7,25 @@
 
 import Foundation
 import RxDataSources
+import RealmSwift
 
-class Chat {
-    var from: String
-    var to: String?
-    var text: String
-    var time: String?
+class Chat: EmbeddedObject {
+    @Persisted var id: String
+    @Persisted var from: String
+    @Persisted var to: String?
+    @Persisted var text: String
+    @Persisted var time: String?
     
-    init(from: String, to: String?, text: String, time: String?) {
+    convenience init(from: String, to: String?, text: String, time: String?) {
+        self.init()
+        self.id = time ?? "" + from
         self.from = from
         self.to = to
         self.text = text
         self.time = time
     }
+    
+    
 }
 
 

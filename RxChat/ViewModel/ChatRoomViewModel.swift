@@ -13,67 +13,108 @@ import Action
 import FirebaseDatabase
 
 class ChatRoomViewModel: CommonViewModel {
-
+    
     var chatRoom: ChatRoom
     var chatRoomTitleSubject: Driver<String>
-    var chatContextItemList: [Chat] = []
+    var newChats: [Chat] = []
+    var sendingChats: [Chat] = []
     var chatContextTableData: [SectionOfChatData]!
     var chatContextTableDataSubject = PublishSubject<[SectionOfChatData]>()
     var disposeBag = DisposeBag()
     var chatUtility = ChatUtility()
     var dataSource: RxTableViewSectionedReloadDataSource<SectionOfChatData>!
+    var isListenerPreventedOnInit = false
     
     init(sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil, chatRoom: ChatRoom) {
         self.chatRoom = chatRoom
         chatRoomTitleSubject = Driver<String>.just(chatRoom.title)
         super.init(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
         setDataSource()
-        addListenerToChatRoom()
+        initDownloadPrivateChat()
     }
     
     
     func setDataSource() {
         dataSource = RxTableViewSectionedReloadDataSource<SectionOfChatData>(
-          configureCell: { dataSource, tableView, indexPath, item in
-              // 내가 보낸 메시지
-              if (item.from == Owner.shared.id) {
-                  let chatTextByOwnerCell = tableView.dequeueReusableCell(withIdentifier: "chatTextByOwner", for: indexPath) as? ChatRoomFromOwnerTableViewCell
-                  chatTextByOwnerCell?.chatBubbleLabel.text = item.text
-                  chatTextByOwnerCell?.timeLabel.text = item.time != nil ? item.time!.convertTimeToDateFormat() : ""
-                  return chatTextByOwnerCell ?? UITableViewCell()
-              }
-              // 내가 받은 메시지
-              else {
-                  let previousCellId: String = {
-                      if indexPath.row == 0 {return ""}
-                      else { return self.chatContextItemList[indexPath.row - 1].from }
-                  }()
-                  let currentCellId = self.chatContextItemList[indexPath.row].from
-                  if previousCellId == currentCellId {
-                      let chatTextByFriendCell = tableView.dequeueReusableCell(withIdentifier: "chatTextByFriend", for: indexPath) as? ChatRoomFromFriendTableViewCell
-                      chatTextByFriendCell?.chatBubbleLabel.text = item.text
-                      chatTextByFriendCell?.timeLabel.text = item.time != nil ? item.time!.convertTimeToDateFormat() : ""
-                      
-                      return chatTextByFriendCell ?? UITableViewCell()
-                  }
-                  else {
-                      let chatTextByFriendWithProfileImageCell = tableView.dequeueReusableCell(withIdentifier: "chatTextByFriendWithProfileImage", for: indexPath) as? ChatRoomFromFriendWithProfileImageTableViewCell
-                      chatTextByFriendWithProfileImageCell?.chatBubbleLabel.text = item.text
-                      chatTextByFriendWithProfileImageCell?.timeLabel.text = item.time != nil ? item.time!.convertTimeToDateFormat() : ""
-                      chatTextByFriendWithProfileImageCell?.profileImage.image = Owner.shared.friendList[item.from]?.profileImg
-                      chatTextByFriendWithProfileImageCell?.idLabel.text = item.from
-                      
-                      return chatTextByFriendWithProfileImageCell ?? UITableViewCell()
-                  }
-              }
-        })
+            configureCell: { dataSource, tableView, indexPath, item in
+                // 내가 보낸 메시지
+                if (item.from == Owner.shared.id) {
+                    let chatTextByOwnerCell = tableView.dequeueReusableCell(withIdentifier: "chatTextByOwner", for: indexPath) as? ChatRoomFromOwnerTableViewCell
+                    chatTextByOwnerCell?.chatBubbleLabel.text = item.text
+                    chatTextByOwnerCell?.timeLabel.text = item.time != nil ? item.time!.convertTimeToDateFormat() : ""
+                    return chatTextByOwnerCell ?? UITableViewCell()
+                }
+                // 내가 받은 메시지
+                else {
+                    let previousCellId: String = {
+                        if indexPath.row == 0 {return ""}
+                        else { return self.chatRoom.chats[indexPath.row - 1].from }
+                    }()
+                    let currentCellId = self.chatRoom.chats[indexPath.row].from
+                    if previousCellId == currentCellId {
+                        let chatTextByFriendCell = tableView.dequeueReusableCell(withIdentifier: "chatTextByFriend", for: indexPath) as? ChatRoomFromFriendTableViewCell
+                        chatTextByFriendCell?.chatBubbleLabel.text = item.text
+                        chatTextByFriendCell?.timeLabel.text = item.time != nil ? item.time!.convertTimeToDateFormat() : ""
+                        
+                        return chatTextByFriendCell ?? UITableViewCell()
+                    }
+                    else {
+                        let chatTextByFriendWithProfileImageCell = tableView.dequeueReusableCell(withIdentifier: "chatTextByFriendWithProfileImage", for: indexPath) as? ChatRoomFromFriendWithProfileImageTableViewCell
+                        chatTextByFriendWithProfileImageCell?.chatBubbleLabel.text = item.text
+                        chatTextByFriendWithProfileImageCell?.timeLabel.text = item.time != nil ? item.time!.convertTimeToDateFormat() : ""
+                        chatTextByFriendWithProfileImageCell?.profileImage.image = Owner.shared.friendList[item.from]?.profileImg
+                        chatTextByFriendWithProfileImageCell?.idLabel.text = item.from
+                        
+                        return chatTextByFriendWithProfileImageCell ?? UITableViewCell()
+                    }
+                }
+            })
+    }
+    
+    func initDownloadPrivateChat() {
+        let lastChatId: String? = {
+            if chatRoom.chats.count == 0 {return nil}
+            let lastChat = chatRoom.chats.last!
+            return lastChat.time! + lastChat.from
+        }()
+        
+        chatUtility.getPrivateChatFrom(UUID: chatRoom.UUID, fromId: lastChatId)
+            .subscribe(onNext: { chatList in
+                print("Log -", #fileID, #function, #line, chatList)
+                guard chatList.count != 0 else {
+                    self.addListenerToChatRoom()
+                    return
+                }
+                let downloadedPrivateChat: [Chat] = {
+                    print("Log -", #fileID, #function, #line, lastChatId)
+                    if lastChatId == nil { return chatList}
+                    else {
+                        var chatListFirstRemoved = chatList
+                        chatListFirstRemoved.remove(at: 0)
+                        return chatListFirstRemoved
+                    }
+                }()
+                self.newChats.append(contentsOf: downloadedPrivateChat)
+                self.addListenerToChatRoom()
+            })
+            .disposed(by: self.disposeBag)
     }
     
     func addListenerToChatRoom() {
         chatUtility.addListenerToPrivateChatRoom(UUID: chatRoom.UUID)
-            .subscribe(onNext: { chatList in
-                print("Log -", #fileID, #function, #line, "")
-                self.chatContextItemList = chatList
+            .subscribe(onNext: { chat in
+                guard self.isListenerPreventedOnInit else {
+                    self.isListenerPreventedOnInit = true
+                    self.refreshTableView()
+                    return
+                }
+                
+                guard let chat = chat else {return}
+                self.newChats.append(chat)
+                // 전송 중인 채팅 있음
+                if chat.from == Owner.shared.id {
+                    self.sendingChats.removeFirst()
+                }
                 self.refreshTableView()
             }).disposed(by: self.disposeBag)
     }
@@ -81,7 +122,6 @@ class ChatRoomViewModel: CommonViewModel {
     func removeListenerFromChatRoom() {
         chatUtility.removeListenerFromPrivateChatRoom(UUID: chatRoom.UUID)
     }
-    
     
     
     
@@ -97,19 +137,24 @@ class ChatRoomViewModel: CommonViewModel {
     
     
     func refreshTableView() {
-        self.chatContextTableData = [SectionOfChatData(header: "", items: self.chatContextItemList)]
+        self.chatContextTableData = [SectionOfChatData(header: "", items: self.chatRoom.chats + self.newChats + self.sendingChats)]
         self.chatContextTableDataSubject.onNext(self.chatContextTableData)
     }
     
     
     func sendChat(text: String) {
         let tmpChat = Chat(from: Owner.shared.id!, to: nil, text: text, time: nil)
-        self.chatContextItemList.append(tmpChat)
+        self.sendingChats.append(tmpChat)
         refreshTableView()
         
         chatUtility.sendMessage(UUID: chatRoom.UUID, text: text)
-            .subscribe(onNext: { _ in })
+            .subscribe(onNext: { _ in})
             .disposed(by: self.disposeBag)
+    }
+    
+    func writeChatRoom() {
+        self.chatRoom.chats = newChats
+        RealmUtil.shared.writeChatRoom(chatRoom: self.chatRoom)
     }
 }
 

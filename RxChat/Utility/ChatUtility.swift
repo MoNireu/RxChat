@@ -138,13 +138,13 @@ class ChatUtility {
 
     }
     
-    
-    func addListenerToPrivateChatRoom(UUID: String) -> Observable<[Chat]> {
+    func getPrivateChatFrom(UUID: String, fromId: String? = nil) -> Observable<[Chat]> {
         return Observable.create { observer in
             self.ref.child("privateChat/\(UUID)/chats")
+                .queryStarting(atValue: nil, childKey: fromId)
                 .rx
-                .observeEvent(.value)
-                .subscribe(onNext: { snapShot in
+                .observeSingleEvent(.value)
+                .subscribe(onSuccess: { snapShot in
                     guard snapShot.exists() else {
                         print("Log -", #fileID, #function, #line, "No Chats in ChatRoom")
                         observer.onNext([])
@@ -164,6 +164,33 @@ class ChatUtility {
                     }
                     chatList.sort(by: {Int($0.time!)! < Int($1.time!)!})
                     observer.onNext(chatList)
+                }).disposed(by: self.disposeBag)
+            return Disposables.create()
+        }
+    }
+    
+    
+    
+    func addListenerToPrivateChatRoom(UUID: String) -> Observable<Chat?> {
+        return Observable.create { observer in
+            self.ref.child("privateChat/\(UUID)/chats")
+                .queryLimited(toLast: 1)
+                .rx
+                .observeEvent(.value)
+                .subscribe(onNext: { snapShot in
+                    // 방을 처음 만들었을 떄
+                    guard snapShot.exists() else {
+                        print("Log -", #fileID, #function, #line, "No Chats in ChatRoom")
+                        observer.onNext(nil)
+                        return
+                    }
+                    let snapShotDict = snapShot.value as? [String: Any]
+                    let chatData = snapShotDict!.values.first as! [String: String]
+                    let from = chatData["from"]!
+                    let text = chatData["text"]!
+                    let time = chatData["time"]!
+                    let chat = Chat(from: from, to: nil, text: text, time: time)
+                    observer.onNext(chat)
                 }).disposed(by: self.disposeBag)
             return Disposables.create()
         }
