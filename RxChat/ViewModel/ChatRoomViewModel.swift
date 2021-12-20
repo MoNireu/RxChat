@@ -18,6 +18,7 @@ class ChatRoomViewModel: CommonViewModel {
     var chatRoomTitleSubject: Driver<String>
     var newChats: [Chat] = []
     var sendingChats: [Chat] = []
+    var combinedChats: [Chat] = []
     var chatContextTableData: [SectionOfChatData]!
     var chatContextTableDataSubject = PublishSubject<[SectionOfChatData]>()
     var disposeBag = DisposeBag()
@@ -48,9 +49,9 @@ class ChatRoomViewModel: CommonViewModel {
                 else {
                     let previousCellId: String = {
                         if indexPath.row == 0 {return ""}
-                        else { return self.chatRoom.chats[indexPath.row - 1].from }
+                        else { return self.combinedChats[indexPath.row - 1].from }
                     }()
-                    let currentCellId = self.chatRoom.chats[indexPath.row].from
+                    let currentCellId = self.combinedChats[indexPath.row].from
                     if previousCellId == currentCellId {
                         let chatTextByFriendCell = tableView.dequeueReusableCell(withIdentifier: "chatTextByFriend", for: indexPath) as? ChatRoomFromFriendTableViewCell
                         chatTextByFriendCell?.chatBubbleLabel.text = item.text
@@ -137,7 +138,8 @@ class ChatRoomViewModel: CommonViewModel {
     
     
     func refreshTableView() {
-        self.chatContextTableData = [SectionOfChatData(header: "", items: self.chatRoom.chats + self.newChats + self.sendingChats)]
+        combinedChats = self.chatRoom.chats + self.newChats + self.sendingChats
+        self.chatContextTableData = [SectionOfChatData(header: "", items: combinedChats)]
         self.chatContextTableDataSubject.onNext(self.chatContextTableData)
     }
     
