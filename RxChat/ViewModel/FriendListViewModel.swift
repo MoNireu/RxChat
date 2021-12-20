@@ -136,17 +136,28 @@ class FriendListViewModel: CommonViewModel {
                 .subscribe(onNext: { retrivedChatRoomUUID in
                     if let privateChatRoomUUID = retrivedChatRoomUUID {
                         // 기존 채팅방이 있을 경우 해당 채팅방으로 이동
-                        let chatRoom = RealmUtil.shared.readChatRoom(UUID: privateChatRoomUUID)!
-                        let chatRoomViewModel = ChatRoomViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil, chatRoom: chatRoom)
-                        let chatRoomScene = Scene.chatRoom(chatRoomViewModel)
-                        self.sceneCoordinator.transition(to: chatRoomScene, using: .push, animated: true)
-                        isTransToChatRoomComplete.onNext(indexPath)
-                        print("Connecting to room number: \(chatRoom.UUID)")
+                        let chatRoom: Observable<ChatRoom> = {
+                            return Observable.create { observer in
+                                let chatRoomObject = RealmUtil.shared.readChatRoom(UUID: privateChatRoomUUID)
+                                guard let chatRoomObject = RealmUtil.shared.readChatRoom(UUID: privateChatRoomUUID) else {
+                                    chatUtil.createChatRoomObjectBy(UUID: privateChatRoomUUID, chatRoomType: .privateRoom)
+                                        .subscribe(onNext: { chatRoomObject in
+                                            observer.onNext(chatRoomObject)
+                                        }).disposed(by: self.disposeBag)
+                                    return Disposables.create()
+                                }
+                                observer.onNext(chatRoomObject)
+                                return Disposables.create()
+                            }
+                        }()
                         
-//                        chatUtil.createChatRoomObjectBy(UUID: privateChatRoomUUID, chatRoomType: .privateRoom)
-//                            .subscribe(onNext: { chatRoom in
-//
-//                            }).disposed(by: self.disposeBag)
+                        chatRoom.subscribe(onNext: { chatRoom in
+                            let chatRoomViewModel = ChatRoomViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil, chatRoom: chatRoom)
+                            let chatRoomScene = Scene.chatRoom(chatRoomViewModel)
+                            self.sceneCoordinator.transition(to: chatRoomScene, using: .push, animated: true)
+                            isTransToChatRoomComplete.onNext(indexPath)
+                            print("Connecting to room number: \(chatRoom.UUID)")
+                        }).disposed(by: self.disposeBag)
                     }
                     else {
                         // 기존 채팅룸이 없을 경우 방을 새로 만듬.
@@ -167,6 +178,10 @@ class FriendListViewModel: CommonViewModel {
             return Observable.empty()
         }
     }()
+    
+    private func transitionToChatRoom() {
+        
+    }
     
     
 }
