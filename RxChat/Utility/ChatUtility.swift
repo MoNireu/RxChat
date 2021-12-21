@@ -14,7 +14,7 @@ import RealmSwift
 
 
 class ChatUtility {
-    
+    static let shared = ChatUtility()
     var disposeBag = DisposeBag()
     private var ref = Database.database(url: "https://rxchat-f485a-default-rtdb.asia-southeast1.firebasedatabase.app/").reference()
     let myId = Owner.shared.id!
@@ -121,7 +121,7 @@ class ChatUtility {
                     print("Log -", #fileID, #function, #line, "succ")
                 } onError: { err in
                     print("Log -", #fileID, #function, #line, err.localizedDescription)
-                }
+                }.disposed(by: self.disposeBag)
             return Disposables.create()
         }
     }
@@ -187,7 +187,22 @@ class ChatUtility {
         }
     }
     
-    func addListenerToPrivateLastMessage(UUIDList: [String]) -> Observable<[String: Chat]?> {
+    
+    /// Owner의 PrivateRoom이 새로 생성되는지 확인 후 반환.
+    /// - Returns: 새로 생성된 방의 정보 [상대 UserId: RoomUUID]
+    func listenOwnerPrivateRoom() -> Observable<[String: String]> {
+        return Observable.create { observer in
+            self.ref.child("users/\(Owner.shared.id!)/privateChat")
+                .rx
+                .observeEvent(.childAdded)
+                .subscribe(onNext: { snapShot in
+                    observer.onNext([snapShot.key: snapShot.value as! String])
+                }).disposed(by: self.disposeBag)
+            return Disposables.create()
+        }
+    }
+    
+    func listenPrivateLastMessage(UUIDList: [String]) -> Observable<[String: Chat]?> {
         return Observable.create { observer in
             for roomUUID in UUIDList {
                 self.ref.child("privateLastMessage")
@@ -210,7 +225,7 @@ class ChatUtility {
     
     
     
-    func addListenerToPrivateChatRoom(UUID: String) -> Observable<Chat?> {
+    func listenPrivateChatRoom(UUID: String) -> Observable<Chat?> {
         return Observable.create { observer in
             self.ref.child("privateChat/\(UUID)/chats")
                 .queryLimited(toLast: 1)

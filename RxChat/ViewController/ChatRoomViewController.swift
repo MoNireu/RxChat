@@ -69,11 +69,6 @@ class ChatRoomViewController: UIViewController, ViewModelBindableType {
         self.bottomBarHeightConstraint.constant = BOTTOM_BAR_DEFAULT_HEIGHT + extraSpaceByLine
     }
     
-//    private func addAdditionalHeightToChatBubble(line: Int) {
-//        tableView.cell
-//        guard let font = self.contextTextView.font else { return }
-//        let extraSpaceByLine = font.lineHeight * CGFloat(line - 1)
-//    }
 
     func bindViewModel() {
         viewModel.chatRoomTitleSubject

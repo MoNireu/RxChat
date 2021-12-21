@@ -22,9 +22,6 @@ class FriendListViewModel: CommonViewModel {
     var profileInfoSubject: BehaviorSubject<[SectionOfUserData]>
     var isTransToChatRoomComplete: BehaviorSubject<IndexPath>
     var disposeBag = DisposeBag()
-    lazy var chatUtil = {
-        return ChatUtility()
-    }()
     
     let dataSource: RxTableViewSectionedAnimatedDataSource<SectionOfUserData> = {
         let ds = RxTableViewSectionedAnimatedDataSource<SectionOfUserData>(
@@ -132,7 +129,7 @@ class FriendListViewModel: CommonViewModel {
             
             
             // 기존 채팅방이 있는지 확인
-            chatUtil.getPrivateChatRoomUUID(friendId: selectedFriend.id!)
+            ChatUtility.shared.getPrivateChatRoomUUID(friendId: selectedFriend.id!)
                 .subscribe(onNext: { retrivedChatRoomUUID in
                     if let privateChatRoomUUID = retrivedChatRoomUUID {
                         // 기존 채팅방이 있을 경우 해당 채팅방으로 이동
@@ -140,7 +137,7 @@ class FriendListViewModel: CommonViewModel {
                             return Observable.create { observer in
                                 let chatRoomObject = RealmUtil.shared.readChatRoom(UUID: privateChatRoomUUID)
                                 guard let chatRoomObject = RealmUtil.shared.readChatRoom(UUID: privateChatRoomUUID) else {
-                                    chatUtil.createChatRoomObjectBy(UUID: privateChatRoomUUID, chatRoomType: .privateRoom)
+                                    ChatUtility.shared.createChatRoomObjectBy(UUID: privateChatRoomUUID, chatRoomType: .privateRoom)
                                         .subscribe(onNext: { chatRoomObject in
                                             observer.onNext(chatRoomObject)
                                         }).disposed(by: self.disposeBag)
@@ -161,10 +158,10 @@ class FriendListViewModel: CommonViewModel {
                     }
                     else {
                         // 기존 채팅룸이 없을 경우 방을 새로 만듬.
-                        chatUtil.createPrivateChatRoom(friendId: selectedFriend.id!)
+                        ChatUtility.shared.createPrivateChatRoom(friendId: selectedFriend.id!)
                             .subscribe(onNext: { chatRoomUUID in
                                 // 채팅방으로 이동.
-                                chatUtil.createChatRoomObjectBy(UUID: chatRoomUUID, chatRoomType: .privateRoom)
+                                ChatUtility.shared.createChatRoomObjectBy(UUID: chatRoomUUID, chatRoomType: .privateRoom)
                                     .subscribe(onNext: { chatRoom in
                                         let chatRoomViewModel = ChatRoomViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil, chatRoom: chatRoom)
                                         let chatRoomScene = Scene.chatRoom(chatRoomViewModel)

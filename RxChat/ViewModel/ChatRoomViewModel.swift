@@ -22,7 +22,6 @@ class ChatRoomViewModel: CommonViewModel {
     var chatContextTableData: [SectionOfChatData]!
     var chatContextTableDataSubject = PublishSubject<[SectionOfChatData]>()
     var disposeBag = DisposeBag()
-    var chatUtility = ChatUtility()
     var dataSource: RxTableViewSectionedReloadDataSource<SectionOfChatData>!
     var isListenerPreventedOnInit = false
     
@@ -79,7 +78,7 @@ class ChatRoomViewModel: CommonViewModel {
             return lastChat.time! + lastChat.from
         }()
         
-        chatUtility.getPrivateChatFrom(UUID: chatRoom.UUID, fromId: lastChatId)
+        ChatUtility.shared.getPrivateChatFrom(UUID: chatRoom.UUID, fromId: lastChatId)
             .subscribe(onNext: { chatList in
                 print("Log -", #fileID, #function, #line, chatList)
                 guard chatList.count != 0 else {
@@ -102,7 +101,7 @@ class ChatRoomViewModel: CommonViewModel {
     }
     
     func addListenerToChatRoom() {
-        chatUtility.addListenerToPrivateChatRoom(UUID: chatRoom.UUID)
+        ChatUtility.shared.listenPrivateChatRoom(UUID: chatRoom.UUID)
             .subscribe(onNext: { chat in
                 guard self.isListenerPreventedOnInit else {
                     self.isListenerPreventedOnInit = true
@@ -121,7 +120,7 @@ class ChatRoomViewModel: CommonViewModel {
     }
     
     func removeListenerFromChatRoom() {
-        chatUtility.removeListenerFromPrivateChatRoom(UUID: chatRoom.UUID)
+        ChatUtility.shared.removeListenerFromPrivateChatRoom(UUID: chatRoom.UUID)
     }
     
     
@@ -149,7 +148,7 @@ class ChatRoomViewModel: CommonViewModel {
         self.sendingChats.append(tmpChat)
         refreshTableView()
         
-        chatUtility.sendMessage(UUID: chatRoom.UUID, text: text)
+        ChatUtility.shared.sendMessage(UUID: chatRoom.UUID, text: text)
             .subscribe(onNext: { _ in})
             .disposed(by: self.disposeBag)
     }
