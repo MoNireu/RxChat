@@ -145,7 +145,7 @@ class ChatRoomViewModel: CommonViewModel {
     
     
     func sendChat(text: String) {
-        let tmpChat = Chat(from: Owner.shared.id!, to: nil, text: text, time: nil)
+        let tmpChat = Chat(from: Owner.shared.id!,text: text, time: nil)
         self.sendingChats.append(tmpChat)
         refreshTableView()
         

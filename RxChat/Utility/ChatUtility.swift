@@ -22,7 +22,6 @@ class ChatUtility {
     func createPrivateChatRoom(friendId: String) -> Observable<String> {
         return Observable.create { observer in
             let chatUUID = UUID().uuidString
-            
             // 내 개인채팅 목록에 상대 추가
             self.ref.child("users")
                 .child(self.myId)
@@ -116,7 +115,7 @@ class ChatUtility {
                                     "text": text,
                                     "time": timestamp])
                 .subscribe { _ in
-                    let chat = Chat(from: Owner.shared.id!, to: nil, text: text, time: timestamp)
+                    let chat = Chat(from: Owner.shared.id!, text: text, time: timestamp)
                     self.setLastMessage(UUID: UUID, chat: chat)
                     observer.onNext(chat)
                     print("Log -", #fileID, #function, #line, "succ")
@@ -159,12 +158,52 @@ class ChatUtility {
                         let from = chatDict["from"]!
                         let text = chatDict["text"]!
                         let time = chatDict["time"]!
-                        let chat = Chat(from: from, to: nil, text: text, time: time)
+                        let chat = Chat(from: from, text: text, time: time)
                         chatList.append(chat)
                     }
                     chatList.sort(by: {Int($0.time!)! < Int($1.time!)!})
                     observer.onNext(chatList)
                 }).disposed(by: self.disposeBag)
+            return Disposables.create()
+        }
+    }
+    
+    
+    func getPrivateChatRoomUUIDDict() -> Observable<[String: String]> {
+        return Observable.create { observer in
+            self.ref.child("users/\(Owner.shared.id!)/privateChat")
+                .rx
+                .observeSingleEvent(.value)
+                .subscribe { snapShot in
+                    guard let chatRoomDict = snapShot.value as? [String: String] else {
+                        observer.onNext([:])
+                        return
+                    }
+                    observer.onNext(chatRoomDict)
+                } onError: { err in
+                    print("Log -", #fileID, #function, #line, err.localizedDescription)
+                }.disposed(by: self.disposeBag)
+            return Disposables.create()
+        }
+    }
+    
+    func addListenerToPrivateLastMessage(UUIDList: [String]) -> Observable<[String: Chat]?> {
+        return Observable.create { observer in
+            for roomUUID in UUIDList {
+                self.ref.child("privateLastMessage")
+                    .queryEqual(toValue: nil, childKey: roomUUID)
+                    .rx
+                    .observeEvent(.value)
+                    .subscribe(onNext: { snapShot in
+                        guard snapShot.exists() else {
+                            observer.onNext(nil)
+                            return
+                        }
+                        let roomDict = snapShot.value as! [String: [String: String]]
+                        let chatDict = roomDict[roomUUID]!
+                        observer.onNext([roomUUID: Chat(from: chatDict["from"]!, text: chatDict["text"]!, time: chatDict["time"])])
+                    }).disposed(by: self.disposeBag)
+            }
             return Disposables.create()
         }
     }
@@ -189,7 +228,7 @@ class ChatUtility {
                     let from = chatData["from"]!
                     let text = chatData["text"]!
                     let time = chatData["time"]!
-                    let chat = Chat(from: from, to: nil, text: text, time: time)
+                    let chat = Chat(from: from, text: text, time: time)
                     observer.onNext(chat)
                 }).disposed(by: self.disposeBag)
             return Disposables.create()

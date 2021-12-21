@@ -178,17 +178,4 @@ class FriendListViewModel: CommonViewModel {
             return Observable.empty()
         }
     }()
-    
-    private func transitionToChatRoom() {
-        
-    }
-    
-    
-}
-
-
-extension String {
-    func removeDotFromEmail() -> String {
-        return self.replacingOccurrences(of: ".", with: "")
-    }
 }

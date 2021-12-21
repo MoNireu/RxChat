@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,6 +16,7 @@
 		E1232F2326AFE6C100A9EA31 /* PrivateChatListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1232F2226AFE6C100A9EA31 /* PrivateChatListViewModel.swift */; };
 		E1232F2726AFE73500A9EA31 /* GroupChatListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1232F2626AFE73500A9EA31 /* GroupChatListViewController.swift */; };
 		E1232F2926AFE74000A9EA31 /* GroupChatListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1232F2826AFE74000A9EA31 /* GroupChatListViewModel.swift */; };
+		E1395AA42771A56E00DF0B1B /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = E1395AA32771A56E00DF0B1B /* OrderedCollections */; };
 		E13D44702750AA91005EECB9 /* ChatRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13D446F2750AA91005EECB9 /* ChatRoomViewModel.swift */; };
 		E13D44722750AAB4005EECB9 /* ChatRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13D44712750AAB4005EECB9 /* ChatRoomViewController.swift */; };
 		E14BD599270C381C00B48DA6 /* RealmUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14BD598270C381C00B48DA6 /* RealmUtil.swift */; };
@@ -144,6 +145,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1395AA42771A56E00DF0B1B /* OrderedCollections in Frameworks */,
 				EF3F0F7073D67AC3E62C09CC /* Pods_RxChat.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -356,6 +358,7 @@
 			);
 			name = RxChat;
 			packageProductDependencies = (
+				E1395AA32771A56E00DF0B1B /* OrderedCollections */,
 			);
 			productName = RxChat;
 			productReference = E15B2D132696E8B2005D1C3F /* RxChat.app */;
@@ -432,6 +435,7 @@
 			);
 			mainGroup = E15B2D0A2696E8B2005D1C3F;
 			packageReferences = (
+				E1395AA22771A56E00DF0B1B /* XCRemoteSwiftPackageReference "swift-collections" */,
 			);
 			productRefGroup = E15B2D142696E8B2005D1C3F /* Products */;
 			projectDirPath = "";
@@ -961,6 +965,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E1395AA22771A56E00DF0B1B /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-collections.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E1395AA32771A56E00DF0B1B /* OrderedCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E1395AA22771A56E00DF0B1B /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = OrderedCollections;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E15B2D0B2696E8B2005D1C3F /* Project object */;
 }
