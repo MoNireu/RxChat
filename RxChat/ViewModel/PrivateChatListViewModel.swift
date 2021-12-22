@@ -16,19 +16,8 @@ class PrivateChatListViewModel: CommonViewModel {
     var userIdByRoomIdSubject = BehaviorSubject<[String: String]>(value: [:])
     override init(sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil) {
         super.init(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
-//        setUserIdByRoomId()
         addNewRoomListener()
         print("Log -", #fileID, #function, #line, userIdByRoomId)
-    }
-
-    func setUserIdByRoomId() {
-        ChatUtility.shared.getOwnersAllChatRoomIdWithFriendId(roomType: .privateRoom)
-            .subscribe(onNext: { valueDict in
-                self.userIdByRoomId = valueDict
-                self.userIdByRoomIdSubject.onNext(self.userIdByRoomId)
-                print("Log -", #fileID, #function, #line, self.userIdByRoomId)
-            })
-            .disposed(by: self.disposeBag)
     }
 
     private func addNewRoomListener() {
