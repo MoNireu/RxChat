@@ -78,7 +78,7 @@ class ChatRoomViewModel: CommonViewModel {
             return lastChat.time! + lastChat.from
         }()
         
-        ChatUtility.shared.getPrivateChatFrom(UUID: chatRoom.UUID, fromId: lastChatId)
+        ChatUtility.shared.getChatsBy(roomId: chatRoom.UUID, startingId: lastChatId)
             .subscribe(onNext: { chatList in
                 print("Log -", #fileID, #function, #line, chatList)
                 guard chatList.count != 0 else {
@@ -101,7 +101,7 @@ class ChatRoomViewModel: CommonViewModel {
     }
     
     func addListenerToChatRoom() {
-        ChatUtility.shared.listenPrivateChatRoom(UUID: chatRoom.UUID)
+        ChatUtility.shared.listenChatRoom(roomId: chatRoom.UUID)
             .subscribe(onNext: { chat in
                 guard self.isListenerPreventedOnInit else {
                     self.isListenerPreventedOnInit = true
@@ -120,7 +120,7 @@ class ChatRoomViewModel: CommonViewModel {
     }
     
     func removeListenerFromChatRoom() {
-        ChatUtility.shared.removeListenerFromPrivateChatRoom(UUID: chatRoom.UUID)
+        ChatUtility.shared.removeListenerFromPrivateChatRoom(roomId: chatRoom.UUID)
     }
     
     
@@ -148,7 +148,7 @@ class ChatRoomViewModel: CommonViewModel {
         self.sendingChats.append(tmpChat)
         refreshTableView()
         
-        ChatUtility.shared.sendMessage(UUID: chatRoom.UUID, text: text)
+        ChatUtility.shared.sendMessage(roomId: chatRoom.UUID, text: text)
             .subscribe(onNext: { _ in})
             .disposed(by: self.disposeBag)
     }
