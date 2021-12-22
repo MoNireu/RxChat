@@ -10,46 +10,58 @@ import RxSwift
 import OrderedCollections
 
 class PrivateChatListViewModel: CommonViewModel {
-//    var disposeBag = DisposeBag()
-//    var chatByUserId: OrderedDictionary<String, Chat> = [:] //[userId: roomUUID]
-//    var roomUUIDByUserId: [String: String] = [:] //[userId: roomUUID]
-//    override init(sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil) {
-//        super.init(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
-//        self.addListener()
-//        self.addNewRoomListener()
-//    }
-//
-//    private func addListener() {
-//        ChatUtility.shared.getPrivateChatRoomUUIDDict()
-//            .subscribe(onNext: { dict in
-//                self.roomUUIDByUserId = dict
-//                let chatRoomUUIDList = Array(dict.values)
-//                ChatUtility.shared.listenPrivateLastMessage(UUIDList: chatRoomUUIDList)
-//                    .subscribe(onNext: { lastChatDict in
-//                        self.addChatDictAndSort(lastChatDict: lastChatDict)
-//                    }).disposed(by: self.disposeBag)
-//            }).disposed(by: self.disposeBag)
-//    }
-//
-//    private func addNewRoomListener() {
-//        ChatUtility.shared.listenOwnerChatRoom()
-//            .subscribe(onNext: { newRoom in
-//                let key = newRoom.first!.key
-//                let val = newRoom.first!.value
-//                self.roomUUIDByUserId.updateValue(val, forKey: key)
-//                ChatUtility.shared.listenPrivateLastMessage(UUIDList: [val])
-//                    .subscribe(onNext: { lastChatDic in
-//                        self.addChatDictAndSort(lastChatDict: lastChatDic)
-//                    }).disposed(by: self.disposeBag)
-//            }).disposed(by: self.disposeBag)
-//    }
-//
-//    private func addChatDictAndSort(lastChatDict: [String: Chat]?) {
-//        guard let lastChatDict = lastChatDict else { return } // 마지막 채팅이 존재하지 않는경우(보통 초기 생성된 방)
-//        let roomUUID = lastChatDict.first?.key
-//        let userId = self.roomUUIDByUserId.first(where: {$1 == roomUUID})?.key
-//        self.chatByUserId.updateValue(lastChatDict.first!.value, forKey: userId!)
-//        self.chatByUserId.sort(by: {$0.value.time! > $1.value.time!})
-//        print("Log -", #fileID, #function, #line, self.chatByUserId)
-//    }
+    var disposeBag = DisposeBag()
+    var chatByRoomId: OrderedDictionary<String, Chat> = [:] // [roomId: roomUUID]
+    var userIdByRoomId: [String: String] = [:] // [roomUUID: userId]
+    var userIdByRoomIdSubject = BehaviorSubject<[String: String]>(value: [:])
+    override init(sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil) {
+        super.init(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
+//        setUserIdByRoomId()
+        addNewRoomListener()
+        print("Log -", #fileID, #function, #line, userIdByRoomId)
+    }
+
+    func setUserIdByRoomId() {
+        ChatUtility.shared.getOwnersAllChatRoomIdWithFriendId(roomType: .privateRoom)
+            .subscribe(onNext: { valueDict in
+                self.userIdByRoomId = valueDict
+                self.userIdByRoomIdSubject.onNext(self.userIdByRoomId)
+                print("Log -", #fileID, #function, #line, self.userIdByRoomId)
+            })
+            .disposed(by: self.disposeBag)
+    }
+
+    private func addNewRoomListener() {
+        ChatUtility.shared.listenRoomIdByFriendId(roomType: .privateRoom)
+            .subscribe(onNext: { newRoom in
+                let friendId = newRoom.first!.key
+                let roomId = newRoom.first!.value
+                self.userIdByRoomId.updateValue(friendId, forKey: roomId)
+                self.userIdByRoomIdSubject.onNext(self.userIdByRoomId)
+                print("Log -", #fileID, #function, #line, "NewRoom: \(friendId)")
+            }).disposed(by: self.disposeBag)
+    }
+    
+    func updateLastMessage() {
+        let roomIdList = Array(self.userIdByRoomId.keys)
+        var listCount = 0
+        Observable.from(roomIdList)
+            .subscribe(onNext: { roomId in
+                ChatUtility.shared.getLastChatFrom(roomId: roomId)
+                    .subscribe(onNext: { chat in
+                        guard let chat = chat else { return }
+                        self.chatByRoomId.updateValue(chat, forKey: roomId)
+                        listCount += 1
+                        if listCount == roomIdList.count {
+                            self.refreshTable()
+                        }
+                    }).disposed(by: self.disposeBag)
+            }).disposed(by: self.disposeBag)
+    }
+
+    private func refreshTable() {
+        var lastChatList = Array(chatByRoomId.values)
+        lastChatList.sort(by: {$0.time! > $1.time!})
+        print("Log -", #fileID, #function, #line, lastChatList)
+    }
 }

@@ -129,7 +129,7 @@ class FriendListViewModel: CommonViewModel {
             
             
             // 기존 채팅방이 있는지 확인
-            ChatUtility.shared.getChatRoomIdBy(friendId: selectedFriend.id!)
+            ChatUtility.shared.getChatRoomIdBy(friendId: selectedFriend.id!, roomType: .privateRoom)
                 .subscribe(onNext: { retrivedChatRoomUUID in
                     // 기존 채팅방이 있을 경우
                     if let privateChatRoomUUID = retrivedChatRoomUUID {

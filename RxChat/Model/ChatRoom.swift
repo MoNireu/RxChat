@@ -6,8 +6,8 @@
 //
 
 enum ChatRoomType: String {
-    case privateRoom = "privateChat"
-    case groupRoom = "groupChat"
+    case privateRoom = "private"
+    case groupRoom = "group"
 }
 
 

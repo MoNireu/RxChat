@@ -112,7 +112,7 @@ class ChatRoomViewModel: CommonViewModel {
                 guard let chat = chat else {return}
                 self.newChats.append(chat)
                 // 전송 중인 채팅 있음
-                if chat.from == Owner.shared.id {
+                if chat.from == Owner.shared.id && !self.sendingChats.isEmpty {
                     self.sendingChats.removeFirst()
                 }
                 self.refreshTableView()

@@ -27,6 +27,7 @@ class FirebaseUtil {
     func downloadMyData(_ uid: String) -> Observable<Owner?> {
         return Observable.create { observer in
             let generalInfoDocRef = self.db.collection("Users").document(uid)
+            // MARK: -
             // download my general info
             generalInfoDocRef.rx
                 .getDocument()
