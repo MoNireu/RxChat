@@ -53,6 +53,7 @@
 		E1D8ADB926CBA7DF001586D3 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D8ADB826CBA7DF001586D3 /* UIButtonExtension.swift */; };
 		E1D994682733AEAA00352547 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D994672733AEAA00352547 /* LaunchViewController.swift */; };
 		E1D9946A2733AED500352547 /* LaunchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D994692733AED500352547 /* LaunchViewModel.swift */; };
+		E1DACD362775B40500891E5B /* PrivateChatListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DACD352775B40500891E5B /* PrivateChatListTableViewCell.swift */; };
 		E1E11E3C269C1E2D000CE221 /* FirebaseUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E11E3B269C1E2D000CE221 /* FirebaseUtil.swift */; };
 		E1E11E3F269C1F19000CE221 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E11E3E269C1F19000CE221 /* User.swift */; };
 		E1F141E6275754AF0098BB99 /* ChatUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F141E5275754AE0098BB99 /* ChatUtility.swift */; };
@@ -132,6 +133,7 @@
 		E1D8ADB826CBA7DF001586D3 /* UIButtonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
 		E1D994672733AEAA00352547 /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
 		E1D994692733AED500352547 /* LaunchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewModel.swift; sourceTree = "<group>"; };
+		E1DACD352775B40500891E5B /* PrivateChatListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateChatListTableViewCell.swift; sourceTree = "<group>"; };
 		E1E11E3B269C1E2D000CE221 /* FirebaseUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUtil.swift; sourceTree = "<group>"; };
 		E1E11E3E269C1F19000CE221 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E1F141E5275754AE0098BB99 /* ChatUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUtility.swift; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 				E1B4CCAF2769D96500F55CB6 /* ChatRoomFromOwnerTableViewCell.swift */,
 				E1B4CCB12769D97900F55CB6 /* ChatRoomFromFriendTableViewCell.swift */,
 				E1C03A47276C3D940081D2F5 /* ChatRoomFromFriendWithProfileImageTableViewCell.swift */,
+				E1DACD352775B40500891E5B /* PrivateChatListTableViewCell.swift */,
 			);
 			path = TableViewCell;
 			sourceTree = "<group>";
@@ -609,6 +612,7 @@
 				E1D994682733AEAA00352547 /* LaunchViewController.swift in Sources */,
 				E1D8ADB926CBA7DF001586D3 /* UIButtonExtension.swift in Sources */,
 				E170DF5826A01B2900A5BAAF /* TransitionModel.swift in Sources */,
+				E1DACD362775B40500891E5B /* PrivateChatListTableViewCell.swift in Sources */,
 				E1C03A48276C3D940081D2F5 /* ChatRoomFromFriendWithProfileImageTableViewCell.swift in Sources */,
 				E18BE13226BA81ED000B29FA /* Owner.swift in Sources */,
 				E170DF6626A02B1400A5BAAF /* SignInViewModel.swift in Sources */,

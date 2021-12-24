@@ -20,12 +20,7 @@ class Chat: EmbeddedObject {
         self.text = text
         self.time = time
     }
-    
-    
 }
-
-
-
 
 struct SectionOfChatData {
     var header: String
@@ -40,3 +35,4 @@ extension SectionOfChatData: SectionModelType {
     self.items = items
   }
 }
+

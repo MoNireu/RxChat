@@ -368,11 +368,11 @@ PODS:
   - "NSObject+Rx (5.1.0)":
     - RxSwift (~> 5.1)
   - PromisesObjC (1.2.12)
-  - Realm (10.20.0):
-    - Realm/Headers (= 10.20.0)
-  - Realm/Headers (10.20.0)
-  - RealmSwift (10.20.0):
-    - Realm (= 10.20.0)
+  - Realm (10.20.1):
+    - Realm/Headers (= 10.20.1)
+  - Realm/Headers (10.20.1)
+  - RealmSwift (10.20.1):
+    - Realm (= 10.20.1)
   - RxCocoa (5.1.3):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
@@ -516,8 +516,8 @@ SPEC CHECKSUMS:
   nanopb: 59317e09cf1f1a0af72f12af412d54edf52603fc
   "NSObject+Rx": fa6bbcc1ab1faa06b01466bc09b1e0692bbc5946
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
-  Realm: ae32bdc1da7d19c7617e0400201a77acd4a211b9
-  RealmSwift: c95eec6a712924870b2e36c4c081d63ec07e5414
+  Realm: fac5ecd031fcb81171627b74944c885662d4b266
+  RealmSwift: 9b02d25acb46a14756bde9893abb99e2e3675923
   RxCocoa: e2ed092d5432e4296aa818021d27de4090ac0354
   RxCoreData: 1ed5f83e80facccc90fc054eb7f39a44177de56a
   RxDataSources: efee07fa4de48477eca0a4611e6d11e2da9c1114

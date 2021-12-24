@@ -13,6 +13,7 @@ enum ChatRoomType: String {
 
 import Foundation
 import RealmSwift
+import RxDataSources
 
 
 class ChatRoom {
@@ -62,4 +63,18 @@ class ChatRoomRealm: Object {
         self.chats = List<Chat>()
         self.chats.append(objectsIn: chatRoom.chats)
     }
+}
+
+struct SectionOfChatRoomData {
+    var header: String
+    var items: [Item]
+}
+
+extension SectionOfChatRoomData: SectionModelType {
+  typealias Item = ChatRoom
+
+   init(original: SectionOfChatRoomData, items: [Item]) {
+    self = original
+    self.items = items
+  }
 }
