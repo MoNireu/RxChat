@@ -101,7 +101,7 @@ class ChatRoomViewModel: CommonViewModel {
     }
     
     func addListenerToChatRoom() {
-        ChatUtility.shared.listenChatRoom(roomId: chatRoom.UUID)
+        ChatUtility.shared.listenChat(roomId: chatRoom.UUID)
             .subscribe(onNext: { chat in
                 guard self.isListenerPreventedOnInit else {
                     self.isListenerPreventedOnInit = true
@@ -118,11 +118,6 @@ class ChatRoomViewModel: CommonViewModel {
                 self.refreshTableView()
             }).disposed(by: self.disposeBag)
     }
-    
-    func removeListenerFromChatRoom() {
-        ChatUtility.shared.removeListenerFromPrivateChatRoom(roomId: chatRoom.UUID)
-    }
-    
     
     
     static func convertTimeToDateFormat(timestamp: String) -> String {

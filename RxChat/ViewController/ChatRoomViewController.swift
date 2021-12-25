@@ -43,7 +43,6 @@ class ChatRoomViewController: UIViewController, ViewModelBindableType {
     
     override func viewWillDisappear(_ animated: Bool) {
         viewModel.writeChatRoom()
-        viewModel.removeListenerFromChatRoom()
         viewModel.sceneCoordinator.getCurrentVC().tabBarController?.tabBar.isHidden = false
         viewModel.sceneCoordinator.closed()
     }

@@ -23,16 +23,17 @@ class PrivateChatListViewController: UIViewController, ViewModelBindableType {
     
     override func viewWillAppear(_ animated: Bool) {
         print("Log -", #fileID, #function, #line, "Appear")
-        self.viewModel.refreshTable()
         viewModel.chatByRoomIdSubject.subscribe(onNext: { val in
             print("Log -", #fileID, #function, #line, val)
             self.viewModel.refreshTable()
         }).disposed(by: rx.disposeBag)
+        viewModel.chatByRoomIdSubject.onNext(viewModel.chatByRoomId)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         viewModel.chatByRoomIdSubject.disposed(by: rx.disposeBag)
     }
+    
     
     func bindViewModel() {
         viewModel.tableDataSubject
@@ -42,6 +43,6 @@ class PrivateChatListViewController: UIViewController, ViewModelBindableType {
         viewModel.tableDataSubject
             .subscribe(onNext: { val in
                 print("Log -", #fileID, #function, #line, val)
-            })
+            }).disposed(by: rx.disposeBag)
     }
 }

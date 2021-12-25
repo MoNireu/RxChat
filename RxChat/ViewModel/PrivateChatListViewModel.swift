@@ -15,9 +15,8 @@ class PrivateChatListViewModel: CommonViewModel {
     var chatByRoomId: [String: Chat] = [:] // [roomId: Chat]
     var chatByRoomIdSubject = PublishSubject<[String: Chat]>()
     var tableData: [SectionOfChatRoomData]!
-    var tableDataSubject = PublishSubject<[SectionOfChatRoomData]>()
-//    var userIdByRoomId: [String: String] = [:] // [roomUUID: userId]
-//    var userIdByRoomIdSubject = BehaviorSubject<[String: String]>(value: [:])
+    var tableDataSubject = BehaviorSubject<[SectionOfChatRoomData]>(value: [])
+
     override init(sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil) {
         super.init(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
         addNewRoomListener()
@@ -44,57 +43,41 @@ class PrivateChatListViewModel: CommonViewModel {
             cell.roomLastChatTimeLbl.text = lastChat.time?.convertTimeToDateFormat()
             return cell
         })
-//        return RxTableViewSectionedReloadDataSource<SectionOfChatRoomData> {
-//        }
     }()
 
     private func addNewRoomListener() {
         ChatUtility.shared.listenRoomIdByFriendId(roomType: .privateRoom)
             .subscribe(onNext: { newRoom in
-//                let friendId = newRoom.first!.key
                 let roomId = newRoom.first!.value
+                print("Log -", #fileID, #function, #line, roomId)
                 
                 // 채팅방에 리스너 추가
-                ChatUtility.shared.listenChatRoom(roomId: roomId)
+                ChatUtility.shared.listenChat(roomId: roomId)
                     .subscribe(onNext: { chat in
                         guard let chat = chat else {return}
                         self.chatByRoomId.updateValue(chat, forKey: roomId)
-                        self.chatByRoomIdSubject.onNext(self.chatByRoomId)
+                        
                         
                         guard self.chatRoomByRoomId[roomId] != nil else { // 방 정보가 없을경우
                             // 방 정보 가져오기
                             ChatUtility.shared.getChatRoomBy(roomId: roomId)
                                 .subscribe(onNext: { chatRoom in
                                     self.chatRoomByRoomId.updateValue(chatRoom, forKey: roomId)
+                                    self.chatByRoomIdSubject.onNext(self.chatByRoomId)
                                 }).disposed(by: self.disposeBag)
                             return
                         }
-                        self.chatByRoomId.updateValue(chat, forKey: roomId)
+                        self.chatByRoomIdSubject.onNext(self.chatByRoomId)
                         print("Log -", #fileID, #function, #line, "\(roomId):\(chat)")
                     }).disposed(by: self.disposeBag)
             }).disposed(by: self.disposeBag)
     }
     
-//    func updateLastMessage() {
-//        let roomIdList = Array(self.userIdByRoomId.keys)
-//        var listCount = 0
-//        Observable.from(roomIdList)
-//            .subscribe(onNext: { roomId in
-//                ChatUtility.shared.getLastChatFrom(roomId: roomId)
-//                    .subscribe(onNext: { chat in
-//                        guard let chat = chat else { return }
-//                        self.chatByRoomId.updateValue(chat, forKey: roomId)
-//                        listCount += 1
-//                        if listCount == roomIdList.count {
-//                            self.refreshTable()
-//                        }
-//                    }).disposed(by: self.disposeBag)
-//            }).disposed(by: self.disposeBag)
-//    }
 
     func refreshTable() {
         var lastChatList: [ChatRoom] = []
         for (roomId, chat) in chatByRoomId {
+            print("Log -", #fileID, #function, #line, "\(roomId): \(chat)")
             let chatRoom = chatRoomByRoomId[roomId]!
             chatRoom.chats = [chat]
             lastChatList.append(chatRoom)

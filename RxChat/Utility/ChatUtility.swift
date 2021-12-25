@@ -233,56 +233,34 @@ class ChatUtility {
         }
     }
     
-    func getLastChatFrom(roomId: String) -> Observable<Chat?> {
-        return Observable.create { observer in
-            self.chatsRef
-                .child(roomId)
-                .queryLimited(toLast: 1)
-                .rx
-                .observeSingleEvent(.value)
-                .subscribe { snapShot in
-                    guard snapShot.hasChildren() else {
-                        observer.onNext(nil)
-                        return
-                    }
-                    print("Log -", #fileID, #function, #line, "Success")
-                    let valueDict = snapShot.value as! [String: [String: String]]
-                    let chatDict = valueDict.values.first!
-                    let from = chatDict["from"]
-                    let text = chatDict["text"]
-                    let time = chatDict["time"]
-                    let chat = Chat(from: from!, text: text!, time: time)
-                    observer.onNext(chat)
-                } onError: { err in
-                    print("Log -", #fileID, #function, #line, err.localizedDescription)
-                }
-        }
-    }
-    
-//    func listenPrivateLastMessage(UUIDList: [String]) -> Observable<[String: Chat]?> {
-//        return Observable.create { observer in
-//            for roomUUID in UUIDList {
-//                self.ref.child("privateLastMessage")
-//                    .queryEqual(toValue: nil, childKey: roomUUID)
-//                    .rx
-//                    .observeEvent(.value)
-//                    .subscribe(onNext: { snapShot in
-//                        guard snapShot.exists() else {
-//                            observer.onNext(nil)
-//                            return
-//                        }
-//                        let roomDict = snapShot.value as! [String: [String: String]]
-//                        let chatDict = roomDict[roomUUID]!
-//                        observer.onNext([roomUUID: Chat(from: chatDict["from"]!, text: chatDict["text"]!, time: chatDict["time"])])
-//                    }).disposed(by: self.disposeBag)
-//            }
-//            return Disposables.create()
-//        }
+//    func getLastChatFrom(roomId: String) {
+//        self.chatsRef
+//            .child(roomId)
+//            .queryLimited(toLast: 1)
+//            .rx
+//            .observeSingleEvent(.value)
+//            .subscribe { snapShot in
+//                guard snapShot.hasChildren() else {
+//                    self.lastChatSubject.onNext(nil)
+////                    observer.onNext(nil)
+//                    return
+//                }
+//                print("Log -", #fileID, #function, #line, "Success")
+//                let valueDict = snapShot.value as! [String: [String: String]]
+//                let chatDict = valueDict.values.first!
+//                let from = chatDict["from"]
+//                let text = chatDict["text"]
+//                let time = chatDict["time"]
+//                let chat = Chat(from: from!, text: text!, time: time)
+//                self.lastChatSubject.onNext(chat)
+////                observer.onNext(chat)
+//            } onError: { err in
+//                print("Log -", #fileID, #function, #line, err.localizedDescription)
+//            }.disposed(by: self.disposeBag)
 //    }
     
     
-    
-    func listenChatRoom(roomId: String) -> Observable<Chat?> {
+    func listenChat(roomId: String) -> Observable<Chat?>{
         return Observable.create { observer in
             self.chatsRef
                 .child(roomId)
