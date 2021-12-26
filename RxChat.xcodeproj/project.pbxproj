@@ -21,7 +21,6 @@
 		E13D44722750AAB4005EECB9 /* ChatRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13D44712750AAB4005EECB9 /* ChatRoomViewController.swift */; };
 		E14BD599270C381C00B48DA6 /* RealmUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14BD598270C381C00B48DA6 /* RealmUtil.swift */; };
 		E14EFAA727782A6A001211A0 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14EFAA627782A6A001211A0 /* StringExtension.swift */; };
-		E14EFAA927782B02001211A0 /* TimeStampConvertUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14EFAA827782B02001211A0 /* TimeStampConvertUtility.swift */; };
 		E159B04726A95C4600071C52 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = E159B04626A95C4600071C52 /* plus.png */; };
 		E15B2D172696E8B2005D1C3F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B2D162696E8B2005D1C3F /* AppDelegate.swift */; };
 		E15B2D192696E8B2005D1C3F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B2D182696E8B2005D1C3F /* SceneDelegate.swift */; };
@@ -99,7 +98,6 @@
 		E13D44712750AAB4005EECB9 /* ChatRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomViewController.swift; sourceTree = "<group>"; };
 		E14BD598270C381C00B48DA6 /* RealmUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmUtil.swift; sourceTree = "<group>"; };
 		E14EFAA627782A6A001211A0 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
-		E14EFAA827782B02001211A0 /* TimeStampConvertUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeStampConvertUtility.swift; sourceTree = "<group>"; };
 		E159B04626A95C4600071C52 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
 		E15B2D132696E8B2005D1C3F /* RxChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RxChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E15B2D162696E8B2005D1C3F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -343,7 +341,6 @@
 				E1E11E3B269C1E2D000CE221 /* FirebaseUtil.swift */,
 				E14BD598270C381C00B48DA6 /* RealmUtil.swift */,
 				E1F141E5275754AE0098BB99 /* ChatUtility.swift */,
-				E14EFAA827782B02001211A0 /* TimeStampConvertUtility.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -600,7 +597,6 @@
 				E1F7B5DC26D8830800B9A9FC /* SectionOfUserData.swift in Sources */,
 				E15B2D1B2696E8B2005D1C3F /* SignInViewController.swift in Sources */,
 				E15B2D172696E8B2005D1C3F /* AppDelegate.swift in Sources */,
-				E14EFAA927782B02001211A0 /* TimeStampConvertUtility.swift in Sources */,
 				E170DF5E26A01F4D00A5BAAF /* Scene.swift in Sources */,
 				E1A76A1F26A7FD0D00C8F783 /* UIImagePickerController+RxCreate.swift in Sources */,
 				E1A76A2226A8091E00C8F783 /* RxImagePickerDelegateProxy.swift .swift in Sources */,

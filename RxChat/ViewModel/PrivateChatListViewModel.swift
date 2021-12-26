@@ -16,6 +16,12 @@ class PrivateChatListViewModel: CommonViewModel {
     var chatRoomByRoomIdSubject = PublishSubject<OrderedDictionary<String, ChatRoom>>()
     var tableData: [SectionOfChatRoomData]!
     var tableDataSubject = BehaviorSubject<[SectionOfChatRoomData]>(value: [])
+    static var todayMonthDay: String = {
+        let today = DateFormatter().dateToDefaultFormat(date:Date())
+        return today.convertTimeStampToMonthDay()
+    }()
+    //    var today: String!
+//    static var todayMonthDay: String!
 
     override init(sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil) {
         super.init(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
@@ -38,9 +44,16 @@ class PrivateChatListViewModel: CommonViewModel {
                 }
             }()
             cell.roomImageView.image = Owner.shared.friendList[friendId]?.profileImg
-            cell.roomTitleLbl.text = item.title
+            cell.roomTitleLbl.text = friendId
             cell.roomLastChatLbl.text = lastChat.text
-            cell.roomLastChatTimeLbl.text = lastChat.time?.convertTimeStampToHourMinute()
+            
+            
+            if todayMonthDay == lastChat.time?.convertTimeStampToMonthDay() {
+                cell.roomLastChatTimeLbl.text = lastChat.time?.convertTimeStampToHourMinute()
+            }
+            else {
+                cell.roomLastChatTimeLbl.text = lastChat.time?.convertTimeStampToMonthDay()
+            }
             return cell
         })
     }()
@@ -80,6 +93,9 @@ class PrivateChatListViewModel: CommonViewModel {
     
 
     func refreshTable() {
+        let today = DateFormatter().dateToDefaultFormat(date:Date())
+        PrivateChatListViewModel.todayMonthDay = today.convertTimeStampToMonthDay()
+        
         tableData = [SectionOfChatRoomData(header: "", items: Array(chatRoomByRoomId.values))]
         tableDataSubject.onNext(tableData)
         print("Log -", #fileID, #function, #line, Array(chatRoomByRoomId.values))
