@@ -23,15 +23,15 @@ class PrivateChatListViewController: UIViewController, ViewModelBindableType {
     
     override func viewWillAppear(_ animated: Bool) {
         print("Log -", #fileID, #function, #line, "Appear")
-        viewModel.chatByRoomIdSubject.subscribe(onNext: { val in
+        viewModel.chatRoomByRoomIdSubject.subscribe(onNext: { val in
             print("Log -", #fileID, #function, #line, val)
             self.viewModel.refreshTable()
         }).disposed(by: rx.disposeBag)
-        viewModel.chatByRoomIdSubject.onNext(viewModel.chatByRoomId)
+        viewModel.chatRoomByRoomIdSubject.onNext(viewModel.chatRoomByRoomId)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        viewModel.chatByRoomIdSubject.disposed(by: rx.disposeBag)
+        viewModel.chatRoomByRoomIdSubject.disposed(by: rx.disposeBag)
     }
     
     

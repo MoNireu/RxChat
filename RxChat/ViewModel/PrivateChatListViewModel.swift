@@ -8,12 +8,12 @@
 import Foundation
 import RxSwift
 import RxDataSources
+import OrderedCollections
 
 class PrivateChatListViewModel: CommonViewModel {
     var disposeBag = DisposeBag()
-    var chatRoomByRoomId: [String: ChatRoom] = [:] // [roomId: ChatRoom]
-    var chatByRoomId: [String: Chat] = [:] // [roomId: Chat]
-    var chatByRoomIdSubject = PublishSubject<[String: Chat]>()
+    var chatRoomByRoomId: OrderedDictionary<String, ChatRoom> = [:] // [roomId: ChatRoom]
+    var chatRoomByRoomIdSubject = PublishSubject<OrderedDictionary<String, ChatRoom>>()
     var tableData: [SectionOfChatRoomData]!
     var tableDataSubject = BehaviorSubject<[SectionOfChatRoomData]>(value: [])
 
@@ -40,7 +40,7 @@ class PrivateChatListViewModel: CommonViewModel {
             cell.roomImageView.image = Owner.shared.friendList[friendId]?.profileImg
             cell.roomTitleLbl.text = item.title
             cell.roomLastChatLbl.text = lastChat.text
-            cell.roomLastChatTimeLbl.text = lastChat.time?.convertTimeToDateFormat()
+            cell.roomLastChatTimeLbl.text = lastChat.time?.convertTimeStampToHourMinute()
             return cell
         })
     }()
@@ -55,19 +55,24 @@ class PrivateChatListViewModel: CommonViewModel {
                 ChatUtility.shared.listenChat(roomId: roomId)
                     .subscribe(onNext: { chat in
                         guard let chat = chat else {return}
-                        self.chatByRoomId.updateValue(chat, forKey: roomId)
                         
-                        
-                        guard self.chatRoomByRoomId[roomId] != nil else { // 방 정보가 없을경우
-                            // 방 정보 가져오기
+                        // 방 정보와 채팅을 조합.
+                        guard self.chatRoomByRoomId[roomId] != nil
+                        else {
                             ChatUtility.shared.getChatRoomBy(roomId: roomId)
                                 .subscribe(onNext: { chatRoom in
-                                    self.chatRoomByRoomId.updateValue(chatRoom, forKey: roomId)
-                                    self.chatByRoomIdSubject.onNext(self.chatByRoomId)
+                                    chatRoom.chats = [chat]
+                                    self.chatRoomByRoomId.updateValue(chatRoom, forKey: roomId, insertingAt: 0)
+                                    self.chatRoomByRoomId.sort(by: {$0.value.chats.first!.time! > $1.value.chats.first!.time!})
+                                    self.chatRoomByRoomIdSubject.onNext(self.chatRoomByRoomId)
                                 }).disposed(by: self.disposeBag)
                             return
                         }
-                        self.chatByRoomIdSubject.onNext(self.chatByRoomId)
+                        let chatRoom = self.chatRoomByRoomId[roomId]!
+                        chatRoom.chats = [chat]
+                        self.chatRoomByRoomId.removeValue(forKey: roomId)
+                        self.chatRoomByRoomId.updateValue(chatRoom, forKey: roomId, insertingAt: 0)
+                        self.chatRoomByRoomIdSubject.onNext(self.chatRoomByRoomId)
                         print("Log -", #fileID, #function, #line, "\(roomId):\(chat)")
                     }).disposed(by: self.disposeBag)
             }).disposed(by: self.disposeBag)
@@ -75,16 +80,8 @@ class PrivateChatListViewModel: CommonViewModel {
     
 
     func refreshTable() {
-        var lastChatList: [ChatRoom] = []
-        for (roomId, chat) in chatByRoomId {
-            print("Log -", #fileID, #function, #line, "\(roomId): \(chat)")
-            let chatRoom = chatRoomByRoomId[roomId]!
-            chatRoom.chats = [chat]
-            lastChatList.append(chatRoom)
-        }
-        lastChatList.sort(by: {$0.chats.first!.time! > $1.chats.first!.time!})
-        tableData = [SectionOfChatRoomData(header: "", items: lastChatList)]
+        tableData = [SectionOfChatRoomData(header: "", items: Array(chatRoomByRoomId.values))]
         tableDataSubject.onNext(tableData)
-        print("Log -", #fileID, #function, #line, lastChatList)
+        print("Log -", #fileID, #function, #line, Array(chatRoomByRoomId.values))
     }
 }
