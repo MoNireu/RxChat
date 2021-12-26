@@ -27,6 +27,9 @@ class ChatUtility {
     
     
     // MARK: - ChatRoom
+    var ownerPrivateChatRoomList: [String] = [] // [PrivateRoomUUID]
+    var ownerGroupChatRoomList: [String] = [] // [GroupRoomUUID]
+    
     func createPrivateChatRoom(friendId: String, roomTitle: String, roomType: ChatRoomType) -> Observable<ChatRoom> {
         return Observable.create { observer in
             let roomId = UUID().uuidString
@@ -157,6 +160,44 @@ class ChatUtility {
         }
     }
     
+    /// Owner의 ChatRoom이 새로 생성되는지 확인 후 반환.
+    /// - Returns: 새로 생성된 방의 정보 [상대 UserId: RoomUUID]
+    func listenNewRoom(roomType: ChatRoomType) -> Observable<[String: String]> {
+        return Observable.create { observer in
+            self.usersRef
+                .child(self.myId)
+                .child(roomType.rawValue)
+                .rx
+                .observeEvent(.childAdded)
+                .subscribe(onNext: { snapShot in
+                    let userId = snapShot.key
+                    let roomUUID = snapShot.value as! String
+                    observer.onNext([userId: roomUUID])
+                    
+                    switch roomType {
+                    case .privateRoom:
+                        self.ownerPrivateChatRoomList.append(roomUUID)
+                    case .groupRoom:
+                        self.ownerGroupChatRoomList.append(roomUUID)
+                    }
+                }).disposed(by: self.disposeBag)
+            return Disposables.create()
+        }
+    }
+    
+    func removeAllRoomListener() {
+        for ownerPrivateChatRoom in ownerPrivateChatRoomList {
+            self.roomsRef
+                .child(ownerPrivateChatRoom)
+                .removeAllObservers()
+        }
+        for ownerGroupChatRoom in ownerGroupChatRoomList {
+            self.roomsRef
+                .child(ownerGroupChatRoom)
+                .removeAllObservers()
+        }
+    }
+    
     
     // MARK: - Chats
     func sendMessage(roomId: String, text: String) -> Observable<Chat> {
@@ -215,49 +256,8 @@ class ChatUtility {
             return Disposables.create()
         }
     }
+
     
-    
-    /// Owner의 PrivateRoom이 새로 생성되는지 확인 후 반환.
-    /// - Returns: 새로 생성된 방의 정보 [상대 UserId: RoomUUID]
-    func listenRoomIdByFriendId(roomType: ChatRoomType) -> Observable<[String: String]> {
-        return Observable.create { observer in
-            self.usersRef
-                .child(self.myId)
-                .child(roomType.rawValue)
-                .rx
-                .observeEvent(.childAdded)
-                .subscribe(onNext: { snapShot in
-                    observer.onNext([snapShot.key: snapShot.value as! String])
-                }).disposed(by: self.disposeBag)
-            return Disposables.create()
-        }
-    }
-    
-//    func getLastChatFrom(roomId: String) {
-//        self.chatsRef
-//            .child(roomId)
-//            .queryLimited(toLast: 1)
-//            .rx
-//            .observeSingleEvent(.value)
-//            .subscribe { snapShot in
-//                guard snapShot.hasChildren() else {
-//                    self.lastChatSubject.onNext(nil)
-////                    observer.onNext(nil)
-//                    return
-//                }
-//                print("Log -", #fileID, #function, #line, "Success")
-//                let valueDict = snapShot.value as! [String: [String: String]]
-//                let chatDict = valueDict.values.first!
-//                let from = chatDict["from"]
-//                let text = chatDict["text"]
-//                let time = chatDict["time"]
-//                let chat = Chat(from: from!, text: text!, time: time)
-//                self.lastChatSubject.onNext(chat)
-////                observer.onNext(chat)
-//            } onError: { err in
-//                print("Log -", #fileID, #function, #line, err.localizedDescription)
-//            }.disposed(by: self.disposeBag)
-//    }
     
     
     func listenChat(roomId: String) -> Observable<Chat?>{
@@ -286,10 +286,17 @@ class ChatUtility {
         }
     }
     
-    func removeListenerFromPrivateChatRoom(roomId: String) {
-        self.chatsRef
-            .child("\(roomId)")
-            .removeAllObservers()
+    func removeAllChatListener() {
+        for ownerPrivateChatRoom in ownerPrivateChatRoomList {
+            self.chatsRef
+                .child(ownerPrivateChatRoom)
+                .removeAllObservers()
+        }
+        for ownerGroupChatRoom in ownerGroupChatRoomList {
+            self.chatsRef
+                .child(ownerGroupChatRoom)
+                .removeAllObservers()
+        }
     }
     
     

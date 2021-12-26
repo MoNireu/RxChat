@@ -46,7 +46,7 @@ class PrivateChatListViewModel: CommonViewModel {
     }()
 
     private func addNewRoomListener() {
-        ChatUtility.shared.listenRoomIdByFriendId(roomType: .privateRoom)
+        ChatUtility.shared.listenNewRoom(roomType: .privateRoom)
             .subscribe(onNext: { newRoom in
                 let roomId = newRoom.first!.value
                 print("Log -", #fileID, #function, #line, roomId)

@@ -38,9 +38,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This occurs shortly after the scene enters the background, or when its session is discarded.
         // Release any resources associated with this scene that can be re-created the next time the scene connects.
         // The scene may re-connect later, as its session was not necessarily discarded (see `application:didDiscardSceneSessions` instead).
-        print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
-        print("Scene Did Disconnect")
-        print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
+        print("Log -", #fileID, #function, #line, "Scene Did Disconnect")
         if sceneCoordinator?.getCurrentVC().sceneViewController.restorationIdentifier == "CreateProfileVC" {
             let firebaseAuth = Auth.auth()
             do {
@@ -49,9 +47,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
               print("Error signing out: %@", signOutError)
             }
             GIDSignIn.sharedInstance.signOut()
-            print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
-            print("Sign Out Complete")
-            print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
+            print("Log -", #fileID, #function, #line, "SignOut Complete")
         }
     }
 

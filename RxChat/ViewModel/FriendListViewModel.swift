@@ -85,6 +85,8 @@ class FriendListViewModel: CommonViewModel {
             }
             GIDSignIn.sharedInstance.signOut()
             RealmUtil.shared.deleteAll()
+            ChatUtility.shared.removeAllRoomListener()
+            ChatUtility.shared.removeAllChatListener()
             
             let signInViewModel = SignInViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
             let signInScene = Scene.signIn(signInViewModel)
