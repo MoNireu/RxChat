@@ -75,6 +75,7 @@ class FriendListViewModel: CommonViewModel {
     }()
     
     
+    
     lazy var signOut: CocoaAction = {
         return Action { _ in
             let firebaseAuth = Auth.auth()

@@ -62,62 +62,59 @@ class FindUserViewController: UIViewController, ViewModelBindableType {
     // MARK: Bind View
     func bindViewModel() {
         searchBar.rx.textDidBeginEditing
-            .subscribe(onNext: { _ in
-                print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
-                print("text edit started")
-                print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
-                self.noResultLabel.isHidden = true
+            .subscribe(onNext: { [weak self]_ in
+                self?.noResultLabel.isHidden = true
             }).disposed(by: disposeBag)
         
         addFriendButton.rx.tap
-            .subscribe(onNext: { _ in
-                self.activityIndicator.startAnimating()
-                self.viewModel.addFriend.execute()
+            .subscribe(onNext: { [weak self]_ in
+                self?.activityIndicator.startAnimating()
+                self?.viewModel.addFriend.execute()
                     .subscribe(onCompleted: {
-                        self.activityIndicator.stopAnimating()
+                        self?.activityIndicator.stopAnimating()
                         let alert = UIAlertController(title: "친구추가를 완료했습니다.", message: nil, preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: "확인", style: .cancel) { _ in
-                            self.changeAddFriendButtonState(state: .alreadyFriend)
+                            self?.changeAddFriendButtonState(state: .alreadyFriend)
                         })
-                        self.present(alert, animated: true)
-                    }).disposed(by: self.disposeBag)
+                        self?.present(alert, animated: true)
+                    }).disposed(by: self!.disposeBag)
             }).disposed(by: self.disposeBag)
         
         
         viewModel.foundUserSubject
-            .subscribe(onNext: { user in
-                self.activityIndicator.stopAnimating()
+            .subscribe(onNext: { [weak self] user in
+                self?.activityIndicator.stopAnimating()
                 // user found
                 if let user = user {
-                    self.hideNoResultView(true)
-                    self.profileImageView.image = user.profileImg
-                    self.nameLabel.text = user.id
+                    self?.hideNoResultView(true)
+                    self?.profileImageView.image = user.profileImg
+                    self?.nameLabel.text = user.id
                     // found user is owner
                     if user.id == Owner.shared.id {
-                        self.changeAddFriendButtonState(state: .myProfile)
+                        self?.changeAddFriendButtonState(state: .myProfile)
                     }
                     // found user is already friend
                     else if Owner.shared.friendList.keys.contains(user.id!) {
-                        self.changeAddFriendButtonState(state: .alreadyFriend)
+                        self?.changeAddFriendButtonState(state: .alreadyFriend)
                     }
                     // found user is not friend
                     else {
-                        self.changeAddFriendButtonState(state: .addFriend)
+                        self?.changeAddFriendButtonState(state: .addFriend)
                     }
                 }
                 // user not found
                 else {
-                    self.hideNoResultView(false)
+                    self?.hideNoResultView(false)
                 }
             }).disposed(by: disposeBag)
         
         
         searchBar.rx.searchButtonClicked
-            .subscribe(onNext: { _ in
-                self.searchBar.resignFirstResponder()
-                self.activityIndicator.startAnimating()
-                guard let text = self.searchBar.text else { return }
-                self.viewModel.findUser.execute(text)
+            .subscribe(onNext: { [weak self]_ in
+                self?.searchBar.resignFirstResponder()
+                self?.activityIndicator.startAnimating()
+                guard let text = self?.searchBar.text else { return }
+                self?.viewModel.findUser.execute(text)
             }).disposed(by: disposeBag)
     }
     

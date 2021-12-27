@@ -50,8 +50,8 @@ class FriendListViewController: UIViewController, ViewModelBindableType {
         
         
         viewModel.isTransToChatRoomComplete
-            .subscribe(onNext: { indexPath in
-                self.tableView.cellForRow(at: indexPath)?.isSelected = false
+            .subscribe(onNext: { [weak self] indexPath in
+                self?.tableView.cellForRow(at: indexPath)?.isSelected = false
             })
             .disposed(by: disposeBag)
     }

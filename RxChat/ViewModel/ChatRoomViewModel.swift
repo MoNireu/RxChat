@@ -33,10 +33,14 @@ class ChatRoomViewModel: CommonViewModel {
         initDownloadPrivateChat()
     }
     
+    deinit {
+        print("Log -", #fileID, #function, #line, "DeInit")
+    }
+    
     
     func setDataSource() {
         dataSource = RxTableViewSectionedReloadDataSource<SectionOfChatData>(
-            configureCell: { dataSource, tableView, indexPath, item in
+            configureCell: { [weak self] dataSource, tableView, indexPath, item in
                 // 내가 보낸 메시지
                 if (item.from == Owner.shared.id) {
                     let chatTextByOwnerCell = tableView.dequeueReusableCell(withIdentifier: "chatTextByOwner", for: indexPath) as? ChatRoomFromOwnerTableViewCell
@@ -48,9 +52,9 @@ class ChatRoomViewModel: CommonViewModel {
                 else {
                     let previousCellId: String = {
                         if indexPath.row == 0 {return ""}
-                        else { return self.combinedChats[indexPath.row - 1].from }
+                        else { return (self?.combinedChats[indexPath.row - 1].from)! }
                     }()
-                    let currentCellId = self.combinedChats[indexPath.row].from
+                    let currentCellId = self?.combinedChats[indexPath.row].from
                     if previousCellId == currentCellId {
                         let chatTextByFriendCell = tableView.dequeueReusableCell(withIdentifier: "chatTextByFriend", for: indexPath) as? ChatRoomFromFriendTableViewCell
                         chatTextByFriendCell?.chatBubbleLabel.text = item.text
@@ -79,10 +83,10 @@ class ChatRoomViewModel: CommonViewModel {
         }()
         
         ChatUtility.shared.getChatsBy(roomId: chatRoom.UUID, startingId: lastChatId)
-            .subscribe(onNext: { chatList in
+            .subscribe(onNext: { [weak self] chatList in
                 print("Log -", #fileID, #function, #line, chatList)
                 guard chatList.count != 0 else {
-                    self.addListenerToChatRoom()
+                    self?.addListenerToChatRoom()
                     return
                 }
                 let downloadedPrivateChat: [Chat] = {
@@ -94,40 +98,29 @@ class ChatRoomViewModel: CommonViewModel {
                         return chatListFirstRemoved
                     }
                 }()
-                self.newChats.append(contentsOf: downloadedPrivateChat)
-                self.addListenerToChatRoom()
+                self?.newChats.append(contentsOf: downloadedPrivateChat)
+                self?.addListenerToChatRoom()
             })
             .disposed(by: self.disposeBag)
     }
     
     func addListenerToChatRoom() {
         ChatUtility.shared.listenChat(roomId: chatRoom.UUID)
-            .subscribe(onNext: { chat in
-                guard self.isListenerPreventedOnInit else {
-                    self.isListenerPreventedOnInit = true
-                    self.refreshTableView()
+            .subscribe(onNext: { [weak self] chat in
+                guard ((self?.isListenerPreventedOnInit) != nil) else {
+                    self?.isListenerPreventedOnInit = true
+                    self?.refreshTableView()
                     return
                 }
-                
+
                 guard let chat = chat else {return}
-                self.newChats.append(chat)
+                self?.newChats.append(chat)
                 // 전송 중인 채팅 있음
-                if chat.from == Owner.shared.id && !self.sendingChats.isEmpty {
-                    self.sendingChats.removeFirst()
+                if chat.from == Owner.shared.id && !(self?.sendingChats.isEmpty)! {
+                    self?.sendingChats.removeFirst()
                 }
-                self.refreshTableView()
+                self?.refreshTableView()
             }).disposed(by: self.disposeBag)
-    }
-    
-    
-    static func convertTimeToDateFormat(timestamp: String) -> String {
-        let hourStartIdx = timestamp.index(timestamp.startIndex, offsetBy: 8)
-        let hourEndIdx = timestamp.index(timestamp.startIndex, offsetBy: 9)
-        let minuteStartIdx = timestamp.index(timestamp.startIndex, offsetBy: 10)
-        let minuteEndIdx = timestamp.index(timestamp.startIndex, offsetBy: 11)
-        let hour = timestamp[hourStartIdx...hourEndIdx]
-        let minute = timestamp[minuteStartIdx...minuteEndIdx]
-        return "\(hour):\(minute)"
     }
     
     
@@ -144,7 +137,7 @@ class ChatRoomViewModel: CommonViewModel {
         refreshTableView()
         
         ChatUtility.shared.sendMessage(roomId: chatRoom.UUID, text: text)
-            .subscribe(onNext: { _ in})
+            .subscribe(onNext: {  _ in})
             .disposed(by: self.disposeBag)
     }
     

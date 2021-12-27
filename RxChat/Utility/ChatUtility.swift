@@ -257,8 +257,7 @@ class ChatUtility {
         }
     }
 
-    
-    
+
     
     func listenChat(roomId: String) -> Observable<Chat?>{
         return Observable.create { observer in

@@ -71,17 +71,17 @@ class ChatRoomViewController: UIViewController, ViewModelBindableType {
 
     func bindViewModel() {
         viewModel.chatRoomTitleSubject
-            .drive(self.navigationItem.rx.title)
+            .drive(navigationItem.rx.title)
             .disposed(by: rx.disposeBag)
             
         
         contextTextView.rx.text
-            .subscribe(onNext: { text in
-                self.sendChatBtn.isEnabled = (text != "")
-                self.contextTextView.isScrollEnabled = true
-                let line = self.contextTextView.getLine()
-                self.addAdditionalHeightToBottomBar(line: line)
-                self.contextTextView.isScrollEnabled = (line != 1)
+            .subscribe(onNext: { [weak self] text in
+                self?.sendChatBtn.isEnabled = (text != "")
+                self?.contextTextView.isScrollEnabled = true
+                let line = self?.contextTextView.getLine()
+                self?.addAdditionalHeightToBottomBar(line: line!)
+                self?.contextTextView.isScrollEnabled = (line != 1)
             }).disposed(by: rx.disposeBag)
         
         viewModel.chatContextTableDataSubject
@@ -89,18 +89,18 @@ class ChatRoomViewController: UIViewController, ViewModelBindableType {
             .disposed(by: rx.disposeBag)
         
         viewModel.chatContextTableDataSubject
-            .subscribe(onNext: { data in
+            .subscribe(onNext: { [weak self] data in
                 guard let dataAmount = data.first?.items.count else { return }
                 guard dataAmount != 0 else {return}
                 let indexPath = IndexPath(row: dataAmount-1, section: 0)
-                self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+                self?.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
             })
             .disposed(by: rx.disposeBag)
             
         sendChatBtn.rx.tap
-            .subscribe(onNext: { _ in
-                self.viewModel.sendChat(text: self.contextTextView.text)
-                self.contextTextView.text = ""
+            .subscribe(onNext: { [weak self] _ in
+                self?.viewModel.sendChat(text: (self?.contextTextView.text)!)
+                self?.contextTextView.text = ""
             }).disposed(by: rx.disposeBag)
     }
 }

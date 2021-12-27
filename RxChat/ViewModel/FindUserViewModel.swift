@@ -22,6 +22,10 @@ class FindUserViewModel: CommonViewModel {
         super.init(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
     }
     
+    deinit {
+        print("Log -", #fileID, #function, #line, "deinit")
+    }
+    
     lazy var findUser: Action<String, Void> = {
         return Action<String, Void> { email in
             self.firebaseUtil.findUser(email)
