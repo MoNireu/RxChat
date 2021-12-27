@@ -107,13 +107,15 @@ class ChatRoomViewModel: CommonViewModel {
     func addListenerToChatRoom() {
         ChatUtility.shared.listenChat(roomId: chatRoom.UUID)
             .subscribe(onNext: { [weak self] chat in
-                guard ((self?.isListenerPreventedOnInit) != nil) else {
+                guard (self?.isListenerPreventedOnInit)! else {
+                    print("Log -", #fileID, #function, #line, "Listener Prevented On Init")
                     self?.isListenerPreventedOnInit = true
                     self?.refreshTableView()
                     return
                 }
-
+                
                 guard let chat = chat else {return}
+                print("Log -", #fileID, #function, #line, "New Chat: \(dump(chat))")
                 self?.newChats.append(chat)
                 // 전송 중인 채팅 있음
                 if chat.from == Owner.shared.id && !(self?.sendingChats.isEmpty)! {
