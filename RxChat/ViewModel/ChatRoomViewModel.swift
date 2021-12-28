@@ -41,14 +41,14 @@ class ChatRoomViewModel: CommonViewModel {
     func setDataSource() {
         dataSource = RxTableViewSectionedReloadDataSource<SectionOfChatData>(
             configureCell: { [weak self] dataSource, tableView, indexPath, item in
-                // 내가 보낸 메시지
+                // 보낸 메시지
                 if (item.from == Owner.shared.id) {
                     let chatTextByOwnerCell = tableView.dequeueReusableCell(withIdentifier: "chatTextByOwner", for: indexPath) as? ChatRoomFromOwnerTableViewCell
                     chatTextByOwnerCell?.chatBubbleLabel.text = item.text
                     chatTextByOwnerCell?.timeLabel.text = item.time != nil ? item.time!.convertTimeStampToHourMinute() : ""
                     return chatTextByOwnerCell ?? UITableViewCell()
                 }
-                // 내가 받은 메시지
+                // 받은 메시지
                 else {
                     let previousCellId: String = {
                         if indexPath.row == 0 {return ""}
@@ -100,8 +100,7 @@ class ChatRoomViewModel: CommonViewModel {
                 }()
                 self?.newChats.append(contentsOf: downloadedPrivateChat)
                 self?.addListenerToChatRoom()
-            })
-            .disposed(by: self.disposeBag)
+            }).disposed(by: self.disposeBag)
     }
     
     func addListenerToChatRoom() {

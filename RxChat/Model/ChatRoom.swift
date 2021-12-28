@@ -41,7 +41,7 @@ class ChatRoom {
 }
 
 
-
+// MARK: - Realm
 class ChatRoomRealm: Object {
     @Persisted var UUID: String
     @Persisted var title: String
@@ -65,6 +65,8 @@ class ChatRoomRealm: Object {
     }
 }
 
+
+// MARK: - RxDatasources
 struct SectionOfChatRoomData {
     var header: String
     var items: [Item]

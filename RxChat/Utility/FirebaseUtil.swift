@@ -20,14 +20,15 @@ enum FirebaseUtilError: Error {
 class FirebaseUtil {
     private let db = Firestore.firestore()
     private let STORAGE_BUCKET = "gs://rxchat-f485a.appspot.com"
-    let realmUtil = RealmUtil()
     private var disposeBag = DisposeBag()
     
+    
+    //MARK: - Download
     // Download my base info from firebase
     func downloadMyData(_ uid: String) -> Observable<Owner?> {
         return Observable.create { observer in
             let generalInfoDocRef = self.db.collection("Users").document(uid)
-            // MARK: -
+            
             // download my general info
             generalInfoDocRef.rx
                 .getDocument()
@@ -36,61 +37,99 @@ class FirebaseUtil {
                         let data = doc.data()
                         let email = data!["email"] as! String
                         let id = data!["id"] as! String
+                        let name = data!["name"] as! String
                         
                         
                         let myLastUpdateTime = self.db.collection("UserProfileLastUpdate").document(id)
-                        myLastUpdateTime.rx
-                            .getDocument()
-                            .subscribe(onNext: {doc in
-                                var lastFriendListUpdateTime: Timestamp? = nil
-                                if doc.exists {
-                                    let data = doc.data()
-                                    lastFriendListUpdateTime = data!["lastUpdateTime"] as! Timestamp?
+                        let myLastUpdateTimeObservable = myLastUpdateTime.rx.getDocument()
+                        
+                        Observable
+                            .zip(myLastUpdateTimeObservable,
+                                 self.downloadProfileImage(id),
+                                 self.downloadMyFriendList(uid))
+                        { lastUpdateTimeDoc, profileImageData, friendList in
+                            let lastFriendListUpdateTime: Timestamp? = {
+                                guard doc.exists else { return nil }
+                                let data = doc.data()
+                                return data!["lastUpdateTime"] as! Timestamp?
+                            }()
+                            
+                            Owner.shared.uid = uid
+                            Owner.shared.email = email
+                            Owner.shared.id = id
+                            Owner.shared.name = name
+                            Owner.shared.lastFriendListUpdateTime = lastFriendListUpdateTime
+                            Owner.shared.friendList = friendList
+                            Owner.shared.profileImg = {
+                                guard let profileImageData = profileImageData else {
+                                    return UIImage(named: "defaultProfileImage.png")
                                 }
-                                
-                                Owner.shared.uid = uid
-                                Owner.shared.email = email
-                                Owner.shared.id = id
-                                Owner.shared.lastFriendListUpdateTime = lastFriendListUpdateTime
-                                print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
-                                print(Owner.shared.lastFriendListUpdateTime)
-                                print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
-                                
-                                
-                                
-                                self.downloadProfileImage(id)
-                                    .subscribe(onNext: { imgData in
-                                        Owner.shared.profileImg = UIImage(data: imgData)
-                                        
-                                        self.downloadMyFriendList(uid)
-                                            .subscribe(onNext: { friendList in
-                                                // Save friend list to Realm
-                                                self.realmUtil.writeFriendList(friendList: Array<User>(friendList.values))
-                                                
-                                                Owner.shared.friendList = friendList
-                                                observer.onNext(Owner.shared)
-                                                observer.onCompleted()
-                                            }).disposed(by: self.disposeBag)
-                                        // my profile image not found
-                                    }, onError: { err in
-                                        Owner.shared.profileImg = UIImage(named: "defaultProfileImage.png")
-                                        
-                                        self.downloadMyFriendList(uid)
-                                            .subscribe(onNext: { friendList in
-                                                print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
-                                                print("Friend Amount: \(friendList.count)")
-                                                print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
-                                                
-                                                // Save friend list to Realm
-                                                self.realmUtil.writeFriendList(friendList: Array<User>(friendList.values))
-                                                
-                                                Owner.shared.friendList = friendList
-                                                observer.onNext(Owner.shared)
-                                                observer.onCompleted()
-                                            }).disposed(by: self.disposeBag)
-                                        
-                                    }).disposed(by: self.disposeBag)
-                            })
+                                return UIImage(data: profileImageData)
+                            }()
+                            
+                            RealmUtil.shared.writeFriendList(friendList: Array<User>(friendList.values))
+                            
+                        }
+                        .subscribe { _ in
+                            observer.onNext(Owner.shared)
+                            observer.onCompleted()
+                        } onError: { err in
+                            print("Log -", #fileID, #function, #line, err.localizedDescription)
+                            observer.onError(err)
+                        }.disposed(by: self.disposeBag)
+
+
+                        
+                        
+                        
+//                        myLastUpdateTime.rx
+//                            .getDocument()
+//                            .subscribe(onNext: { doc in
+//                                var lastFriendListUpdateTime: Timestamp? = nil
+//                                if doc.exists {
+//                                    let data = doc.data()
+//                                    lastFriendListUpdateTime = data!["lastUpdateTime"] as! Timestamp?
+//                                }
+//
+//                                Owner.shared.uid = uid
+//                                Owner.shared.email = email
+//                                Owner.shared.id = id
+//                                Owner.shared.name = name
+//                                Owner.shared.lastFriendListUpdateTime = lastFriendListUpdateTime
+//
+//                                self.downloadProfileImage(id)
+//                                    .subscribe(onNext: { imgData in
+//                                        Owner.shared.profileImg = UIImage(data: imgData)
+//
+//                                        self.downloadMyFriendList(uid)
+//                                            .subscribe(onNext: { friendList in
+//                                                // Save friend list to Realm
+//                                                RealmUtil.shared.writeFriendList(friendList: Array<User>(friendList.values))
+//
+//                                                Owner.shared.friendList = friendList
+//                                                observer.onNext(Owner.shared)
+//                                                observer.onCompleted()
+//                                            }).disposed(by: self.disposeBag)
+//                                        // my profile image not found
+//                                    }, onError: { err in
+//                                        Owner.shared.profileImg = UIImage(named: "defaultProfileImage.png")
+//
+//                                        self.downloadMyFriendList(uid)
+//                                            .subscribe(onNext: { friendList in
+//                                                print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
+//                                                print("Friend Amount: \(friendList.count)")
+//                                                print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
+//
+//                                                // Save friend list to Realm
+//                                                RealmUtil.shared.writeFriendList(friendList: Array<User>(friendList.values))
+//
+//                                                Owner.shared.friendList = friendList
+//                                                observer.onNext(Owner.shared)
+//                                                observer.onCompleted()
+//                                            }).disposed(by: self.disposeBag)
+//
+//                                    }).disposed(by: self.disposeBag)
+//                            }).disposed(by: self.disposeBag)
                     }
                 }, onError: { error in
                     observer.onNext(nil)
@@ -114,10 +153,10 @@ class FirebaseUtil {
                     }
                     var friendCount = docs.count
                     
-                    // TODO: Get friend list from realm
+                    // Get friend list from realm
                     var friendList: [String: User] = {
                         var dict: [String: User] = [:]
-                        for user in self.realmUtil.readFriendList() {
+                        for user in RealmUtil.shared.readFriendList() {
                             dict.updateValue(user, forKey: user.id!)
                         }
                         return dict
@@ -125,7 +164,7 @@ class FirebaseUtil {
                     var isFriendEmpty = friendList.isEmpty
                     
                     
-                    // TODO: Find update required friends within friendList loop.
+                    // Find update required friends within friendList loop.
                     let docObservable = Observable.from(docs)
                     docObservable.subscribe(onNext: { doc in
                         let friendData = doc.data()
@@ -177,6 +216,35 @@ class FirebaseUtil {
         }
     }
     
+    
+    func downloadProfileImage(_ id: String) -> Observable<Data?> {
+        return Observable.create { observer in
+            let ref = Storage.storage()
+                .reference(forURL: "\(self.STORAGE_BUCKET)/images/profile/\(id).jpg")
+                .rx
+            
+            ref.getData(maxSize: 1 * 1024 * 1024)
+                .subscribe(onNext: { data in
+                    print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
+                    print("profile img download success! (id: \(id))")
+                    print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
+                    observer.onNext(data)
+                    observer.onCompleted()
+                }, onError: { err in
+                    print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
+                    print("Error: profile img download failed (id: \(id))")
+                    print(err.localizedDescription)
+                    print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
+                    observer.onNext(nil)
+                    observer.onCompleted()
+                })
+                .disposed(by: self.disposeBag)
+            
+            return Disposables.create()
+        }
+    }
+    
+    
     func findUser(_ id: String) -> Observable<User> {
         return Observable.create { observer in
             let query = self.db.collection("Users").whereField("id", isEqualTo: id)
@@ -185,14 +253,17 @@ class FirebaseUtil {
                     if doc.count != 0 {
                         let data = doc.documents.first!.data()
                         let email = data["email"] as? String
+                        let name = data["name"] as? String
                         
                         self.downloadProfileImage(id)
                             .subscribe(onNext: { data in
-                                let user = User(id: id, email: email!, profileImg: UIImage(data: data))
+                                let user = User(id: id,
+                                                email: email!,
+                                                name: name!,
+                                                profileImg: data != nil ? UIImage(data: data!) : UIImage(named: "defaultProfileImage.png"))
                                 observer.onNext(user)
-                            }, onError: { _ in
-                                let user = User(id: id, email: email!, profileImg: UIImage(named: "defaultProfileImage.png"))
-                                observer.onNext(user)
+                            }, onError: { err in
+                                observer.onError(err)
                             }).disposed(by: self.disposeBag)
                     }
                     else {
@@ -204,7 +275,7 @@ class FirebaseUtil {
     }
     
     
-    
+    // MARK: - Upload
     func uploadMyData(_ myInfo: Owner, isProfileImageChanged: Bool) -> Observable<Owner> {
         return Observable.create { observer in
             let docRef = self.db.collection("Users").document(myInfo.uid)
@@ -258,33 +329,6 @@ class FirebaseUtil {
     }
     
     
-    func downloadProfileImage(_ id: String) -> Observable<Data> {
-        return Observable.create { observer in
-            let ref = Storage.storage()
-                .reference(forURL: "\(self.STORAGE_BUCKET)/images/profile/\(id).jpg")
-                .rx
-            
-            ref.getData(maxSize: 1 * 1024 * 1024)
-                .subscribe(onNext: { data in
-                    print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
-                    print("profile img download success! (id: \(id))")
-                    print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
-                    observer.onNext(data)
-                    observer.onCompleted()
-                }, onError: { err in
-                    print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
-                    print("Error: profile img download failed (id: \(id))")
-                    print(err.localizedDescription)
-                    print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
-                    observer.onError(err)
-                    observer.onCompleted()
-                })
-                .disposed(by: self.disposeBag)
-            
-            return Disposables.create()
-        }
-    }
-    
     
     func uploadProfileUpdateTime(_ id: String) -> Observable<Void> {
         return Observable.create { observer in
@@ -302,6 +346,7 @@ class FirebaseUtil {
     }
     
     
+    // MARK: - ETC
     func addFriend(ownerUID: String, newFriend: User) -> Observable<User> {
         return Observable.create { observer in
             let docRef = self.db.collection("Users").document(ownerUID).collection("Friends").document(newFriend.id!)
@@ -408,9 +453,9 @@ class FirebaseUtil {
                 Owner.shared.uid = uid
                 
                 // TODO: 유저 초기 저장하고 Edit완료시 Update 시간 Realm에 저장하기.
-                if RealmUtil().ownerRealmExist() {
+                if RealmUtil.shared.ownerRealmExist() {
                     print("Owner Realm exist")
-                    Owner.shared.lastFriendListUpdateTime = RealmUtil().readOwner().lastFriendListUpdateTime
+                    Owner.shared.lastFriendListUpdateTime = RealmUtil.shared.readOwner().lastFriendListUpdateTime
                     print("Owner lastFriendListUpdateTime = \(Owner.shared.lastFriendListUpdateTime)")
                 }
                 else {

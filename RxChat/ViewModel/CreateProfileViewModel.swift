@@ -50,7 +50,7 @@ class CreateProfileViewModel: CommonViewModel {
                         .subscribe(onCompleted: {
                             // save last friend list update time on Realm
                             Owner.shared.lastFriendListUpdateTime = Timestamp(date: Date())
-                            RealmUtil().writeOwner(owner: Owner.shared)
+                            RealmUtil.shared.writeOwner(owner: Owner.shared)
                             // stop acitivy indicator
                             self.uploadingProfile.onNext(false)
                             

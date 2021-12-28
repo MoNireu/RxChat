@@ -17,8 +17,9 @@ class ChatUtility {
     static let shared = ChatUtility()
     var disposeBag = DisposeBag()
     
+    private init() {}
     
-//    private let ref = Database.database(url: "https://rxchat-f485a-default-rtdb.asia-southeast1.firebasedatabase.app/").reference()
+    
     private let _ref = Database.database(url: "https://rxchat-f485a-default-rtdb.asia-southeast1.firebasedatabase.app/")
     private lazy var usersRef = _ref.reference(withPath: "users")
     private lazy var roomsRef = _ref.reference(withPath: "rooms")

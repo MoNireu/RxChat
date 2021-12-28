@@ -56,8 +56,8 @@ class FindUserViewModel: CommonViewModel {
                         
                         Owner.shared.friendList.updateValue(self.foundUser!, forKey: self.foundUser!.id!)
                         
-                        let realmUtil = RealmUtil()
-                        realmUtil.writeSingleFriend(friendInfo: self.foundUser!)
+                        
+                        RealmUtil.shared.writeSingleFriend(friendInfo: self.foundUser!)
                         
                     }).disposed(by: self.disposeBag)
                 

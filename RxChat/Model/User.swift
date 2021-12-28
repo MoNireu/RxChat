@@ -23,19 +23,22 @@ class User: Equatable, IdentifiableType {
     
     var id: String?
     var email: String
+    var name: String?
     var profileImg: UIImage?
     
-    init(id: String?, email: String, profileImg: UIImage?) {
+    init(id: String?, email: String, name: String?, profileImg: UIImage?) {
         self.id = id
         self.email = email
+        self.name = name
         self.profileImg = profileImg
     }
 }
 
 
 class UserRealm: Object {
-    @Persisted var email: String?
     @Persisted var id: String?
+    @Persisted var email: String?
+    @Persisted var name: String?
     @Persisted var profileImg: Data?
     
     override static func primaryKey() -> String? {

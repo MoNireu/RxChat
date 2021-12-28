@@ -14,7 +14,7 @@ class RealmUtil {
     private let realm = try! Realm()
     
     // Test
-    init() {
+    private init() {
         print("Realm is located at:", realm.configuration.fileURL!)
     }
     
@@ -38,7 +38,7 @@ class RealmUtil {
         var friendList: [User] = []
         
         for friendRealm in friendListRealm {
-            friendList.append(User(id: friendRealm.id, email: friendRealm.email!, profileImg: UIImage(data: friendRealm.profileImg!)))
+            friendList.append(User(id: friendRealm.id, email: friendRealm.email!, name: friendRealm.name, profileImg: UIImage(data: friendRealm.profileImg!)))
         }
         
         return friendList
