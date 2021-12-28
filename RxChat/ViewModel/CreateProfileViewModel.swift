@@ -14,66 +14,48 @@ import RxFirebase
 
 class CreateProfileViewModel: CommonViewModel {
     let disposeBag = DisposeBag()
-    
-    var myInfo: Owner = Owner.shared
-    var myId: BehaviorSubject<String>
-    var myProfileImg: BehaviorSubject<UIImage>
-    //    var userAlreadyExist = true
-    var userAlreadyExistSubject: BehaviorSubject<Bool>
     let isUploadingProfileSubject = BehaviorSubject<Bool>(value: false)
     var profileImageChanged = false
     
     override init(sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil) {
         print("Create Profile View Model Load")
-        myId = BehaviorSubject<String>(value: myInfo.id ?? "")
-        userAlreadyExistSubject = BehaviorSubject<Bool>(value: true)
-        
-        var profileImg: UIImage
-        if let _profileImg = myInfo.profileImg { profileImg = _profileImg }
-        else { profileImg = UIImage(named: "defaultProfileImage.png")! }
-        
-        self.myProfileImg = BehaviorSubject<UIImage>(value: profileImg)
+        Owner.shared.profileImg = UIImage(named: Resources.defaultProfileImg.rawValue)
         super.init(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
-        
-        onValueChange()
+    }
+    
+    deinit {
+        print("Log -", #fileID, #function, #line, "DeInit")
     }
     
     lazy var profileEditDone: CocoaAction = {
-        return Action { _ in
+        return Action { [weak self] _ in
             // start activity indicator
-            self.isUploadingProfileSubject.onNext(true)
-            // upload my data & profile image
-            self.firebaseUtil.uploadMyData(self.myInfo, isProfileImageChanged: self.profileImageChanged)
-                .subscribe(onNext: { uploadedUser in
-                    // upload profile update time
-                    self.firebaseUtil.uploadProfileUpdateTime(uploadedUser.id!)
+            self?.isUploadingProfileSubject.onNext(true)
+            
+            self?.firebaseUtil.uploadMyData(isProfileImageChanged: (self?.profileImageChanged)!)
+                .subscribe(onNext: { [weak self] uploadedUser in
+                    self?.firebaseUtil.uploadProfileUpdateTime(uploadedUser.id!)
                         .subscribe(onCompleted: {
-                            // save last friend list update time on Realm
                             Owner.shared.lastFriendListUpdateTime = Timestamp(date: Date())
+                            // save last friend list update time on Realm
                             RealmUtil.shared.writeOwner(owner: Owner.shared)
                             // stop acitivy indicator
-                            self.isUploadingProfileSubject.onNext(false)
+                            self?.isUploadingProfileSubject.onNext(false)
                             
                             // change to scene "FriendList"
-                            let friendListVM = FriendListViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
-                            let privateChatListVM = PrivateChatListViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
-                            let groupChatListVM = GroupChatListViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
+                            let sceneCoordinator = (self?.sceneCoordinator)!
+                            let firebaseUtil = (self?.firebaseUtil)!
+                            let friendListVM = FriendListViewModel(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
+                            let privateChatListVM = PrivateChatListViewModel(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
+                            let groupChatListVM = GroupChatListViewModel(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
                             let chatListScene = Scene.chatList(friendListVM, privateChatListVM, groupChatListVM)
-                            self.sceneCoordinator.transition(to: chatListScene, using: .root, animated: true)
-                        }).disposed(by: self.disposeBag)
-                }).disposed(by: self.disposeBag)
+                            self?.sceneCoordinator.transition(to: chatListScene, using: .root, animated: true)
+                        }).disposed(by: (self?.disposeBag)!)
+                }).disposed(by: (self?.disposeBag)!)
             
             return Observable.empty()
         }
     }()
-    
-    func onValueChange() {
-        myId.subscribe(onNext: { id in
-            self.myInfo.id = id
-            
-        }).disposed(by: self.disposeBag)
-        
-    }
     
     func doesUserAlreadyExist(id: String) -> Observable<Bool> {
         return Observable.create { observer in

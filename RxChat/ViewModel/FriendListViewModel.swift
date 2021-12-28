@@ -29,13 +29,13 @@ class FriendListViewModel: CommonViewModel {
                 switch indexPath.section {
                 case 0:
                     let myInfoCell = tableView.dequeueReusableCell(withIdentifier: "MyProfileCell", for: indexPath) as! FriendListMyTableViewCell
-                    myInfoCell.profileImageView.image = item.profileImg ?? UIImage(named: "defualtProfileImage.png")!
+                    myInfoCell.profileImageView.image = item.profileImg ?? UIImage(named: Resources.defaultProfileImg.rawValue)!
                     myInfoCell.profileName.text = item.id
                     myInfoCell.profileStatMsg.text = "This is test MSG"
                     return myInfoCell
                 case 1:
                     let friendInfoCell = tableView.dequeueReusableCell(withIdentifier: "FriendProfileCell", for: indexPath) as! FriendListFriendTableViewCell
-                    friendInfoCell.profileImageView.image = item.profileImg ?? UIImage(named: "defualtProfileImage.png")!
+                    friendInfoCell.profileImageView.image = item.profileImg ?? UIImage(named: Resources.defaultProfileImg.rawValue)!
                     friendInfoCell.profileName.text = item.id
                     friendInfoCell.profileStatMsg.text = "This is test MSG"
                     return friendInfoCell

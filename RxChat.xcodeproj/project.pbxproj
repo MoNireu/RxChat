@@ -17,6 +17,7 @@
 		E1232F2726AFE73500A9EA31 /* GroupChatListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1232F2626AFE73500A9EA31 /* GroupChatListViewController.swift */; };
 		E1232F2926AFE74000A9EA31 /* GroupChatListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1232F2826AFE74000A9EA31 /* GroupChatListViewModel.swift */; };
 		E1395AA42771A56E00DF0B1B /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = E1395AA32771A56E00DF0B1B /* OrderedCollections */; };
+		E139C280277AF6EC00EFD61C /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = E139C27F277AF6EC00EFD61C /* Resources.swift */; };
 		E13D44702750AA91005EECB9 /* ChatRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13D446F2750AA91005EECB9 /* ChatRoomViewModel.swift */; };
 		E13D44722750AAB4005EECB9 /* ChatRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13D44712750AAB4005EECB9 /* ChatRoomViewController.swift */; };
 		E14BD599270C381C00B48DA6 /* RealmUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14BD598270C381C00B48DA6 /* RealmUtil.swift */; };
@@ -94,6 +95,7 @@
 		E1232F2226AFE6C100A9EA31 /* PrivateChatListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateChatListViewModel.swift; sourceTree = "<group>"; };
 		E1232F2626AFE73500A9EA31 /* GroupChatListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupChatListViewController.swift; sourceTree = "<group>"; };
 		E1232F2826AFE74000A9EA31 /* GroupChatListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupChatListViewModel.swift; sourceTree = "<group>"; };
+		E139C27F277AF6EC00EFD61C /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		E13D446F2750AA91005EECB9 /* ChatRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomViewModel.swift; sourceTree = "<group>"; };
 		E13D44712750AAB4005EECB9 /* ChatRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomViewController.swift; sourceTree = "<group>"; };
 		E14BD598270C381C00B48DA6 /* RealmUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmUtil.swift; sourceTree = "<group>"; };
@@ -257,6 +259,7 @@
 			children = (
 				E1613B36269D824600F4E359 /* defaultProfileImage.png */,
 				E159B04626A95C4600071C52 /* plus.png */,
+				E139C27F277AF6EC00EFD61C /* Resources.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -633,6 +636,7 @@
 				E1D9946A2733AED500352547 /* LaunchViewModel.swift in Sources */,
 				E1E11E3F269C1F19000CE221 /* User.swift in Sources */,
 				E1232F2926AFE74000A9EA31 /* GroupChatListViewModel.swift in Sources */,
+				E139C280277AF6EC00EFD61C /* Resources.swift in Sources */,
 				E15B2D192696E8B2005D1C3F /* SceneDelegate.swift in Sources */,
 				E13D44702750AA91005EECB9 /* ChatRoomViewModel.swift in Sources */,
 			);

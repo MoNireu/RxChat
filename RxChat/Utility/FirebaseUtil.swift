@@ -77,59 +77,59 @@ class FirebaseUtil {
                             print("Log -", #fileID, #function, #line, err.localizedDescription)
                             observer.onError(err)
                         }.disposed(by: self.disposeBag)
-
-
                         
                         
                         
-//                        myLastUpdateTime.rx
-//                            .getDocument()
-//                            .subscribe(onNext: { doc in
-//                                var lastFriendListUpdateTime: Timestamp? = nil
-//                                if doc.exists {
-//                                    let data = doc.data()
-//                                    lastFriendListUpdateTime = data!["lastUpdateTime"] as! Timestamp?
-//                                }
-//
-//                                Owner.shared.uid = uid
-//                                Owner.shared.email = email
-//                                Owner.shared.id = id
-//                                Owner.shared.name = name
-//                                Owner.shared.lastFriendListUpdateTime = lastFriendListUpdateTime
-//
-//                                self.downloadProfileImage(id)
-//                                    .subscribe(onNext: { imgData in
-//                                        Owner.shared.profileImg = UIImage(data: imgData)
-//
-//                                        self.downloadMyFriendList(uid)
-//                                            .subscribe(onNext: { friendList in
-//                                                // Save friend list to Realm
-//                                                RealmUtil.shared.writeFriendList(friendList: Array<User>(friendList.values))
-//
-//                                                Owner.shared.friendList = friendList
-//                                                observer.onNext(Owner.shared)
-//                                                observer.onCompleted()
-//                                            }).disposed(by: self.disposeBag)
-//                                        // my profile image not found
-//                                    }, onError: { err in
-//                                        Owner.shared.profileImg = UIImage(named: "defaultProfileImage.png")
-//
-//                                        self.downloadMyFriendList(uid)
-//                                            .subscribe(onNext: { friendList in
-//                                                print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
-//                                                print("Friend Amount: \(friendList.count)")
-//                                                print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
-//
-//                                                // Save friend list to Realm
-//                                                RealmUtil.shared.writeFriendList(friendList: Array<User>(friendList.values))
-//
-//                                                Owner.shared.friendList = friendList
-//                                                observer.onNext(Owner.shared)
-//                                                observer.onCompleted()
-//                                            }).disposed(by: self.disposeBag)
-//
-//                                    }).disposed(by: self.disposeBag)
-//                            }).disposed(by: self.disposeBag)
+                        
+                        
+                        //                        myLastUpdateTime.rx
+                        //                            .getDocument()
+                        //                            .subscribe(onNext: { doc in
+                        //                                var lastFriendListUpdateTime: Timestamp? = nil
+                        //                                if doc.exists {
+                        //                                    let data = doc.data()
+                        //                                    lastFriendListUpdateTime = data!["lastUpdateTime"] as! Timestamp?
+                        //                                }
+                        //
+                        //                                Owner.shared.uid = uid
+                        //                                Owner.shared.email = email
+                        //                                Owner.shared.id = id
+                        //                                Owner.shared.name = name
+                        //                                Owner.shared.lastFriendListUpdateTime = lastFriendListUpdateTime
+                        //
+                        //                                self.downloadProfileImage(id)
+                        //                                    .subscribe(onNext: { imgData in
+                        //                                        Owner.shared.profileImg = UIImage(data: imgData)
+                        //
+                        //                                        self.downloadMyFriendList(uid)
+                        //                                            .subscribe(onNext: { friendList in
+                        //                                                // Save friend list to Realm
+                        //                                                RealmUtil.shared.writeFriendList(friendList: Array<User>(friendList.values))
+                        //
+                        //                                                Owner.shared.friendList = friendList
+                        //                                                observer.onNext(Owner.shared)
+                        //                                                observer.onCompleted()
+                        //                                            }).disposed(by: self.disposeBag)
+                        //                                        // my profile image not found
+                        //                                    }, onError: { err in
+                        //                                        Owner.shared.profileImg = UIImage(named: "defaultProfileImage.png")
+                        //
+                        //                                        self.downloadMyFriendList(uid)
+                        //                                            .subscribe(onNext: { friendList in
+                        //                                                print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
+                        //                                                print("Friend Amount: \(friendList.count)")
+                        //                                                print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
+                        //
+                        //                                                // Save friend list to Realm
+                        //                                                RealmUtil.shared.writeFriendList(friendList: Array<User>(friendList.values))
+                        //
+                        //                                                Owner.shared.friendList = friendList
+                        //                                                observer.onNext(Owner.shared)
+                        //                                                observer.onCompleted()
+                        //                                            }).disposed(by: self.disposeBag)
+                        //
+                        //                                    }).disposed(by: self.disposeBag)
+                        //                            }).disposed(by: self.disposeBag)
                     }
                 }, onError: { error in
                     observer.onNext(nil)
@@ -276,28 +276,27 @@ class FirebaseUtil {
     
     
     // MARK: - Upload
-    func uploadMyData(_ myInfo: Owner, isProfileImageChanged: Bool) -> Observable<Owner> {
+    func uploadMyData(isProfileImageChanged: Bool) -> Observable<Owner> {
         return Observable.create { observer in
-            let docRef = self.db.collection("Users").document(myInfo.uid)
+            let docRef = self.db.collection("Users").document(Owner.shared.uid)
             docRef.rx
                 .setData([
-                    "id" : myInfo.id,
-                    "email" : myInfo.email,
+                    "id": Owner.shared.id!,
+                    "email": Owner.shared.email,
+                    "name": Owner.shared.name!
                 ])
                 .subscribe(
                     onError: { err in
                         print("Error setting user data: \(err.localizedDescription)")
                     },
                     onCompleted: {
-                        guard isProfileImageChanged else {return observer.onNext(myInfo)}
-                        self.uploadProfileImage(myInfo.id!, myInfo.profileImg!)
+                        guard isProfileImageChanged else {return observer.onNext(Owner.shared)}
+                        self.uploadProfileImage(Owner.shared.id!, Owner.shared.profileImg!)
                             .subscribe(
                                 onNext: { data in
-                                    observer.onNext(myInfo)
-                                }
-                            ).disposed(by: self.disposeBag)
-                    }
-                ).disposed(by: self.disposeBag)
+                                    observer.onNext(Owner.shared)
+                                }).disposed(by: self.disposeBag)
+                }).disposed(by: self.disposeBag)
             return Disposables.create()
         }
     }
