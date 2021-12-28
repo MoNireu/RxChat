@@ -109,8 +109,7 @@ extension UITextView {
     func getLine() -> Int {
         guard let font = self.font else { return 1 }
         return Int(round(self.contentSize.height / font.lineHeight)-1)
-    }
-        
+    } 
 }
 
 

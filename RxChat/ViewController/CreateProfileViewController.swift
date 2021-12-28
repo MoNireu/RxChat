@@ -21,11 +21,11 @@ class CreateProfileViewController: UIViewController, ViewModelBindableType {
     
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var idTextField: UITextField!
+    @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var completeButton: UIButton!
     @IBOutlet weak var actIndicator: UIActivityIndicatorView!
     @IBOutlet weak var profileImageSetButton: UIButton!
     @IBOutlet weak var profilePlusImageView: UIImageView!
-    @IBOutlet weak var userAlreadyExistWarningLabel: UILabel!
     
     
     override func viewDidLoad() {
@@ -37,9 +37,11 @@ class CreateProfileViewController: UIViewController, ViewModelBindableType {
         profilePlusImageView.clipsToBounds = true
         profilePlusImageView.layer.cornerRadius = profilePlusImageView.frame.size.height * 0.5
         
-        idTextField.placeholder = "닉네임을 입력하세요"
+        idTextField.placeholder = "아이디는 추후에 변경하실 수 없습니다."
         idTextField.textAlignment = .center
-        userAlreadyExistWarningLabel.isHidden = true
+        
+        nameTextField.placeholder = "친구들에게 보여질 이름을 설정합니다."
+        nameTextField.textAlignment = .center
         
         completeButton.setBackgroundColor(.lightGray, for: .disabled)
         completeButton.clipsToBounds = true
@@ -71,14 +73,14 @@ class CreateProfileViewController: UIViewController, ViewModelBindableType {
                 alert.addAction(UIAlertAction(title: "나의 앨범에서 선택", style: .default) {_ in
                     self.viewModel.profileImageChanged = true
                     
-                    self.viewModel.uploadingProfile.onNext(true)
+                    self.viewModel.isUploadingProfileSubject.onNext(true)
                     let imgPicker = UIImagePickerController()
                     imgPicker.delegate = self
                     imgPicker.sourceType = .photoLibrary
                     imgPicker.mediaTypes = ["public.image"]
                     imgPicker.allowsEditing = true
                     self.present(imgPicker, animated: true) {
-                        self.viewModel.uploadingProfile.onNext(false)
+                        self.viewModel.isUploadingProfileSubject.onNext(false)
                     }
                 })
                 alert.addAction(UIAlertAction(title: "취소", style: .cancel))
@@ -90,43 +92,105 @@ class CreateProfileViewController: UIViewController, ViewModelBindableType {
         idTextField
             .rx
             .text
-            .subscribe(onNext: { id in
-                self.viewModel.myId.onNext(id ?? "")
+            .subscribe(onNext: { [weak self] id in
+                self?.viewModel.myId.onNext(id ?? "")
             }).disposed(by: rx.disposeBag)
         
         
-        
-        idTextField
-            .rx
-            .controlEvent(.editingDidEndOnExit)
-            .subscribe(onNext: { _ in
-                guard let text = self.idTextField.text else { return }
-                self.viewModel.doesUserAlreadyExist(id: text)
-                    .map({!$0})
-                    .bind(to: self.userAlreadyExistWarningLabel.rx.isHidden,
-                          self.completeButton.rx.isEnabled)
-                    .disposed(by: self.rx.disposeBag)
+        let idTextFieldConfirmedObservable = addIdTextFieldConfirmObservables()
+        let nameTextFieldConfirmedObservable = addNameTextFieldConfirmObservables()
+        Observable.combineLatest(idTextFieldConfirmedObservable, nameTextFieldConfirmedObservable)
+            .subscribe(onNext: { [weak self] in
+                self?.completeButton.isEnabled = $0 && $1
             }).disposed(by: rx.disposeBag)
+
         
-        idTextField
+        
+        let idTextFieldDidBeginEditingObservable = idTextField
             .rx
             .controlEvent(.editingDidBegin)
-            .subscribe(onNext: { _ in
-                self.completeButton.isEnabled = false
+        let nameTextFieldDidBeginEditingObservable = nameTextField
+            .rx
+            .controlEvent(.editingDidBegin)
+        Observable.of(idTextFieldDidBeginEditingObservable, nameTextFieldDidBeginEditingObservable)
+            .merge()
+            .subscribe(onNext: { [weak self] _ in
+                self?.completeButton.isEnabled = false
             }).disposed(by: rx.disposeBag)
         
-        viewModel.uploadingProfile
-            .subscribe(onNext: { isUploading in
-                self.actIndicator.isHidden = !isUploading
+        completeButton.rx.action = viewModel.profileEditDone
+        
+        
+        viewModel.isUploadingProfileSubject
+            .subscribe(onNext: { [weak self] isUploading in
+                self?.actIndicator.isHidden = !isUploading
             })
             .disposed(by: disposeBag)
         
         
-        completeButton.rx.action = viewModel.profileEditDone
-        
         Observable.just(false)
             .bind(to: completeButton.rx.isEnabled)
             .disposed(by: rx.disposeBag)
+    }
+    
+    private func addIdTextFieldConfirmObservables() -> Observable<Bool> {
+        let idTextFieldEditDidEnd = idTextField
+            .rx
+            .controlEvent(.editingDidEnd)
+
+        let idTextFieldEditDidEndOnExit = idTextField
+            .rx
+            .controlEvent(.editingDidEndOnExit)
+        
+        let isIdTextFieldConfirmedObserver = Observable<Bool>.create { [weak self] observer in
+            Observable.of(idTextFieldEditDidEnd, idTextFieldEditDidEndOnExit)
+                .merge()
+                .subscribe(onNext: { [weak self] _ in
+                    guard let text = self?.idTextField.text else { observer.onNext(false); return}
+                    self?.viewModel.doesUserAlreadyExist(id: text)
+                        .subscribe(onNext: { [weak self] userAlreadyExist in
+                            if userAlreadyExist {
+                                self?.alertIdAlreadyExist()
+                                observer.onNext(false)
+                            }
+                            else { observer.onNext(true) }
+                        }).disposed(by: (self?.rx.disposeBag)!)
+                }).disposed(by: (self?.rx.disposeBag)!)
+            return Disposables.create()
+        }
+        
+        return isIdTextFieldConfirmedObserver
+    }
+    
+    private func addNameTextFieldConfirmObservables() -> Observable<Bool> {
+        let nameTextFieldEditDidEnd = nameTextField
+            .rx
+            .controlEvent(.editingDidEnd)
+        
+        let nameTextFieldEditDidEndOnExit = nameTextField
+            .rx
+            .controlEvent(.editingDidEndOnExit)
+        
+        let isNameTextFieldConfirmedObserver = Observable<Bool>.create { [weak self] observer in
+            Observable.of(nameTextFieldEditDidEnd, nameTextFieldEditDidEndOnExit)
+                .merge()
+                .subscribe { [weak self] _ in
+                    guard (self?.nameTextField.text) != nil else {observer.onNext(false); return}
+                    observer.onNext(true)
+                }.disposed(by: (self?.rx.disposeBag)!)
+            return Disposables.create()
+        }
+        
+        return isNameTextFieldConfirmedObserver
+    }
+    
+    private func alertIdAlreadyExist() {
+        let alert = UIAlertController(title: "아이디 중복",
+                                      message: "이미 존재하는 아이디입니다.\n다른 아이디를 설정해주세요.",
+                                      preferredStyle: .alert)
+        let action = UIAlertAction(title: "닫기", style: .cancel)
+        alert.addAction(action)
+        self.present(alert, animated: true)
     }
 }
 

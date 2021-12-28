@@ -116,7 +116,7 @@
                                 </constraints>
                             </imageView>
                             <textField toolTip="asdfasdf" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="jxP-FM-sc5">
-                                <rect key="frame" x="50" y="481" width="314" height="34"/>
+                                <rect key="frame" x="88" y="481" width="276" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
                             </textField>
@@ -146,33 +146,48 @@
                                 <imageReference key="image" image="plus.png" symbolScale="large"/>
                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="이미 존재하는 아이디 입니다." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aqG-Gf-WF0">
-                                <rect key="frame" x="20" y="523" width="374" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uvV-AL-vLR">
+                                <rect key="frame" x="50" y="481" width="30" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" systemColor="systemRedColor"/>
+                                <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="이름" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WdQ-Vh-oS0">
+                                <rect key="frame" x="50" y="535" width="30" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="O66-BY-9fs">
+                                <rect key="frame" x="88" y="528.5" width="276" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="k9y-KP-86h"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="aqG-Gf-WF0" firstAttribute="leading" secondItem="k9y-KP-86h" secondAttribute="leading" constant="20" id="4az-yW-hVi"/>
-                            <constraint firstItem="aqG-Gf-WF0" firstAttribute="top" secondItem="jxP-FM-sc5" secondAttribute="bottom" constant="8" symbolic="YES" id="70F-Gt-AaS"/>
+                            <constraint firstItem="WdQ-Vh-oS0" firstAttribute="leading" secondItem="uvV-AL-vLR" secondAttribute="leading" id="4bc-mY-vdd"/>
                             <constraint firstItem="D3l-dI-FmT" firstAttribute="top" secondItem="nrY-w2-ccJ" secondAttribute="top" constant="112.5" id="9Zg-Iz-jH4"/>
-                            <constraint firstItem="k9y-KP-86h" firstAttribute="trailing" secondItem="aqG-Gf-WF0" secondAttribute="trailing" constant="20" id="DNS-oo-z6w"/>
                             <constraint firstItem="Ipg-yk-Ofg" firstAttribute="leading" secondItem="k9y-KP-86h" secondAttribute="leading" constant="20" id="I1o-1x-jYp"/>
+                            <constraint firstItem="WdQ-Vh-oS0" firstAttribute="top" secondItem="uvV-AL-vLR" secondAttribute="bottom" constant="20" id="Igu-fg-fPF"/>
                             <constraint firstItem="eb8-va-mnI" firstAttribute="leading" secondItem="nrY-w2-ccJ" secondAttribute="leading" id="IkV-Ne-N6H"/>
+                            <constraint firstItem="O66-BY-9fs" firstAttribute="leading" secondItem="WdQ-Vh-oS0" secondAttribute="trailing" constant="8" id="JKg-mj-ibR"/>
                             <constraint firstItem="k9y-KP-86h" firstAttribute="trailing" secondItem="jxP-FM-sc5" secondAttribute="trailing" constant="50" id="MyG-yl-YLH"/>
+                            <constraint firstItem="uvV-AL-vLR" firstAttribute="width" secondItem="WdQ-Vh-oS0" secondAttribute="width" id="NjY-nP-gvL"/>
                             <constraint firstItem="eb8-va-mnI" firstAttribute="bottom" secondItem="nrY-w2-ccJ" secondAttribute="bottom" id="OK2-6d-JMK"/>
+                            <constraint firstItem="k9y-KP-86h" firstAttribute="trailing" secondItem="O66-BY-9fs" secondAttribute="trailing" constant="50" id="P7h-eF-Wbk"/>
                             <constraint firstItem="nrY-w2-ccJ" firstAttribute="centerY" secondItem="w1H-c3-Yev" secondAttribute="centerY" constant="-100" id="PAq-o1-RhS"/>
+                            <constraint firstItem="WdQ-Vh-oS0" firstAttribute="centerY" secondItem="O66-BY-9fs" secondAttribute="centerY" id="TMd-Fo-AGZ"/>
+                            <constraint firstItem="uvV-AL-vLR" firstAttribute="leading" secondItem="k9y-KP-86h" secondAttribute="leading" constant="50" id="VZu-Sr-3fQ"/>
                             <constraint firstItem="Ipg-yk-Ofg" firstAttribute="bottom" secondItem="k9y-KP-86h" secondAttribute="bottom" id="Zir-tL-6Ue"/>
-                            <constraint firstItem="jxP-FM-sc5" firstAttribute="centerX" secondItem="w1H-c3-Yev" secondAttribute="centerX" id="gKo-kb-nCs"/>
+                            <constraint firstItem="uvV-AL-vLR" firstAttribute="height" secondItem="jxP-FM-sc5" secondAttribute="height" id="dfF-rM-xl9"/>
                             <constraint firstItem="yoX-eQ-DJW" firstAttribute="centerY" secondItem="w1H-c3-Yev" secondAttribute="centerY" id="ja9-OY-0S9"/>
-                            <constraint firstItem="aqG-Gf-WF0" firstAttribute="centerX" secondItem="w1H-c3-Yev" secondAttribute="centerX" id="mBT-f5-iST"/>
+                            <constraint firstItem="uvV-AL-vLR" firstAttribute="centerY" secondItem="w1H-c3-Yev" secondAttribute="centerY" constant="50" id="l6b-Wa-KVE"/>
+                            <constraint firstItem="jxP-FM-sc5" firstAttribute="leading" secondItem="uvV-AL-vLR" secondAttribute="trailing" constant="8" id="q87-kq-D3L"/>
                             <constraint firstItem="yoX-eQ-DJW" firstAttribute="centerX" secondItem="w1H-c3-Yev" secondAttribute="centerX" id="qR7-Vy-PgH"/>
                             <constraint firstItem="k9y-KP-86h" firstAttribute="trailing" secondItem="Ipg-yk-Ofg" secondAttribute="trailing" constant="20" id="sfi-wP-fqq"/>
                             <constraint firstItem="D3l-dI-FmT" firstAttribute="leading" secondItem="nrY-w2-ccJ" secondAttribute="leading" constant="112.5" id="svY-4e-JvH"/>
-                            <constraint firstItem="jxP-FM-sc5" firstAttribute="leading" secondItem="k9y-KP-86h" secondAttribute="leading" constant="50" id="uJ3-yS-2sl"/>
                             <constraint firstItem="eb8-va-mnI" firstAttribute="top" secondItem="nrY-w2-ccJ" secondAttribute="top" id="uon-JM-JBi"/>
                             <constraint firstItem="eb8-va-mnI" firstAttribute="trailing" secondItem="nrY-w2-ccJ" secondAttribute="trailing" id="wLn-nT-XTL"/>
                             <constraint firstItem="nrY-w2-ccJ" firstAttribute="centerX" secondItem="w1H-c3-Yev" secondAttribute="centerX" id="x1W-kK-ByF"/>
@@ -183,15 +198,15 @@
                         <outlet property="actIndicator" destination="yoX-eQ-DJW" id="8I6-5w-PaD"/>
                         <outlet property="completeButton" destination="Ipg-yk-Ofg" id="MeV-vx-8SM"/>
                         <outlet property="idTextField" destination="jxP-FM-sc5" id="tH3-ee-19b"/>
+                        <outlet property="nameTextField" destination="O66-BY-9fs" id="2dS-wI-9FY"/>
                         <outlet property="profileImageSetButton" destination="eb8-va-mnI" id="T3C-Fa-I05"/>
                         <outlet property="profileImageView" destination="nrY-w2-ccJ" id="ydt-Kn-oRd"/>
                         <outlet property="profilePlusImageView" destination="D3l-dI-FmT" id="rTt-0c-VJ2"/>
-                        <outlet property="userAlreadyExistWarningLabel" destination="aqG-Gf-WF0" id="Alv-f0-FgY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Ph-YJ-0b1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="983" y="116"/>
+            <point key="canvasLocation" x="982.60869565217399" y="115.84821428571428"/>
         </scene>
         <!--ChatRoomViewController-->
         <scene sceneID="eE1-7a-VdW">
@@ -863,9 +878,6 @@
         </systemColor>
         <systemColor name="systemGrayColor">
             <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

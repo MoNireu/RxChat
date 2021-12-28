@@ -20,7 +20,7 @@ class CreateProfileViewModel: CommonViewModel {
     var myProfileImg: BehaviorSubject<UIImage>
     //    var userAlreadyExist = true
     var userAlreadyExistSubject: BehaviorSubject<Bool>
-    let uploadingProfile = BehaviorSubject<Bool>(value: false)
+    let isUploadingProfileSubject = BehaviorSubject<Bool>(value: false)
     var profileImageChanged = false
     
     override init(sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil) {
@@ -41,7 +41,7 @@ class CreateProfileViewModel: CommonViewModel {
     lazy var profileEditDone: CocoaAction = {
         return Action { _ in
             // start activity indicator
-            self.uploadingProfile.onNext(true)
+            self.isUploadingProfileSubject.onNext(true)
             // upload my data & profile image
             self.firebaseUtil.uploadMyData(self.myInfo, isProfileImageChanged: self.profileImageChanged)
                 .subscribe(onNext: { uploadedUser in
@@ -52,7 +52,7 @@ class CreateProfileViewModel: CommonViewModel {
                             Owner.shared.lastFriendListUpdateTime = Timestamp(date: Date())
                             RealmUtil.shared.writeOwner(owner: Owner.shared)
                             // stop acitivy indicator
-                            self.uploadingProfile.onNext(false)
+                            self.isUploadingProfileSubject.onNext(false)
                             
                             // change to scene "FriendList"
                             let friendListVM = FriendListViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
