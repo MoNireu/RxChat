@@ -13,6 +13,7 @@ enum TransitionStyle {
     case push
     case modal
     case fullScreen
+    case pushOnParent
 }
 
 enum TransitionError: Error {

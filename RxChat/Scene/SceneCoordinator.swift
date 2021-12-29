@@ -37,7 +37,8 @@ class SceneCoordinator: SceneCoordinatorType {
     func transition(to scene: Scene, using style: TransitionStyle, animated: Bool) -> Completable {
         let subject = PublishSubject<Void>()
         
-        let target = scene.instantiate()
+        var target = scene.instantiate()
+        print("Log -", #fileID, #function, #line, "Load")
         
         print("Log -", #fileID, #function, #line, "from: \(getCurrentVC())")
         
@@ -65,8 +66,16 @@ class SceneCoordinator: SceneCoordinatorType {
                 subject.onCompleted()
             }
             currentVC = target.sceneViewController
+            
+        case .pushOnParent:
+            currentVC.dismiss(animated: true) {
+                target = scene.instantiate()
+                let currentNAV = self.currentVC as? UINavigationController
+                currentNAV?.pushViewController(target, animated: true)
+                subject.onCompleted()
+                self.currentVC = target.sceneViewController
+            }
         }
-        
         print("Log -", #fileID, #function, #line, "to: \(getCurrentVC())")
         
         return subject.ignoreElements()
@@ -84,7 +93,6 @@ class SceneCoordinator: SceneCoordinatorType {
             else {
                 completable(.error(TransitionError.unknown))
             }
-            
             return Disposables.create()
         }
     }

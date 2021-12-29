@@ -533,7 +533,7 @@
                     <size key="freeformSize" width="414" height="500"/>
                     <connections>
                         <outlet property="collectionView" destination="9YI-5m-Cip" id="Cet-tp-e5T"/>
-                        <outlet property="friendNameLbl" destination="euK-X1-mKP" id="Lbu-Uw-dco"/>
+                        <outlet property="nameLbl" destination="euK-X1-mKP" id="Lbu-Uw-dco"/>
                         <outlet property="profileImageView" destination="WOw-yR-XjK" id="1ZT-BV-GKz"/>
                         <outlet property="showChatBtn" destination="yyo-1f-I9m" id="cZg-p6-bnE"/>
                         <outlet property="showProfileDetailBtn" destination="TeT-uA-Jct" id="Eco-ef-aar"/>

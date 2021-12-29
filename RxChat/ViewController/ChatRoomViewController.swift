@@ -30,6 +30,7 @@ class ChatRoomViewController: UIViewController, ViewModelBindableType {
         super.viewDidLoad()
         viewModel.sceneCoordinator.getCurrentVC().tabBarController?.tabBar.isHidden = true
         self.navigationItem.largeTitleDisplayMode = .never
+        
         tableView.separatorColor = .clear
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 80
@@ -39,11 +40,11 @@ class ChatRoomViewController: UIViewController, ViewModelBindableType {
     
     override func viewWillAppear(_ animated: Bool) {
         addAdditionalHeightToBottomBar(line: 1)
+        viewModel.refreshTableView()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         viewModel.writeChatRoom()
-        viewModel.sceneCoordinator.getCurrentVC().tabBarController?.tabBar.isHidden = false
         viewModel.sceneCoordinator.closed()
     }
     
@@ -89,11 +90,12 @@ class ChatRoomViewController: UIViewController, ViewModelBindableType {
             .disposed(by: rx.disposeBag)
         
         viewModel.chatContextTableDataSubject
+            .observeOn(MainScheduler.asyncInstance)
             .subscribe(onNext: { [weak self] data in
-                guard let dataAmount = data.first?.items.count else { return }
-                guard dataAmount != 0 else {return}
-                let indexPath = IndexPath(row: dataAmount-1, section: 0)
-                self?.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+                    guard let dataAmount = data.first?.items.count else { return }
+                    guard dataAmount != 0 else {return}
+                    let indexPath = IndexPath(row: dataAmount-1, section: 0)
+                    self?.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
             })
             .disposed(by: rx.disposeBag)
             

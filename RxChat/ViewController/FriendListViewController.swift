@@ -25,8 +25,10 @@ class FriendListViewController: UIViewController, ViewModelBindableType {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.tabBarController?.tabBar.isHidden = false
         self.navigationController?.navigationBar.sizeToFit()
     }
+    
     
     func bindViewModel() {
         
@@ -45,7 +47,7 @@ class FriendListViewController: UIViewController, ViewModelBindableType {
         
         
         tableView.rx.itemSelected
-            .bind(to: viewModel.chatFriendAt.inputs)
+            .bind(to: viewModel.selectFriendAt.inputs)
             .disposed(by: disposeBag)
         
         

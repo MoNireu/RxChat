@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+import NSObject_Rx
 
 class ChatSummaryViewController: UIViewController, ViewModelBindableType {
     
@@ -13,7 +16,7 @@ class ChatSummaryViewController: UIViewController, ViewModelBindableType {
     var viewModel: ChatSummaryViewModel!
     
     
-    @IBOutlet weak var friendNameLbl: UILabel!
+    @IBOutlet weak var nameLbl: UILabel!
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var showProfileDetailBtn: UIButton!
@@ -31,11 +34,26 @@ class ChatSummaryViewController: UIViewController, ViewModelBindableType {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        print("Log -", #fileID, #function, #line, "View Disappear")
         viewModel.sceneCoordinator.closed()
     }
     
     func bindViewModel() {
+        viewModel.userDriver
+            .drive(onNext: { [weak self] user in
+                self?.profileImageView.image = user.profileImg
+                self?.nameLbl.text = user.name
+            }).disposed(by: rx.disposeBag)
         
+        showChatBtn.rx.action = viewModel.chatFriend
+        
+        viewModel.isChatReadyDriver
+            .subscribe(onNext: { a in
+                if a {
+                    print("Log -", #fileID, #function, #line, "Dismiss")
+                    self.dismiss(animated: true)
+                }
+            })
     }
     
 }
