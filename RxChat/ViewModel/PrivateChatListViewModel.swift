@@ -44,7 +44,7 @@ class PrivateChatListViewModel: CommonViewModel {
                 }
             }()
             cell.roomImageView.image = Owner.shared.friendList[friendId]?.profileImg
-            cell.roomTitleLbl.text = friendId
+            cell.roomTitleLbl.text = Owner.shared.friendList[friendId]?.name
             cell.roomLastChatLbl.text = lastChat.text
             
             

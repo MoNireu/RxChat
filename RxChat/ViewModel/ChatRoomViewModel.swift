@@ -67,7 +67,7 @@ class ChatRoomViewModel: CommonViewModel {
                         chatTextByFriendWithProfileImageCell?.chatBubbleLabel.text = item.text
                         chatTextByFriendWithProfileImageCell?.timeLabel.text = item.time != nil ? item.time!.convertTimeStampToHourMinute() : ""
                         chatTextByFriendWithProfileImageCell?.profileImage.image = Owner.shared.friendList[item.from]?.profileImg
-                        chatTextByFriendWithProfileImageCell?.idLabel.text = item.from
+                        chatTextByFriendWithProfileImageCell?.idLabel.text = Owner.shared.friendList[item.from]?.name
                         
                         return chatTextByFriendWithProfileImageCell ?? UITableViewCell()
                     }

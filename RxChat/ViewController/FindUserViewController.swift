@@ -88,7 +88,7 @@ class FindUserViewController: UIViewController, ViewModelBindableType {
                 if let user = user {
                     self?.hideNoResultView(true)
                     self?.profileImageView.image = user.profileImg
-                    self?.nameLabel.text = user.id
+                    self?.nameLabel.text = user.name
                     // found user is owner
                     if user.id == Owner.shared.id {
                         self?.changeAddFriendButtonState(state: .myProfile)
