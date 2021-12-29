@@ -21,6 +21,7 @@ class FriendListViewModel: CommonViewModel {
     let myInfo: Owner = Owner.shared
     var profileInfoSubject: BehaviorSubject<[SectionOfUserData]>
     var isTransToChatRoomComplete: BehaviorSubject<IndexPath>
+    var friendListTableData: [SectionOfUserData]!
     var disposeBag = DisposeBag()
     
     let dataSource: RxTableViewSectionedAnimatedDataSource<SectionOfUserData> = {
@@ -47,18 +48,14 @@ class FriendListViewModel: CommonViewModel {
         return ds
     }()
     
-    var friendListTableData = [
-        SectionOfUserData(uniqueId: "Owner", header: "나", items: [Owner.shared as User]),
-        SectionOfUserData(uniqueId: "Friend", header: "친구(\(Owner.shared.friendList.count))", items: Array<User>(Owner.shared.friendList.values))
-    ]
-    
     override init(sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil) {
-        profileInfoSubject = BehaviorSubject<[SectionOfUserData]>(value: friendListTableData)
+        profileInfoSubject = BehaviorSubject<[SectionOfUserData]>(value: [])
         dataSource.titleForHeaderInSection = { dataSource, section in
             return dataSource.sectionModels[section].header
         }
         isTransToChatRoomComplete = BehaviorSubject<IndexPath>(value: IndexPath(row: 0, section: 0))
         super.init(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
+        self.refresh()
     }
     
     
@@ -70,39 +67,14 @@ class FriendListViewModel: CommonViewModel {
             return Observable.empty()
         }
     }()
-    
-    
-    
-    lazy var signOut: CocoaAction = {
-        return Action { _ in
-            let firebaseAuth = Auth.auth()
-            do {
-                try firebaseAuth.signOut()
-            } catch let signOutError as NSError {
-                print("Error signing out: %@", signOutError)
-            }
-            GIDSignIn.sharedInstance.signOut()
-            RealmUtil.shared.deleteAll()
-            ChatUtility.shared.removeAllRoomListener()
-            ChatUtility.shared.removeAllChatListener()
-            
-            let signInViewModel = SignInViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
-            let signInScene = Scene.signIn(signInViewModel)
-            self.sceneCoordinator.transition(to: signInScene, using: .root, animated: true)
-            return Observable.empty()
-        }
-    }()
+
     
     func refresh() {
-        setFriendListTableData()
-        profileInfoSubject.onNext(friendListTableData)
-    }
-    
-    func setFriendListTableData() {
         friendListTableData = [
             SectionOfUserData(uniqueId: "Owner", header: "나", items: [Owner.shared as User]),
             SectionOfUserData(uniqueId: "Friend", header: "친구(\(Owner.shared.friendList.count))", items: Array<User>(Owner.shared.friendList.values))
         ]
+        profileInfoSubject.onNext(friendListTableData)
     }
     
     
@@ -167,6 +139,26 @@ class FriendListViewModel: CommonViewModel {
                         print("Connecting to room number: \(chatRoom.UUID)")
                     }).disposed(by: self.disposeBag)
                 }).disposed(by: self.disposeBag)
+            return Observable.empty()
+        }
+    }()
+    
+    lazy var signOut: CocoaAction = {
+        return Action { _ in
+            let firebaseAuth = Auth.auth()
+            do {
+                try firebaseAuth.signOut()
+            } catch let signOutError as NSError {
+                print("Error signing out: %@", signOutError)
+            }
+            GIDSignIn.sharedInstance.signOut()
+            RealmUtil.shared.deleteAll()
+            ChatUtility.shared.removeAllRoomListener()
+            ChatUtility.shared.removeAllChatListener()
+            
+            let signInViewModel = SignInViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
+            let signInScene = Scene.signIn(signInViewModel)
+            self.sceneCoordinator.transition(to: signInScene, using: .root, animated: true)
             return Observable.empty()
         }
     }()
