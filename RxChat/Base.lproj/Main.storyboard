@@ -7,6 +7,7 @@
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -446,6 +447,102 @@
             </objects>
             <point key="canvasLocation" x="2779.7101449275365" y="1506.6964285714284"/>
         </scene>
+        <!--Chat Summary View Controller-->
+        <scene sceneID="e4D-HP-s10">
+            <objects>
+                <viewController storyboardIdentifier="ChatSummaryVC" id="J5T-UP-WJS" customClass="ChatSummaryViewController" customModule="RxChat" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ndZ-7g-Qj4">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="500"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="친구이름" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="euK-X1-mKP">
+                                <rect key="frame" x="177.5" y="192" width="59" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultProfileImage.png" translatesAutoresizingMaskIntoConstraints="NO" id="WOw-yR-XjK">
+                                <rect key="frame" x="157" y="84" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="8we-oP-itJ"/>
+                                    <constraint firstAttribute="width" constant="100" id="MeD-pd-Cpp"/>
+                                </constraints>
+                            </imageView>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="9YI-5m-Cip">
+                                <rect key="frame" x="20" y="249" width="374" height="100"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="1GY-sh-GCW"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="3XI-Pz-2yL">
+                                    <size key="itemSize" width="100" height="100"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="5ve-4W-CTb">
+                                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="zv4-FJ-zUQ">
+                                            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="단체 채팅" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xBJ-U1-gqg">
+                                <rect key="frame" x="20" y="220.5" width="63.5" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hgx-2W-a0T">
+                                <rect key="frame" x="20" y="369" width="374" height="31"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TeT-uA-Jct">
+                                        <rect key="frame" x="0.0" y="0.0" width="187" height="31"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="프로필 보기"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yyo-1f-I9m">
+                                        <rect key="frame" x="187" y="0.0" width="187" height="31"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="채팅하기"/>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="1kx-SU-EIc"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Hgx-2W-a0T" firstAttribute="leading" secondItem="1kx-SU-EIc" secondAttribute="leading" constant="20" id="1Oj-Wk-JVd"/>
+                            <constraint firstItem="xBJ-U1-gqg" firstAttribute="leading" secondItem="1kx-SU-EIc" secondAttribute="leading" constant="20" id="9Jw-nb-lIb"/>
+                            <constraint firstItem="Hgx-2W-a0T" firstAttribute="top" secondItem="9YI-5m-Cip" secondAttribute="bottom" constant="20" id="MXx-hd-sLX"/>
+                            <constraint firstItem="WOw-yR-XjK" firstAttribute="top" secondItem="1kx-SU-EIc" secondAttribute="top" constant="40" id="WTI-r4-FDD"/>
+                            <constraint firstItem="WOw-yR-XjK" firstAttribute="centerX" secondItem="ndZ-7g-Qj4" secondAttribute="centerX" id="ZtJ-mK-m2E"/>
+                            <constraint firstItem="1kx-SU-EIc" firstAttribute="trailing" secondItem="9YI-5m-Cip" secondAttribute="trailing" constant="20" id="caE-l5-YJP"/>
+                            <constraint firstItem="9YI-5m-Cip" firstAttribute="leading" secondItem="1kx-SU-EIc" secondAttribute="leading" constant="20" id="eb1-qT-q6t"/>
+                            <constraint firstItem="euK-X1-mKP" firstAttribute="top" secondItem="WOw-yR-XjK" secondAttribute="bottom" constant="8" symbolic="YES" id="gYA-1V-zKc"/>
+                            <constraint firstItem="9YI-5m-Cip" firstAttribute="top" secondItem="xBJ-U1-gqg" secondAttribute="bottom" constant="8" id="j52-yo-EXx"/>
+                            <constraint firstItem="euK-X1-mKP" firstAttribute="centerX" secondItem="ndZ-7g-Qj4" secondAttribute="centerX" id="p7S-Wu-e3q"/>
+                            <constraint firstItem="xBJ-U1-gqg" firstAttribute="top" secondItem="euK-X1-mKP" secondAttribute="bottom" constant="8" id="qEe-HK-i1m"/>
+                            <constraint firstItem="1kx-SU-EIc" firstAttribute="trailing" secondItem="Hgx-2W-a0T" secondAttribute="trailing" constant="20" id="vO6-nJ-f9m"/>
+                        </constraints>
+                    </view>
+                    <size key="freeformSize" width="414" height="500"/>
+                    <connections>
+                        <outlet property="collectionView" destination="9YI-5m-Cip" id="Cet-tp-e5T"/>
+                        <outlet property="friendNameLbl" destination="euK-X1-mKP" id="Lbu-Uw-dco"/>
+                        <outlet property="profileImageView" destination="WOw-yR-XjK" id="1ZT-BV-GKz"/>
+                        <outlet property="showChatBtn" destination="yyo-1f-I9m" id="cZg-p6-bnE"/>
+                        <outlet property="showProfileDetailBtn" destination="TeT-uA-Jct" id="Eco-ef-aar"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3R2-8d-CoQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3615.9420289855075" y="1513.3928571428571"/>
+        </scene>
         <!--개인채팅-->
         <scene sceneID="aRC-eQ-dX2">
             <objects>
@@ -862,6 +959,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="defaultProfileImage.png" width="225" height="225"/>
         <image name="plus.png" width="225" height="225"/>
         <image name="rectangle.portrait.and.arrow.right" catalog="system" width="128" height="108"/>
         <systemColor name="labelColor">

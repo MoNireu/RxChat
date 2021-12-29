@@ -15,6 +15,7 @@ enum Scene {
     case chatList(FriendListViewModel, PrivateChatListViewModel, GroupChatListViewModel)
     case findUser(FindUserViewModel)
     case chatRoom(ChatRoomViewModel)
+    case chatSummary(ChatSummaryViewModel)
 }
 
 extension Scene {
@@ -101,6 +102,14 @@ extension Scene {
             
             chatRoomVC.bind(viewModel: viewModel)
             return chatRoomVC
+            
+        case .chatSummary(let viewModel):
+            guard var chatSummaryVC = storyboard.instantiateViewController(withIdentifier: "ChatSummaryVC") as? ChatSummaryViewController else {
+                fatalError()
+            }
+//            chatSummaryVC.modalPresentationStyle = .overCurrentContext
+            chatSummaryVC.bind(viewModel: viewModel)
+            return chatSummaryVC
         }
     }
 }
