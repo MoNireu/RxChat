@@ -49,7 +49,10 @@ class FriendListViewController: UIViewController, ViewModelBindableType {
                 findUser.setValue(findUserImage, forKey: "image")
                 
                 let createGroupChat = UIAlertAction(title: "단체채팅 생성", style: .default) { [weak self] _ in
-                    
+                    ChatUtility.shared.createChatRoom(friendIdList: ["leeddvvb", "coreahr_gachon"], roomTitle: "test001")
+                        .subscribe(onNext: { val in
+                            print("Log -", #fileID, #function, #line, dump(val))
+                        }).disposed(by: (self?.rx.disposeBag)!)
                 }
                 let createGroupChatImage = UIImage(systemName: "plus.bubble")
                 createGroupChat.setValue(createGroupChatImage, forKey: "image")

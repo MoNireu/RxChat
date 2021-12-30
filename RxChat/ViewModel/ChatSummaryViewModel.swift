@@ -34,30 +34,25 @@ class ChatSummaryViewModel: CommonViewModel {
                 .subscribe(onNext: { retrivedChatRoomUUID in
                     // ChatRoom Object 가져오기
                     Observable<ChatRoom>.create { observer in
-                        // 기존 채팅방이 있을 경우
-                        if let privateChatRoomUUID = retrivedChatRoomUUID {
-                            guard let chatRoomObject = RealmUtil.shared.readChatRoom(UUID: privateChatRoomUUID) else {
-                                // Realm에 존재하지 않을경우 Firebase에서 가져오기
-                                ChatUtility.shared.getChatRoomBy(roomId: privateChatRoomUUID)
-                                    .subscribe(onNext: { chatRoomObject in
-                                        observer.onNext(chatRoomObject)
-                                        observer.onCompleted()
-                                    }).disposed(by: (self?.disposeBag)!)
-                                return Disposables.create()
-                            }
-                            observer.onNext(chatRoomObject)
-                            observer.onCompleted()
-                        }
-                        // 기존 채팅방이 없는 경우
-                        else {
-                            ChatUtility.shared.createPrivateChatRoom(friendId: friendId,
-                                                                     roomTitle: friendId,
-                                                                     roomType: .privateRoom)
+                        guard let privateChatRoomUUID = retrivedChatRoomUUID else { // 기존 채팅방이 없는 경우
+                            ChatUtility.shared.createChatRoom(friendId: friendId, roomTitle: friendId)
                                 .subscribe(onNext: { chatRoom in
                                     observer.onNext(chatRoom)
                                     observer.onCompleted()
                                 }).disposed(by: (self?.disposeBag)!)
+                            return Disposables.create()
                         }
+                        guard let chatRoomObject = RealmUtil.shared.readChatRoom(UUID: privateChatRoomUUID) else { // Realm에 존재하지 않을경우 Firebase에서 가져오기
+                            ChatUtility.shared.getChatRoomBy(roomId: privateChatRoomUUID)
+                                .subscribe(onNext: { chatRoomObject in
+                                    observer.onNext(chatRoomObject)
+                                    observer.onCompleted()
+                                }).disposed(by: (self?.disposeBag)!)
+                            return Disposables.create()
+                        }
+                        observer.onNext(chatRoomObject)
+                        observer.onCompleted()
+                        
                         return Disposables.create()
                     }
                     .subscribe(onNext: { chatRoom in // 채팅방으로 이동.

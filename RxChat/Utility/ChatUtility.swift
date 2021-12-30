@@ -31,55 +31,106 @@ class ChatUtility {
     var ownerPrivateChatRoomList: [String] = [] // [PrivateRoomUUID]
     var ownerGroupChatRoomList: [String] = [] // [GroupRoomUUID]
     
-    func createPrivateChatRoom(friendId: String, roomTitle: String, roomType: ChatRoomType) -> Observable<ChatRoom> {
+    func createChatRoom(friendId: String, roomTitle: String) -> Observable<ChatRoom> {
         return Observable.create { observer in
             let roomId = UUID().uuidString
-            let setFriendRoomIdOnOwner = self.usersRef
+            let roomType = ChatRoomType.privateRoom
+            
+            let setFriendRoomIdToOwner = self.usersRef
                 .child(self.myId)
                 .child("private")
                 .rx
                 .updateChildValues([friendId: roomId])
             
-            let setOwnerRoomIdOnFriend = self.usersRef
+            let setOwnerRoomIdToFriend = self.usersRef
                 .child(friendId)
                 .child("private")
                 .rx
                 .updateChildValues([self.myId: roomId])
             
-            Observable.of(setFriendRoomIdOnOwner, setOwnerRoomIdOnFriend)
+            Observable.of(setFriendRoomIdToOwner, setOwnerRoomIdToFriend)
                 .merge()
                 .subscribe(onCompleted: {
-                    let setMembers =
                     self.roomsRef
                         .child(roomId)
-                        .child("members")
                         .rx
-                        .setValue([self.myId, friendId])
-                    
-                    let setTitle =
-                    self.roomsRef
-                        .child(roomId)
-                        .child("title")
-                        .rx
-                        .setValue(roomTitle)
-                    
-                    let setRoomType =
-                    self.roomsRef
-                        .child(roomId)
-                        .child("type")
-                        .rx
-                        .setValue(roomType.rawValue)
-                    
-                    Observable.of(setMembers, setTitle, setRoomType)
-                        .merge()
-                        .subscribe(onError: { err in
-                            print("Log -", #fileID, #function, #line, "Error")
-                        }, onCompleted: {
+                        .setValue(["members": [self.myId, friendId],
+                                   "title": roomTitle,
+                                   "type": roomType.rawValue])
+                        .subscribe(onSuccess: { [weak self] _ in
                             print("Log -", #fileID, #function, #line, "Success")
-                            let chatRoom = ChatRoom(UUID: roomId, title: roomTitle, chatRoomType: roomType, members: [self.myId, friendId], chats: [])
+                            let chatRoom = ChatRoom(UUID: roomId,
+                                                    title: roomTitle,
+                                                    chatRoomType: roomType,
+                                                    members: [(self?.myId)!, friendId],
+                                                    chats: [])
                             observer.onNext(chatRoom)
+                        }, onError: { err in
+                            print("Log -", #fileID, #function, #line, "Error")
                         }).disposed(by: self.disposeBag)
                     
+                }).disposed(by: self.disposeBag)
+            return Disposables.create()
+        }
+    }
+    
+    
+    func createChatRoom(friendIdList: [String], roomTitle: String) -> Observable<ChatRoom> {
+        return Observable.create { observer in
+            let roomId = UUID().uuidString
+            let roomType = ChatRoomType.groupRoom
+            
+            let setFriendRoomIdToOwner = self.usersRef
+                .child(self.myId)
+                .child("group")
+                .rx
+                .updateChildValues([roomId : true])
+            
+            let setOwnerRoomIdToFriend =
+            Single<DatabaseReference>.create { single in
+                var cnt = 0
+                for friendId in friendIdList {
+                    self.usersRef
+                        .child(friendId)
+                        .child("group")
+                        .rx
+                        .updateChildValues([roomId : true])
+                        .subscribe(onSuccess: { ref in
+                            cnt += 1
+                            if cnt == friendIdList.count {
+                                single(.success(ref))
+                                return
+                            }
+                        }, onError: { err in
+                            single(.error(err))
+                        }).disposed(by: self.disposeBag)
+                }
+                return Disposables.create()
+            }
+            
+            Observable.of(setFriendRoomIdToOwner, setOwnerRoomIdToFriend)
+                .merge()
+                .subscribe(onCompleted: {
+                    var members = [self.myId] + friendIdList
+                    members.sort()
+                    self.roomsRef
+                        .child(roomId)
+                        .rx
+                        .setValue(["members": members,
+                                   "title": roomTitle,
+                                   "host": self.myId,
+                                   "type": roomType.rawValue])
+                        .subscribe(onSuccess: { _ in
+                            print("Log -", #fileID, #function, #line, "Success")
+                            let chatRoom = ChatRoom(UUID: roomId,
+                                                    title: roomTitle,
+                                                    chatRoomType: roomType,
+                                                    members: members,
+                                                    chats: [])
+                            observer.onNext(chatRoom)
+                        }, onError: { err in
+                            print("Log -", #fileID, #function, #line, "Error")
+                        }).disposed(by: self.disposeBag)
                 }).disposed(by: self.disposeBag)
             return Disposables.create()
         }
