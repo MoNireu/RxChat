@@ -245,7 +245,7 @@ class FirebaseUtil {
     }
     
     
-    func findUser(_ id: String) -> Observable<User> {
+    func findUser(_ id: String, profileImageRequired: Bool = true) -> Observable<User> {
         return Observable.create { observer in
             let query = self.db.collection("Users").whereField("id", isEqualTo: id)
             query.rx.getDocuments()
@@ -254,13 +254,17 @@ class FirebaseUtil {
                         let data = doc.documents.first!.data()
                         let email = data["email"] as? String
                         let name = data["name"] as? String
-                        
+                        let user = User(id: id,
+                                        email: email!,
+                                        name: name!,
+                                        profileImg: nil)
+                        guard profileImageRequired else {
+                            observer.onNext(user)
+                            return
+                        }
                         self.downloadProfileImage(id)
                             .subscribe(onNext: { data in
-                                let user = User(id: id,
-                                                email: email!,
-                                                name: name!,
-                                                profileImg: data != nil ? UIImage(data: data!) : UIImage(named: "defaultProfileImage.png"))
+                                user.profileImg = data != nil ? UIImage(data: data!) : UIImage(named: Resources.defaultProfileImg.rawValue)
                                 observer.onNext(user)
                             }, onError: { err in
                                 observer.onError(err)

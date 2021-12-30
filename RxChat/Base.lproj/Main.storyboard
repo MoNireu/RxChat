@@ -440,7 +440,7 @@
                         <outlet property="bottomBarHeightConstraint" destination="eTJ-SO-JZF" id="SNt-T8-tBE"/>
                         <outlet property="contextTextView" destination="3ul-0e-74s" id="ucW-f8-XUb"/>
                         <outlet property="sendChatBtn" destination="hM0-QY-f4s" id="K11-iy-fDM"/>
-                        <outlet property="tableView" destination="JWQ-4r-4Wl" id="xXK-S3-8Z9"/>
+                        <outlet property="tableView" destination="JWQ-4r-4Wl" id="sq7-9v-WDn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Co8-tT-l7O" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

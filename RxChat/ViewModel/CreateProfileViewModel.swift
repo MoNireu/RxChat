@@ -59,7 +59,7 @@ class CreateProfileViewModel: CommonViewModel {
     
     func doesUserAlreadyExist(id: String) -> Observable<Bool> {
         return Observable.create { observer in
-            self.firebaseUtil.findUser(id)
+            self.firebaseUtil.findUser(id, profileImageRequired: false)
                 .subscribe(onNext: { _ in
                     observer.onNext(true)
                 }, onError: { _ in
