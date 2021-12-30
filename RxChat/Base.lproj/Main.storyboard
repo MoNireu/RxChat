@@ -671,7 +671,7 @@
         <scene sceneID="SDK-2g-Lqs">
             <objects>
                 <navigationController storyboardIdentifier="PrivateChatNav" automaticallyAdjustsScrollViewInsets="NO" id="F6o-Pb-HQ1" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="개인채팅" id="EFS-Bn-dX4"/>
+                    <tabBarItem key="tabBarItem" title="개인채팅" image="bubble.right.fill" catalog="system" id="EFS-Bn-dX4"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="85I-6G-pur">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>
@@ -690,7 +690,7 @@
         <scene sceneID="XfN-LU-edd">
             <objects>
                 <navigationController storyboardIdentifier="GroupChatNav" automaticallyAdjustsScrollViewInsets="NO" id="Kbv-xq-gum" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="단체채팅" id="cFm-Is-nFj"/>
+                    <tabBarItem key="tabBarItem" title="단체채팅" image="bubble.left.and.bubble.right.fill" catalog="system" id="cFm-Is-nFj"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="fEr-MO-Pbs">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>
@@ -820,12 +820,10 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="친구목록" id="5d2-LZ-8A2">
-                        <barButtonItem key="leftBarButtonItem" image="rectangle.portrait.and.arrow.right" catalog="system" style="plain" id="aya-nF-I2B"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="gN4-Oh-eTP"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="gN4-Oh-eTP"/>
                     </navigationItem>
                     <connections>
                         <outlet property="findUserButton" destination="gN4-Oh-eTP" id="Le4-zK-SKr"/>
-                        <outlet property="signOutButton" destination="aya-nF-I2B" id="OXG-2P-BxH"/>
                         <outlet property="tableView" destination="cjj-OH-Ecp" id="FxQ-7S-vpa"/>
                     </connections>
                 </viewController>
@@ -942,7 +940,7 @@
         <scene sceneID="ptM-n0-fhd">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="FnQ-Sc-Kpt" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="친구목록" id="IwR-Eb-VZY"/>
+                    <tabBarItem key="tabBarItem" title="친구목록" image="person.3.fill" catalog="system" id="IwR-Eb-VZY"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="fbu-iC-9Vx">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>
@@ -959,9 +957,11 @@
         </scene>
     </scenes>
     <resources>
+        <image name="bubble.left.and.bubble.right.fill" catalog="system" width="128" height="97"/>
+        <image name="bubble.right.fill" catalog="system" width="128" height="110"/>
         <image name="defaultProfileImage.png" width="225" height="225"/>
+        <image name="person.3.fill" catalog="system" width="128" height="61"/>
         <image name="plus.png" width="225" height="225"/>
-        <image name="rectangle.portrait.and.arrow.right" catalog="system" width="128" height="108"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

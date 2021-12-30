@@ -17,7 +17,6 @@ class FriendListViewController: UIViewController, ViewModelBindableType {
     var viewModel: FriendListViewModel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var findUserButton: UIBarButtonItem!
-    @IBOutlet weak var signOutButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,14 +35,44 @@ class FriendListViewController: UIViewController, ViewModelBindableType {
             .bind(to: tableView.rx.items(dataSource: viewModel.dataSource))
             .disposed(by: disposeBag)
                 
-        findUserButton.rx.action = viewModel.presentFindUserView
         
-        signOutButton.rx.action = viewModel.signOut
+        findUserButton
+            .rx
+            .tap
+            .subscribe(onNext: { [weak self] _ in
+                let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                
+                let findUser = UIAlertAction(title: "친구 찾기", style: .default) { [weak self] _ in
+                    self?.viewModel.presentFindUserView.execute()
+                }
+                let findUserImage = UIImage(systemName: "magnifyingglass")
+                findUser.setValue(findUserImage, forKey: "image")
+                
+                let createGroupChat = UIAlertAction(title: "단체채팅 생성", style: .default) { [weak self] _ in
+                    
+                }
+                let createGroupChatImage = UIImage(systemName: "plus.bubble")
+                createGroupChat.setValue(createGroupChatImage, forKey: "image")
+                
+                let signOut = UIAlertAction(title: "로그아웃", style: .destructive) { [weak self] _ in
+                    self?.viewModel.signOut.execute()
+                }
+                let signOutImage = UIImage(systemName: "rectangle.portrait.and.arrow.right")
+                signOut.setValue(signOutImage, forKey: "image")
+                
+                let cancel = UIAlertAction(title: "취소", style: .cancel)
+                
+                alert.addAction(findUser)
+                alert.addAction(createGroupChat)
+                alert.addAction(signOut)
+                alert.addAction(cancel)
+                self?.present(alert, animated: true)
+            }).disposed(by: rx.disposeBag)
+        
         
         tableView.rx.itemDeleted
             .bind(to: viewModel.deleteFriendAt.inputs)
             .disposed(by: disposeBag)
-    
         
         
         tableView.rx.itemSelected
