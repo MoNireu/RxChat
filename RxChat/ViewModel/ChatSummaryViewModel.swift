@@ -16,7 +16,6 @@ class ChatSummaryViewModel: CommonViewModel {
     
     let user: User
     let userDriver: Driver<User>
-    var isChatReadyDriver = BehaviorSubject<Bool>(value: false)
     
     init(sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil, user: User) {
         self.user = user

@@ -456,20 +456,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="친구이름" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="euK-X1-mKP">
-                                <rect key="frame" x="177.5" y="192" width="59" height="20.5"/>
+                                <rect key="frame" x="177.5" y="232" width="59" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultProfileImage.png" translatesAutoresizingMaskIntoConstraints="NO" id="WOw-yR-XjK">
-                                <rect key="frame" x="157" y="84" width="100" height="100"/>
+                                <rect key="frame" x="157" y="124" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="8we-oP-itJ"/>
                                     <constraint firstAttribute="width" constant="100" id="MeD-pd-Cpp"/>
                                 </constraints>
                             </imageView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="9YI-5m-Cip">
-                                <rect key="frame" x="20" y="249" width="374" height="100"/>
+                                <rect key="frame" x="20" y="289" width="374" height="100"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="1GY-sh-GCW"/>
@@ -492,13 +492,13 @@
                                 </cells>
                             </collectionView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="단체 채팅" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xBJ-U1-gqg">
-                                <rect key="frame" x="20" y="220.5" width="63.5" height="20.5"/>
+                                <rect key="frame" x="20" y="260.5" width="63.5" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hgx-2W-a0T">
-                                <rect key="frame" x="20" y="369" width="374" height="31"/>
+                                <rect key="frame" x="20" y="409" width="374" height="31"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TeT-uA-Jct">
                                         <rect key="frame" x="0.0" y="0.0" width="187" height="31"/>
@@ -512,14 +512,25 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5UU-5y-MPY">
+                                <rect key="frame" x="373" y="64" width="21" height="21"/>
+                                <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="xmark.circle.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="close:" destination="J5T-UP-WJS" eventType="touchUpInside" id="ggo-bc-1oB"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="1kx-SU-EIc"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Hgx-2W-a0T" firstAttribute="leading" secondItem="1kx-SU-EIc" secondAttribute="leading" constant="20" id="1Oj-Wk-JVd"/>
                             <constraint firstItem="xBJ-U1-gqg" firstAttribute="leading" secondItem="1kx-SU-EIc" secondAttribute="leading" constant="20" id="9Jw-nb-lIb"/>
+                            <constraint firstItem="1kx-SU-EIc" firstAttribute="trailing" secondItem="5UU-5y-MPY" secondAttribute="trailing" constant="20" id="EYh-T1-P5M"/>
+                            <constraint firstItem="5UU-5y-MPY" firstAttribute="top" secondItem="1kx-SU-EIc" secondAttribute="top" constant="20" id="FSa-h5-4Rf"/>
                             <constraint firstItem="Hgx-2W-a0T" firstAttribute="top" secondItem="9YI-5m-Cip" secondAttribute="bottom" constant="20" id="MXx-hd-sLX"/>
-                            <constraint firstItem="WOw-yR-XjK" firstAttribute="top" secondItem="1kx-SU-EIc" secondAttribute="top" constant="40" id="WTI-r4-FDD"/>
+                            <constraint firstItem="WOw-yR-XjK" firstAttribute="top" secondItem="1kx-SU-EIc" secondAttribute="top" constant="80" id="WTI-r4-FDD"/>
                             <constraint firstItem="WOw-yR-XjK" firstAttribute="centerX" secondItem="ndZ-7g-Qj4" secondAttribute="centerX" id="ZtJ-mK-m2E"/>
                             <constraint firstItem="1kx-SU-EIc" firstAttribute="trailing" secondItem="9YI-5m-Cip" secondAttribute="trailing" constant="20" id="caE-l5-YJP"/>
                             <constraint firstItem="9YI-5m-Cip" firstAttribute="leading" secondItem="1kx-SU-EIc" secondAttribute="leading" constant="20" id="eb1-qT-q6t"/>
@@ -962,6 +973,7 @@
         <image name="defaultProfileImage.png" width="225" height="225"/>
         <image name="person.3.fill" catalog="system" width="128" height="61"/>
         <image name="plus.png" width="225" height="225"/>
+        <image name="xmark.circle.fill" catalog="system" width="128" height="121"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

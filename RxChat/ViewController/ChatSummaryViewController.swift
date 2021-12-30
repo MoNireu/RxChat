@@ -12,7 +12,7 @@ import NSObject_Rx
 
 class ChatSummaryViewController: UIViewController, ViewModelBindableType {
     
-    let CONTENT_HEIGHT: CGFloat = 470
+    let CONTENT_HEIGHT: CGFloat = 500
     var viewModel: ChatSummaryViewModel!
     
     
@@ -21,6 +21,9 @@ class ChatSummaryViewController: UIViewController, ViewModelBindableType {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var showProfileDetailBtn: UIButton!
     @IBOutlet weak var showChatBtn: UIButton!
+    @IBAction func close(_ sender: Any) {
+        self.dismiss(animated: true)
+    }
     
     override func viewDidLoad() {
         profileImageView.layer.cornerRadius = profileImageView.frame.height * 0.5
@@ -46,14 +49,5 @@ class ChatSummaryViewController: UIViewController, ViewModelBindableType {
             }).disposed(by: rx.disposeBag)
         
         showChatBtn.rx.action = viewModel.chatFriend
-        
-        viewModel.isChatReadyDriver
-            .subscribe(onNext: { a in
-                if a {
-                    print("Log -", #fileID, #function, #line, "Dismiss")
-                    self.dismiss(animated: true)
-                }
-            })
     }
-    
 }
