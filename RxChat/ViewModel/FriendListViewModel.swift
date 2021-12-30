@@ -70,9 +70,12 @@ class FriendListViewModel: CommonViewModel {
 
     
     func refresh() {
+        var friendListItems = Array<User>(Owner.shared.friendList.values)
+        friendListItems.sort(by: {$0.name! < $1.name!})
+        
         friendListTableData = [
             SectionOfUserData(uniqueId: "Owner", header: "나", items: [Owner.shared as User]),
-            SectionOfUserData(uniqueId: "Friend", header: "친구(\(Owner.shared.friendList.count))", items: Array<User>(Owner.shared.friendList.values))
+            SectionOfUserData(uniqueId: "Friend", header: "친구(\(Owner.shared.friendList.count))", items: friendListItems)
         ]
         profileInfoSubject.onNext(friendListTableData)
     }
