@@ -40,6 +40,7 @@ class FriendListViewController: UIViewController, ViewModelBindableType {
             .rx
             .tap
             .subscribe(onNext: { [weak self] _ in
+                print("Log -", #fileID, #function, #line, "finUserButtonBefor:\(self?.viewModel.sceneCoordinator.getCurrentVC())")
                 let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
                 
                 let findUser = UIAlertAction(title: "친구 찾기", style: .default) { [weak self] _ in
@@ -49,10 +50,7 @@ class FriendListViewController: UIViewController, ViewModelBindableType {
                 findUser.setValue(findUserImage, forKey: "image")
                 
                 let createGroupChat = UIAlertAction(title: "단체채팅 생성", style: .default) { [weak self] _ in
-                    ChatUtility.shared.createChatRoom(friendIdList: ["leeddvvb", "coreahr_gachon"], roomTitle: "test001")
-                        .subscribe(onNext: { val in
-                            print("Log -", #fileID, #function, #line, dump(val))
-                        }).disposed(by: (self?.rx.disposeBag)!)
+                    self?.viewModel.presentGroupChatMemberSelectView.execute()
                 }
                 let createGroupChatImage = UIImage(systemName: "plus.bubble")
                 createGroupChat.setValue(createGroupChatImage, forKey: "image")
@@ -69,7 +67,9 @@ class FriendListViewController: UIViewController, ViewModelBindableType {
                 alert.addAction(createGroupChat)
                 alert.addAction(signOut)
                 alert.addAction(cancel)
-                self?.present(alert, animated: true)
+                self?.present(alert, animated: true) {
+                    print("Log -", #fileID, #function, #line, "finUserButtonAfter:\(self?.viewModel.sceneCoordinator.getCurrentVC())")
+                }
             }).disposed(by: rx.disposeBag)
         
         

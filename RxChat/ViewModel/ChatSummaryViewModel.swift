@@ -58,7 +58,6 @@ class ChatSummaryViewModel: CommonViewModel {
                     .subscribe(onNext: { chatRoom in // 채팅방으로 이동.
                         let chatRoomViewModel = ChatRoomViewModel(sceneCoordinator: (self?.sceneCoordinator)!, firebaseUtil: (self?.firebaseUtil)!, chatRoom: chatRoom)
                         let chatRoomScene = Scene.chatRoom(chatRoomViewModel)
-                        print("Log -", #fileID, #function, #line, "Load")
                         self?.sceneCoordinator.transition(to: chatRoomScene, using: .pushOnParent, animated: true)
                         print("Connecting to room number: \(chatRoom.UUID)")
                     }).disposed(by: (self?.disposeBag)!)

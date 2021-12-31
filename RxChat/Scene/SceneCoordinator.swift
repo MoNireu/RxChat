@@ -62,13 +62,16 @@ class SceneCoordinator: SceneCoordinatorType {
             currentVC = target.sceneViewController
         
         case .modal:
+            print("Log -", #fileID, #function, #line, "Before:\(currentVC)")
             currentVC.present(target, animated: true) {
                 subject.onCompleted()
             }
             currentVC = target.sceneViewController
+            print("Log -", #fileID, #function, #line, "After:\(currentVC)")
             
         case .pushOnParent:
             currentVC.dismiss(animated: true) {
+                print("Log -", #fileID, #function, #line, "vcAfterDismiss: \(self.currentVC)")
                 target = scene.instantiate()
                 let currentNAV = self.currentVC as? UINavigationController
                 currentNAV?.pushViewController(target, animated: true)
@@ -99,13 +102,12 @@ class SceneCoordinator: SceneCoordinatorType {
     
     
     func closed() {
-        print("Log -", #fileID, #function, #line, self.currentVC.presentingViewController)
         if let presentingVC = self.currentVC.presentingViewController {
-            print("Log -", #fileID, #function, #line, "VC")
+            print("Log -", #fileID, #function, #line, "presentingVC: \(presentingVC)")
             self.currentVC = presentingVC.sceneViewController
         }
         else if let parentNAV = self.currentVC.navigationController?.parent {
-            print("Log -", #fileID, #function, #line, "NAV")
+            print("Log -", #fileID, #function, #line, "presentingNAV: \(parentNAV)")
             self.currentVC = parentNAV.sceneViewController
         }
         else {

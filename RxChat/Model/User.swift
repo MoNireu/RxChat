@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import RealmSwift
+import RxDataSources
 import Differentiator
 
 
@@ -35,6 +36,7 @@ class User: Equatable, IdentifiableType {
 }
 
 
+// MARK: - Realm
 class UserRealm: Object {
     @Persisted var id: String?
     @Persisted var email: String?
@@ -43,5 +45,42 @@ class UserRealm: Object {
     
     override static func primaryKey() -> String? {
         return "id"
+    }
+}
+
+// MARK: - RxTableViewSectionedReloadDataSource
+struct SectionOfUserData {
+  var items: [Item]
+}
+
+extension SectionOfUserData: SectionModelType {
+  typealias Item = User
+
+   init(original: SectionOfUserData, items: [Item]) {
+    self = original
+    self.items = items
+  }
+}
+
+
+// MARK: - RxTableViewSectionedAnimatedDataSource
+struct SectionOfAnimatableUserData: AnimatableSectionModelType {
+    var uniqueId: String
+    var header: String
+    var items: [Item]
+    
+    typealias Identity = String
+    var identity: String {
+        return uniqueId
+    }
+}
+
+
+extension SectionOfAnimatableUserData: SectionModelType {
+    typealias Item = User
+    
+    init(original: SectionOfAnimatableUserData, items: [Item]) {
+        self = original
+        self.items = items
     }
 }

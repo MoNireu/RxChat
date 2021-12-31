@@ -19,13 +19,13 @@ import FirebaseAuth
 class FriendListViewModel: CommonViewModel {
     
     let myInfo: Owner = Owner.shared
-    var profileInfoSubject: BehaviorSubject<[SectionOfUserData]>
+    var profileInfoSubject: BehaviorSubject<[SectionOfAnimatableUserData]>
     var isTransToChatRoomComplete: BehaviorSubject<IndexPath>
-    var friendListTableData: [SectionOfUserData]!
+    var friendListTableData: [SectionOfAnimatableUserData]!
     var disposeBag = DisposeBag()
     
-    let dataSource: RxTableViewSectionedAnimatedDataSource<SectionOfUserData> = {
-        let ds = RxTableViewSectionedAnimatedDataSource<SectionOfUserData>(
+    let dataSource: RxTableViewSectionedAnimatedDataSource<SectionOfAnimatableUserData> = {
+        let ds = RxTableViewSectionedAnimatedDataSource<SectionOfAnimatableUserData>(
             configureCell: { dataSource, tableView, indexPath, item in
                 switch indexPath.section {
                 case 0:
@@ -49,7 +49,7 @@ class FriendListViewModel: CommonViewModel {
     }()
     
     override init(sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil) {
-        profileInfoSubject = BehaviorSubject<[SectionOfUserData]>(value: [])
+        profileInfoSubject = BehaviorSubject<[SectionOfAnimatableUserData]>(value: [])
         dataSource.titleForHeaderInSection = { dataSource, section in
             return dataSource.sectionModels[section].header
         }
@@ -60,22 +60,30 @@ class FriendListViewModel: CommonViewModel {
     
     
     lazy var presentFindUserView: CocoaAction = {
-        return Action { _ in
-            let findUserViewModel = FindUserViewModel(friendListDelegate: self, sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil)
+        return Action { [weak self] _ in
+            let findUserViewModel = FindUserViewModel(friendListDelegate: self!, sceneCoordinator: self!.sceneCoordinator, firebaseUtil: self!.firebaseUtil)
             let findUserScene = Scene.findUser(findUserViewModel)
-            self.sceneCoordinator.transition(to: findUserScene, using: .modal, animated: true)
+            self?.sceneCoordinator.transition(to: findUserScene, using: .modal, animated: true)
             return Observable.empty()
         }
     }()
-
+    
+    lazy var presentGroupChatMemberSelectView: CocoaAction = {
+        return Action { [weak self] _ in
+            let groupChatMemberSelectViewModel = GroupChatMemberSelectViewModel(sceneCoordinator: self!.sceneCoordinator, firebaseUtil: self!.firebaseUtil)
+            let groupChatMemberSelectScene = Scene.groupChatMemberSelect(groupChatMemberSelectViewModel)
+            self?.sceneCoordinator.transition(to: groupChatMemberSelectScene, using: .modal, animated: true)
+            return Observable.empty()
+        }
+    }()
     
     func refresh() {
         var friendListItems = Array<User>(Owner.shared.friendList.values)
         friendListItems.sort(by: {$0.name! < $1.name!})
         
         friendListTableData = [
-            SectionOfUserData(uniqueId: "Owner", header: "나", items: [Owner.shared as User]),
-            SectionOfUserData(uniqueId: "Friend", header: "친구(\(Owner.shared.friendList.count))", items: friendListItems)
+            SectionOfAnimatableUserData(uniqueId: "Owner", header: "나", items: [Owner.shared as User]),
+            SectionOfAnimatableUserData(uniqueId: "Friend", header: "친구(\(Owner.shared.friendList.count))", items: friendListItems)
         ]
         profileInfoSubject.onNext(friendListTableData)
     }
@@ -113,9 +121,6 @@ class FriendListViewModel: CommonViewModel {
         }
     }()
     
-    func transitionToChat() {
-        
-    }
     
     lazy var signOut: CocoaAction = {
         return Action { _ in
