@@ -221,7 +221,7 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="772"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="chatTextByOwner" rowHeight="90" id="ZUB-Jv-6bo" customClass="ChatRoomFromOwnerTableViewCell" customModule="RxChat" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ChatByOwnerCell" rowHeight="90" id="ZUB-Jv-6bo" customClass="ChatRoomFromOwnerTableViewCell" customModule="RxChat" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="44.5" width="414" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ZUB-Jv-6bo" id="t8G-1t-iNQ">
@@ -270,7 +270,7 @@
                                             <outlet property="timeLabel" destination="8eG-vk-O6S" id="bCD-q1-jcj"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="chatTextByFriend" rowHeight="90" id="HSd-AS-0gw" customClass="ChatRoomFromFriendTableViewCell" customModule="RxChat" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ChatByFriendCell" rowHeight="90" id="HSd-AS-0gw" customClass="ChatRoomFromFriendTableViewCell" customModule="RxChat" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="134.5" width="414" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HSd-AS-0gw" id="8tx-oc-Jtu">
@@ -320,7 +320,7 @@
                                             <outlet property="timeLabel" destination="Xek-72-Ghl" id="INN-lR-Ege"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="chatTextByFriendWithProfileImage" rowHeight="90" id="YPK-qZ-VbF" customClass="ChatRoomFromFriendWithProfileImageTableViewCell" customModule="RxChat" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ChatByFriendWithProfileImage" rowHeight="90" id="YPK-qZ-VbF" customClass="ChatRoomFromFriendWithProfileImageTableViewCell" customModule="RxChat" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="224.5" width="414" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YPK-qZ-VbF" id="IOW-pW-Cmc">
@@ -481,7 +481,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="5ve-4W-CTb">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ChatSummaryGroupsCelll" id="5ve-4W-CTb">
                                         <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="zv4-FJ-zUQ">
@@ -566,7 +566,7 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="privateChatListCell" id="fZV-QF-lip" customClass="PrivateChatListTableViewCell" customModule="RxChat" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PrivateChatListCell" id="fZV-QF-lip" customClass="PrivateChatListTableViewCell" customModule="RxChat" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="44.5" width="414" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fZV-QF-lip" id="khi-i3-sRw">
@@ -681,7 +681,7 @@
         <!--개인채팅-->
         <scene sceneID="SDK-2g-Lqs">
             <objects>
-                <navigationController storyboardIdentifier="PrivateChatNav" automaticallyAdjustsScrollViewInsets="NO" id="F6o-Pb-HQ1" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="PrivateChatNAV" automaticallyAdjustsScrollViewInsets="NO" id="F6o-Pb-HQ1" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="개인채팅" image="bubble.right.fill" catalog="system" id="EFS-Bn-dX4"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="85I-6G-pur">
@@ -700,7 +700,7 @@
         <!--단체채팅-->
         <scene sceneID="XfN-LU-edd">
             <objects>
-                <navigationController storyboardIdentifier="GroupChatNav" automaticallyAdjustsScrollViewInsets="NO" id="Kbv-xq-gum" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="GroupChatNAV" automaticallyAdjustsScrollViewInsets="NO" id="Kbv-xq-gum" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="단체채팅" image="bubble.left.and.bubble.right.fill" catalog="system" id="cFm-Is-nFj"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="fEr-MO-Pbs">
@@ -719,7 +719,7 @@
         <!--친구목록-->
         <scene sceneID="aGw-XI-AmI">
             <objects>
-                <viewController id="Tae-wd-4dw" customClass="FriendListViewController" customModule="RxChat" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FriendListVC" id="Tae-wd-4dw" customClass="FriendListViewController" customModule="RxChat" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3BS-wt-JZ4">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -950,7 +950,7 @@
         <!--친구목록-->
         <scene sceneID="ptM-n0-fhd">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="FnQ-Sc-Kpt" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="FriendListNAV" automaticallyAdjustsScrollViewInsets="NO" id="FnQ-Sc-Kpt" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="친구목록" image="person.3.fill" catalog="system" id="IwR-Eb-VZY"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="fbu-iC-9Vx">
@@ -1061,7 +1061,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="groupChatMemberSelectCell" id="xFz-wl-eVD" customClass="GroupChatMemberSelectCollectionViewCell" customModule="RxChat" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="GroupChatMemberSelectCell" id="xFz-wl-eVD" customClass="GroupChatMemberSelectCollectionViewCell" customModule="RxChat" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="a0F-cH-MPo">
@@ -1136,7 +1136,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sOt-n8-CW0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2865.217391304348" y="2187.7232142857142"/>
+            <point key="canvasLocation" x="2780" y="2188"/>
         </scene>
     </scenes>
     <resources>

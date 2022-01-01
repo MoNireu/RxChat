@@ -40,7 +40,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Release any resources associated with this scene that can be re-created the next time the scene connects.
         // The scene may re-connect later, as its session was not necessarily discarded (see `application:didDiscardSceneSessions` instead).
         print("Log -", #fileID, #function, #line, "Scene Did Disconnect")
-        if sceneCoordinator?.getCurrentVC().sceneViewController.restorationIdentifier == "CreateProfileVC" {
+        if sceneCoordinator?.getCurrentVC().sceneViewController.restorationIdentifier == IdentifierUtil.VC.createProfile {
             let firebaseAuth = Auth.auth()
             do {
               try firebaseAuth.signOut()

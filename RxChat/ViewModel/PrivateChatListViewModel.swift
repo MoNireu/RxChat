@@ -30,7 +30,7 @@ class PrivateChatListViewModel: CommonViewModel {
     
     let dataSource: RxTableViewSectionedReloadDataSource<SectionOfChatRoomData> = {
         return RxTableViewSectionedReloadDataSource<SectionOfChatRoomData> (configureCell: { dataSource, tableView, indexPath, item in
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "privateChatListCell") as? PrivateChatListTableViewCell else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: IdentifierUtil.TableCell.privateChatList) as? PrivateChatListTableViewCell else {
                 print("fuck")
                 return UITableViewCell()
             }

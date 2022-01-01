@@ -43,7 +43,7 @@ class ChatRoomViewModel: CommonViewModel {
             configureCell: { [weak self] dataSource, tableView, indexPath, item in
                 // 보낸 메시지
                 if (item.from == Owner.shared.id) {
-                    let chatTextByOwnerCell = tableView.dequeueReusableCell(withIdentifier: "chatTextByOwner", for: indexPath) as? ChatRoomFromOwnerTableViewCell
+                    let chatTextByOwnerCell = tableView.dequeueReusableCell(withIdentifier: IdentifierUtil.TableCell.chatByOwner, for: indexPath) as? ChatRoomFromOwnerTableViewCell
                     chatTextByOwnerCell?.chatBubbleLabel.text = item.text
                     chatTextByOwnerCell?.timeLabel.text = item.time != nil ? item.time!.convertTimeStampToHourMinute() : ""
                     return chatTextByOwnerCell ?? UITableViewCell()
@@ -56,14 +56,14 @@ class ChatRoomViewModel: CommonViewModel {
                     }()
                     let currentCellId = self?.combinedChats[indexPath.row].from
                     if previousCellId == currentCellId {
-                        let chatTextByFriendCell = tableView.dequeueReusableCell(withIdentifier: "chatTextByFriend", for: indexPath) as? ChatRoomFromFriendTableViewCell
+                        let chatTextByFriendCell = tableView.dequeueReusableCell(withIdentifier: IdentifierUtil.TableCell.chatByFriend, for: indexPath) as? ChatRoomFromFriendTableViewCell
                         chatTextByFriendCell?.chatBubbleLabel.text = item.text
                         chatTextByFriendCell?.timeLabel.text = item.time != nil ? item.time!.convertTimeStampToHourMinute() : ""
                         
                         return chatTextByFriendCell ?? UITableViewCell()
                     }
                     else {
-                        let chatTextByFriendWithProfileImageCell = tableView.dequeueReusableCell(withIdentifier: "chatTextByFriendWithProfileImage", for: indexPath) as? ChatRoomFromFriendWithProfileImageTableViewCell
+                        let chatTextByFriendWithProfileImageCell = tableView.dequeueReusableCell(withIdentifier: IdentifierUtil.TableCell.chatByFriendWithProfileImage, for: indexPath) as? ChatRoomFromFriendWithProfileImageTableViewCell
                         chatTextByFriendWithProfileImageCell?.chatBubbleLabel.text = item.text
                         chatTextByFriendWithProfileImageCell?.timeLabel.text = item.time != nil ? item.time!.convertTimeStampToHourMinute() : ""
                         chatTextByFriendWithProfileImageCell?.profileImage.image = Owner.shared.friendList[item.from]?.profileImg

@@ -48,7 +48,7 @@ class GroupChatMemberSelectViewModel: CommonViewModel {
     let collectionDataSource: RxCollectionViewSectionedReloadDataSource<SectionOfUserData> = {
         return RxCollectionViewSectionedReloadDataSource<SectionOfUserData>(
             configureCell: { dataSource, collectionView, indexPath, item in
-                let selectedMemberCell = collectionView.dequeueReusableCell(withReuseIdentifier: "groupChatMemberSelectCell", for: indexPath) as! GroupChatMemberSelectCollectionViewCell
+                let selectedMemberCell = collectionView.dequeueReusableCell(withReuseIdentifier: IdentifierUtil.CollectionCell.groupChatMemberSelect, for: indexPath) as! GroupChatMemberSelectCollectionViewCell
                 selectedMemberCell.profileImageView.image = item.profileImg ?? UIImage(named: Resources.defaultProfileImg.rawValue)!
                 selectedMemberCell.nameLbl.text = item.name
                 return selectedMemberCell

@@ -26,7 +26,7 @@ extension Scene {
         switch self {
           
         case .launch(let viewModel):
-            guard var launchVC = storyboard.instantiateViewController(withIdentifier: "LaunchVC") as? LaunchViewController else {
+            guard var launchVC = storyboard.instantiateViewController(withIdentifier: IdentifierUtil.VC.launch) as? LaunchViewController else {
                 fatalError()
             }
             launchVC.bind(viewModel: viewModel)
@@ -35,7 +35,7 @@ extension Scene {
             
             
         case .signIn(let viewModel):
-            guard var signInVC = storyboard.instantiateViewController(withIdentifier: "SignInVC") as? SignInViewController else {
+            guard var signInVC = storyboard.instantiateViewController(withIdentifier: IdentifierUtil.VC.signIn) as? SignInViewController else {
                 fatalError()
             }
             
@@ -44,7 +44,7 @@ extension Scene {
             return signInVC
             
         case .editProfile(let viewModel):
-            guard var createProfileVC = storyboard.instantiateViewController(withIdentifier: "CreateProfileVC") as? CreateProfileViewController else {
+            guard var createProfileVC = storyboard.instantiateViewController(withIdentifier: IdentifierUtil.VC.createProfile) as? CreateProfileViewController else {
                 fatalError()
             }
             
@@ -54,7 +54,7 @@ extension Scene {
             
             
         case .chatList(let viewModel1, let viewModel2, let viewModel3):
-            guard let chatListTBC = storyboard.instantiateViewController(withIdentifier: "ChatListTBC") as? UITabBarController else {
+            guard let chatListTBC = storyboard.instantiateViewController(withIdentifier: IdentifierUtil.TBC.chatList) as? UITabBarController else {
                 fatalError()
             }
             
@@ -90,14 +90,14 @@ extension Scene {
             return chatListTBC
             
         case .findUser(let viewModel):
-            guard var findUserVC = storyboard.instantiateViewController(withIdentifier: "FindUserVC") as? FindUserViewController else {
+            guard var findUserVC = storyboard.instantiateViewController(withIdentifier: IdentifierUtil.VC.findUser) as? FindUserViewController else {
                 fatalError()
             }
             findUserVC.bind(viewModel: viewModel)
             return findUserVC
             
         case .chatRoom(let viewModel):
-            guard var chatRoomVC = storyboard.instantiateViewController(withIdentifier: "ChatRoomVC") as? ChatRoomViewController else {
+            guard var chatRoomVC = storyboard.instantiateViewController(withIdentifier: IdentifierUtil.VC.chatRoom) as? ChatRoomViewController else {
                 fatalError()
             }
             
@@ -105,14 +105,14 @@ extension Scene {
             return chatRoomVC
             
         case .chatSummary(let viewModel):
-            guard var chatSummaryVC = storyboard.instantiateViewController(withIdentifier: "ChatSummaryVC") as? ChatSummaryViewController else {
+            guard var chatSummaryVC = storyboard.instantiateViewController(withIdentifier: IdentifierUtil.VC.chatSummary) as? ChatSummaryViewController else {
                 fatalError()
             }
             chatSummaryVC.bind(viewModel: viewModel)
             return chatSummaryVC
             
         case .groupChatMemberSelect(let viewModel):
-            guard var vc = storyboard.instantiateViewController(withIdentifier: "GroupChatMemberSelectVC") as? GroupChatMemberSelectViewController else {
+            guard var vc = storyboard.instantiateViewController(withIdentifier: IdentifierUtil.VC.groupChatMemberSelect) as? GroupChatMemberSelectViewController else {
                 fatalError()
             }
             vc.modalPresentationStyle = .fullScreen
