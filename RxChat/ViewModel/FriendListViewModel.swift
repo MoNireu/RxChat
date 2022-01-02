@@ -44,7 +44,10 @@ class FriendListViewModel: CommonViewModel {
                     return UITableViewCell()
                 }
             })
-        ds.canEditRowAtIndexPath = { _, _ in return true}
+        ds.canEditRowAtIndexPath = { _, indexPath in
+            guard indexPath.section != 0 else {return false}
+            return true
+        }
         return ds
     }()
     
