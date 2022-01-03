@@ -68,7 +68,7 @@ class ChatUtility {
             
             let setRoomIdToOwner = self.setRoomIdToOwner(roomType: groupRoom, value: [roomId : roomId])
             let setRoomIdToMembers = self.setRoomIdToUsers(roomType: groupRoom, friendIdList: friendIdList, value: [roomId : roomId])
-
+            
             Observable.of(setRoomIdToOwner, setRoomIdToMembers)
                 .merge()
                 .subscribe(onCompleted: {
@@ -164,27 +164,28 @@ class ChatUtility {
     /// - Returns: [roomId: friendId]
     func getOwnersAllChatRoomIdWithFriendId(roomType: ChatRoomType) -> Observable<[String: String]> { // [roomId: friendId]
         return Observable.create { observer in
-            self.usersRef
-                .child(self.myId)
-                .child(roomType.rawValue)
-                .rx
-                .observeSingleEvent(.value)
+            self.observeOwnerChatRoomSingleEvent(roomType: roomType)
                 .subscribe(onSuccess: { snapshot in
                     guard snapshot.hasChildren() else {
                         observer.onNext([:])
                         return
                     }
                     let valueDict = snapshot.value as! [String: String]
-                    var chatRoomIdWithFriendIdDict: [String: String] = [:]
-                    for (key, value) in valueDict {
-                        chatRoomIdWithFriendIdDict.updateValue(key, forKey: value)
-                    }
-                    observer.onNext(chatRoomIdWithFriendIdDict)
+                    let chatRoomIdWithFriendIdDict = valueDict.swap()
+                    observer.onNext(chatRoomIdWithFriendIdDict!)
                 }, onError: { err in
                     observer.onError(err)
                 }).disposed(by: self.disposeBag)
             return Disposables.create()
         }
+    }
+    
+    private func observeOwnerChatRoomSingleEvent(roomType: ChatRoomType) -> Single<DataSnapshot> {
+        self.usersRef
+            .child(self.myId)
+            .child(roomType.rawValue)
+            .rx
+            .observeSingleEvent(.value)
     }
     
     
@@ -202,6 +203,7 @@ class ChatUtility {
                 }
         }
     }
+    
     
     private func parseDataSnapshotToChatRoom( _ snapShot: DataSnapshot, roomId: String) -> ChatRoom {
         let valueDict = snapShot.value as! [String: Any]
@@ -308,8 +310,8 @@ class ChatUtility {
             return Disposables.create()
         }
     }
-
-
+    
+    
     
     func listenChat(roomId: String) -> Observable<Chat?>{
         return Observable.create { observer in

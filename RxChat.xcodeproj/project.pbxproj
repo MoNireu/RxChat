@@ -10,6 +10,7 @@
 		249CA8077FA1FDCE033711F7 /* Pods_RxChat_RxChatUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC57A12DD001E4D35CBE88ED /* Pods_RxChat_RxChatUITests.framework */; };
 		938321D1BA4F3A3A5EA21804 /* Pods_RxChatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F63C573E14C177FC06527979 /* Pods_RxChatTests.framework */; };
 		E105FFAC278291C500C6B73B /* GroupChatListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E105FFAB278291C500C6B73B /* GroupChatListTableViewCell.swift */; };
+		E105FFAE2782D01400C6B73B /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E105FFAD2782D01400C6B73B /* DictionaryExtension.swift */; };
 		E10D16E826B91942003DD5D3 /* FriendListMyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10D16E726B91942003DD5D3 /* FriendListMyTableViewCell.swift */; };
 		E1232F1D26AFE5E000A9EA31 /* FriendListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1232F1C26AFE5E000A9EA31 /* FriendListViewModel.swift */; };
 		E1232F1F26AFE5EF00A9EA31 /* FriendListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1232F1E26AFE5EF00A9EA31 /* FriendListViewController.swift */; };
@@ -95,6 +96,7 @@
 		BB0D740BDCD23FBED81B6BCC /* Pods-RxChatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxChatTests.release.xcconfig"; path = "Target Support Files/Pods-RxChatTests/Pods-RxChatTests.release.xcconfig"; sourceTree = "<group>"; };
 		BC57A12DD001E4D35CBE88ED /* Pods_RxChat_RxChatUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RxChat_RxChatUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E105FFAB278291C500C6B73B /* GroupChatListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupChatListTableViewCell.swift; sourceTree = "<group>"; };
+		E105FFAD2782D01400C6B73B /* DictionaryExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExtension.swift; sourceTree = "<group>"; };
 		E10D16E726B91942003DD5D3 /* FriendListMyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListMyTableViewCell.swift; sourceTree = "<group>"; };
 		E1232F1C26AFE5E000A9EA31 /* FriendListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListViewModel.swift; sourceTree = "<group>"; };
 		E1232F1E26AFE5EF00A9EA31 /* FriendListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListViewController.swift; sourceTree = "<group>"; };
@@ -303,6 +305,7 @@
 			children = (
 				E1D8ADB826CBA7DF001586D3 /* UIButtonExtension.swift */,
 				E14EFAA627782A6A001211A0 /* StringExtension.swift */,
+				E105FFAD2782D01400C6B73B /* DictionaryExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -638,6 +641,7 @@
 				E1A76A2226A8091E00C8F783 /* RxImagePickerDelegateProxy.swift .swift in Sources */,
 				E1F84483277FFED4000330C9 /* IdentifierUtil.swift in Sources */,
 				E13D44722750AAB4005EECB9 /* ChatRoomViewController.swift in Sources */,
+				E105FFAE2782D01400C6B73B /* DictionaryExtension.swift in Sources */,
 				E180E3EA26C277D1000F4CEA /* FindUserViewModel.swift in Sources */,
 				E170DF6226A0203A00A5BAAF /* SceneCoordinator.swift in Sources */,
 				E10D16E826B91942003DD5D3 /* FriendListMyTableViewCell.swift in Sources */,
