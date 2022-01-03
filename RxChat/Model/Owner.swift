@@ -33,6 +33,10 @@ class Owner: User {
         self.shared.profileImg = profileImg
         self.shared.friendList = friendList
     }
+    
+    func getUserProfileImage(userId: String) -> UIImage {
+        return friendList[userId]?.profileImg ?? UIImage(named: Resources.defaultProfileImg.rawValue)!
+    }
 }
 
 

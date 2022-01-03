@@ -92,9 +92,8 @@ class CreateGroupChatViewModel: CommonViewModel {
     lazy var createGroupChat: Action<String, ChatRoom> = {
         return Action { [weak self] roomTitle in
             return Observable.create { [weak self] observer in
-                var friendIdList: [String] = []
-                for member in self!.memberList {friendIdList.append(member.id!)}
-                ChatUtility.shared.createChatRoom(friendIdList: friendIdList, roomTitle: roomTitle)
+                guard let friendIdList = self?.memberList.map({$0.id!}) else { return Disposables.create() }
+                ChatUtility.shared.createGroupChatRoom(friendIdList: friendIdList, roomTitle: roomTitle)
                     .subscribe(onNext: { [weak self] chatRoom in
                         observer.onNext(chatRoom)
                     }).disposed(by: self!.disposeBag)

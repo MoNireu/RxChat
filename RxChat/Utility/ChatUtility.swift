@@ -31,20 +31,21 @@ class ChatUtility {
     var ownerPrivateChatRoomList: [String] = [] // [PrivateRoomUUID]
     var ownerGroupChatRoomList: [String] = [] // [GroupRoomUUID]
     
-    func createChatRoom(friendId: String, roomTitle: String) -> Observable<ChatRoom> {
+    
+    func createPrivateChatRoom(friendId: String, roomTitle: String) -> Observable<ChatRoom> {
         return Observable.create { observer in
             let roomId = UUID().uuidString
-            let roomType = ChatRoomType.privateRoom
+            let privateRoomType = ChatRoomType.privateRoom
             
             let setFriendRoomIdToOwner = self.usersRef
                 .child(self.myId)
-                .child("private")
+                .child(privateRoomType.rawValue)
                 .rx
                 .updateChildValues([friendId: roomId])
             
             let setOwnerRoomIdToFriend = self.usersRef
                 .child(friendId)
-                .child("private")
+                .child(privateRoomType.rawValue)
                 .rx
                 .updateChildValues([self.myId: roomId])
             
@@ -56,12 +57,12 @@ class ChatUtility {
                         .rx
                         .setValue(["members": [self.myId, friendId],
                                    "title": roomTitle,
-                                   "type": roomType.rawValue])
+                                   "type": privateRoomType.rawValue])
                         .subscribe(onSuccess: { [weak self] _ in
                             print("Log -", #fileID, #function, #line, "Success")
                             let chatRoom = ChatRoom(UUID: roomId,
                                                     title: roomTitle,
-                                                    chatRoomType: roomType,
+                                                    chatRoomType: privateRoomType,
                                                     members: [(self?.myId)!, friendId],
                                                     chats: [])
                             observer.onNext(chatRoom)
@@ -75,16 +76,16 @@ class ChatUtility {
     }
     
     
-    func createChatRoom(friendIdList: [String], roomTitle: String) -> Observable<ChatRoom> {
+    func createGroupChatRoom(friendIdList: [String], roomTitle: String) -> Observable<ChatRoom> {
         return Observable.create { observer in
             let roomId = UUID().uuidString
-            let roomType = ChatRoomType.groupRoom
+            let groupRoomType = ChatRoomType.groupRoom
             
             let setFriendRoomIdToOwner = self.usersRef
                 .child(self.myId)
-                .child("group")
+                .child(groupRoomType.rawValue)
                 .rx
-                .updateChildValues([roomId : true])
+                .updateChildValues([roomId : roomId])
             
             let setOwnerRoomIdToFriend =
             Single<DatabaseReference>.create { single in
@@ -92,9 +93,9 @@ class ChatUtility {
                 for friendId in friendIdList {
                     self.usersRef
                         .child(friendId)
-                        .child("group")
+                        .child(groupRoomType.rawValue)
                         .rx
-                        .updateChildValues([roomId : true])
+                        .updateChildValues([roomId : roomId])
                         .subscribe(onSuccess: { ref in
                             cnt += 1
                             if cnt == friendIdList.count {
@@ -119,12 +120,12 @@ class ChatUtility {
                         .setValue(["members": members,
                                    "title": roomTitle,
                                    "host": self.myId,
-                                   "type": roomType.rawValue])
+                                   "type": groupRoomType.rawValue])
                         .subscribe(onSuccess: { _ in
                             print("Log -", #fileID, #function, #line, "Success")
                             let chatRoom = ChatRoom(UUID: roomId,
                                                     title: roomTitle,
-                                                    chatRoomType: roomType,
+                                                    chatRoomType: groupRoomType,
                                                     members: members,
                                                     chats: [])
                             observer.onNext(chatRoom)

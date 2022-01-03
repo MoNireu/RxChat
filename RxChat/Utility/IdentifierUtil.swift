@@ -36,6 +36,10 @@ enum IdentifierUtil {
         static let chatByOwner = "ChatByOwnerCell"
         static let chatByFriend = "ChatByFriendCell"
         static let chatByFriendWithProfileImage = "ChatByFriendWithProfileImage"
+        static let groupChatListOneMember = "GroupChatListOneMemberCell"
+        static let groupChatListTwoMember = "GroupChatListTwoMemberCell"
+        static let groupChatListThreeMember = "GroupChatListThreeMemberCell"
+        static let groupChatListFourMember = "GroupChatListFourMemberCell"
     }
     enum CollectionCell {
         static let groupChatMemberSelect = "GroupChatMemberSelectCell"

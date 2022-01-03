@@ -35,7 +35,8 @@ class ChatSummaryViewModel: CommonViewModel {
                     // ChatRoom Object 가져오기
                     Observable<ChatRoom>.create { observer in
                         guard let privateChatRoomUUID = retrivedChatRoomUUID else { // 기존 채팅방이 없는 경우
-                            ChatUtility.shared.createChatRoom(friendId: friendId, roomTitle: friendId)
+                            let roomTitle = Owner.shared.id! + friendId
+                            ChatUtility.shared.createPrivateChatRoom(friendId: friendId, roomTitle: roomTitle)
                                 .subscribe(onNext: { chatRoom in
                                     observer.onNext(chatRoom)
                                     observer.onCompleted()
