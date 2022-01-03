@@ -13,7 +13,7 @@ import RealmSwift
 import Action
 
 
-class GroupChatMemberSelectViewModel: CommonViewModel {
+class CreateGroupChatViewModel: CommonViewModel {
     
     deinit {print("Log -", #fileID, #function, #line, "DeInit")}
     var disposeBag = DisposeBag()
@@ -37,7 +37,7 @@ class GroupChatMemberSelectViewModel: CommonViewModel {
     let tableDataSource: RxTableViewSectionedReloadDataSource<SectionOfUserData> = {
         return RxTableViewSectionedReloadDataSource<SectionOfUserData>(
             configureCell: { dataSource, tableView, indexPath, item in
-                let friendInfoCell = tableView.dequeueReusableCell(withIdentifier: "FriendProfileCell", for: indexPath) as! FriendListFriendTableViewCell
+                let friendInfoCell = tableView.dequeueReusableCell(withIdentifier: IdentifierUtil.TableCell.friendProfile, for: indexPath) as! FriendListFriendTableViewCell
                 friendInfoCell.profileImageView.image = item.profileImg ?? UIImage(named: Resources.defaultProfileImg.rawValue)!
                 friendInfoCell.profileName.text = item.name
                 friendInfoCell.profileStatMsg.text = ""

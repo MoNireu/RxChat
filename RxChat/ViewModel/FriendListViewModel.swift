@@ -45,6 +45,7 @@ class FriendListViewModel: CommonViewModel {
                 }
             })
         ds.canEditRowAtIndexPath = { _, indexPath in
+            // 나의 프로필일 경우 편집을 제한함.
             guard indexPath.section != 0 else {return false}
             return true
         }
@@ -73,7 +74,7 @@ class FriendListViewModel: CommonViewModel {
     
     lazy var presentGroupChatMemberSelectView: CocoaAction = {
         return Action { [weak self] _ in
-            let groupChatMemberSelectViewModel = GroupChatMemberSelectViewModel(sceneCoordinator: self!.sceneCoordinator, firebaseUtil: self!.firebaseUtil)
+            let groupChatMemberSelectViewModel = CreateGroupChatViewModel(sceneCoordinator: self!.sceneCoordinator, firebaseUtil: self!.firebaseUtil)
             let groupChatMemberSelectScene = Scene.groupChatMemberSelect(groupChatMemberSelectViewModel)
             self?.sceneCoordinator.transition(to: groupChatMemberSelectScene, using: .modal, animated: true)
             return Observable.empty()

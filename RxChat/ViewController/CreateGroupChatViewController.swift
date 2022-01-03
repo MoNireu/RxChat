@@ -10,8 +10,8 @@ import RxSwift
 import RxCocoa
 import NSObject_Rx
 
-class GroupChatMemberSelectViewController: UIViewController, ViewModelBindableType {
-    var viewModel: GroupChatMemberSelectViewModel!
+class CreateGroupChatViewController: UIViewController, ViewModelBindableType {
+    var viewModel: CreateGroupChatViewModel!
     
     @IBOutlet weak var titleLbl: UINavigationItem!
     @IBOutlet weak var warnLbl: UILabel!

@@ -16,7 +16,7 @@ enum Scene {
     case findUser(FindUserViewModel)
     case chatRoom(ChatRoomViewModel)
     case chatSummary(ChatSummaryViewModel)
-    case groupChatMemberSelect(GroupChatMemberSelectViewModel)
+    case groupChatMemberSelect(CreateGroupChatViewModel)
 }
 
 extension Scene {
@@ -112,7 +112,7 @@ extension Scene {
             return chatSummaryVC
             
         case .groupChatMemberSelect(let viewModel):
-            guard var vc = storyboard.instantiateViewController(withIdentifier: IdentifierUtil.VC.groupChatMemberSelect) as? GroupChatMemberSelectViewController else {
+            guard var vc = storyboard.instantiateViewController(withIdentifier: IdentifierUtil.VC.groupChatMemberSelect) as? CreateGroupChatViewController else {
                 fatalError()
             }
             vc.modalPresentationStyle = .fullScreen

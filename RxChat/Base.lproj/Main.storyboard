@@ -969,7 +969,7 @@
         <!--GroupChatMemberSelectVC-->
         <scene sceneID="KN0-ce-JVx">
             <objects>
-                <viewController storyboardIdentifier="GroupChatMemberSelectVC" title="GroupChatMemberSelectVC" id="ted-4o-s36" customClass="GroupChatMemberSelectViewController" customModule="RxChat" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GroupChatMemberSelectVC" title="GroupChatMemberSelectVC" id="ted-4o-s36" customClass="CreateGroupChatViewController" customModule="RxChat" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0XD-T6-uSQ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
