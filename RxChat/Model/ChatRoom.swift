@@ -20,13 +20,15 @@ class ChatRoom {
     var UUID: String
     var title: String
     var chatRoomType: ChatRoomType
+    var host: String
     var members: [String]
     var chats: [Chat]
     
-    init(UUID: String,title: String, chatRoomType: ChatRoomType, members: [String], chats: [Chat]) {
+    init(UUID: String,title: String, chatRoomType: ChatRoomType, host: String, members: [String], chats: [Chat]) {
         self.UUID = UUID
         self.title = title
         self.chatRoomType = chatRoomType
+        self.host = host
         self.members = members
         self.chats = chats
     }
@@ -35,6 +37,7 @@ class ChatRoom {
         self.UUID = chatRoomRealm.UUID
         self.title = chatRoomRealm.title
         self.chatRoomType = ChatRoomType(rawValue: chatRoomRealm.chatRoomType)!
+        self.host = chatRoomRealm.host
         self.members = Array(chatRoomRealm.members)
         self.chats = Array(chatRoomRealm.chats)
     }
@@ -46,6 +49,7 @@ class ChatRoomRealm: Object {
     @Persisted var UUID: String
     @Persisted var title: String
     @Persisted var chatRoomType: String
+    @Persisted var host: String
     @Persisted var members: List<String>
     @Persisted var chats: List<Chat>
     
@@ -58,6 +62,7 @@ class ChatRoomRealm: Object {
         self.UUID = chatRoom.UUID
         self.title = chatRoom.title
         self.chatRoomType = chatRoom.chatRoomType.rawValue
+        self.host = chatRoom.host
         self.members = List<String>()
         self.members.append(objectsIn: chatRoom.members)
         self.chats = List<Chat>()
