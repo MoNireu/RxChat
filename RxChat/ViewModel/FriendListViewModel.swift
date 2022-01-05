@@ -108,18 +108,18 @@ class FriendListViewModel: CommonViewModel {
     
     
     lazy var selectFriendAt: Action<IndexPath, Void> = {
-        return Action { [self] indexPath in
+        return Action { [weak self] indexPath in
+            guard let self = self else { return Observable.empty() }
             guard var sections = try? self.profileInfoSubject.value() else {return Observable.empty()}
             
             let currentSection = sections[indexPath.section]
             let selectedFriend = currentSection.items[indexPath.row] as User
             
-            
-            let chatSummaryViewModel = ChatSummaryViewModel(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil, user: selectedFriend)
+            let chatSummaryViewModel = ChatSummaryViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil, user: selectedFriend)
             let chatSummaryScene = Scene.chatSummary(chatSummaryViewModel)
-            sceneCoordinator.transition(to: chatSummaryScene, using: .modal, animated: true)
+            self.sceneCoordinator.transition(to: chatSummaryScene, using: .modal, animated: true)
             
-            isTransToChatRoomComplete.onNext(indexPath)
+            self.isTransToChatRoomComplete.onNext(indexPath)
 
             return Observable.empty()
         }

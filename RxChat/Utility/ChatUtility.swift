@@ -239,6 +239,37 @@ class ChatUtility {
         }
     }
     
+    
+    func preparePrivateChatRoomTransition(friendId: String) -> Observable<ChatRoom> {
+        // 기존 채팅방이 있는지 확인
+        return Observable<ChatRoom>.create { [weak self] observer in
+            ChatUtility.shared.getChatRoomIdBy(friendId: friendId, roomType: .privateRoom)
+                .subscribe(onNext: { retrivedChatRoomUUID in
+                    // ChatRoom Object 가져오기
+                        guard let privateChatRoomUUID = retrivedChatRoomUUID else { // 기존 채팅방이 없는 경우
+                            let roomTitle = Owner.shared.id! + friendId
+                            ChatUtility.shared.createPrivateChatRoom(friendId: friendId, roomTitle: roomTitle)
+                                .subscribe(onNext: { chatRoom in
+                                    observer.onNext(chatRoom)
+                                    observer.onCompleted()
+                                }).disposed(by: (self?.disposeBag)!)
+                            return
+                        }
+                        guard let chatRoomObject = RealmUtil.shared.readChatRoom(UUID: privateChatRoomUUID) else { // Realm에 존재하지 않을경우 Firebase에서 가져오기
+                            ChatUtility.shared.getChatRoomBy(roomId: privateChatRoomUUID)
+                                .subscribe(onNext: { chatRoomObject in
+                                    observer.onNext(chatRoomObject)
+                                    observer.onCompleted()
+                                }).disposed(by: (self?.disposeBag)!)
+                            return
+                        }
+                        observer.onNext(chatRoomObject)
+                        observer.onCompleted()
+                }).disposed(by: (self?.disposeBag)!)
+            return Disposables.create()
+        }
+    }
+    
     func removeAllRoomListener() {
         for ownerPrivateChatRoom in ownerPrivateChatRoomList {
             self.roomsRef
