@@ -7,8 +7,10 @@
 
 import Foundation
 import RxSwift
+import Action
 import RxDataSources
 import OrderedCollections
+import SwiftUI
 
 class PrivateChatListViewModel: CommonViewModel {
     var disposeBag = DisposeBag()
@@ -100,4 +102,19 @@ class PrivateChatListViewModel: CommonViewModel {
         tableDataSubject.onNext(tableData)
         print("Log -", #fileID, #function, #line, Array(chatRoomByRoomId.values))
     }
+    
+    
+    lazy var presentChatRoom: Action<ChatRoom, Void> = {
+        return Action { [weak self] chatRoom in
+            let friendId = chatRoom.getFriendIdFromChatRoom()
+            ChatUtility.shared.preparePrivateChatRoomForTransition(friendId: friendId)
+                .subscribe(onNext: { [weak self] chatRoom in // 채팅방으로 이동.
+                    let chatRoomViewModel = ChatRoomViewModel(sceneCoordinator: (self?.sceneCoordinator)!, firebaseUtil: (self?.firebaseUtil)!, chatRoom: chatRoom)
+                    let chatRoomScene = Scene.chatRoom(chatRoomViewModel)
+                    self?.sceneCoordinator.transition(to: chatRoomScene, using: .dismissThenPushOnPrivateTab, animated: true)
+                    print("Connecting to room number: \(chatRoom.UUID)")
+                }).disposed(by: (self?.disposeBag)!)
+            return Observable.empty()
+        }
+    }()
 }

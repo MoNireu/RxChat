@@ -41,6 +41,13 @@ class ChatRoom {
         self.members = Array(chatRoomRealm.members)
         self.chats = Array(chatRoomRealm.chats)
     }
+    
+    
+    func getFriendIdFromChatRoom() -> String {
+        let firstId = self.members.first!
+        let secondId = self.members.last!
+        return firstId != Owner.shared.id! ? firstId : secondId
+    }
 }
 
 

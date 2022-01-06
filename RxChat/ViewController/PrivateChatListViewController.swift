@@ -26,12 +26,13 @@ class PrivateChatListViewController: UIViewController, ViewModelBindableType {
         self.tabBarController?.tabBar.isHidden = false
         self.navigationController?.navigationBar.sizeToFit()
         
+        viewModel.refreshTable()
         print("Log -", #fileID, #function, #line, "Appear")
-        viewModel.chatRoomByRoomIdSubject.subscribe(onNext: { val in
-            print("Log -", #fileID, #function, #line, val)
-            self.viewModel.refreshTable()
-        }).disposed(by: rx.disposeBag)
-        viewModel.chatRoomByRoomIdSubject.onNext(viewModel.chatRoomByRoomId)
+//        viewModel.chatRoomByRoomIdSubject.subscribe(onNext: { val in
+//            print("Log -", #fileID, #function, #line, val)
+//            self.viewModel.refreshTable()
+//        }).disposed(by: rx.disposeBag)
+//        viewModel.chatRoomByRoomIdSubject.onNext(viewModel.chatRoomByRoomId)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -48,5 +49,9 @@ class PrivateChatListViewController: UIViewController, ViewModelBindableType {
             .subscribe(onNext: { val in
                 print("Log -", #fileID, #function, #line, val)
             }).disposed(by: rx.disposeBag)
+        
+        tableView.rx.modelSelected(ChatRoom.self)
+            .bind(to: viewModel.presentChatRoom.inputs)
+            .disposed(by: rx.disposeBag)
     }
 }
