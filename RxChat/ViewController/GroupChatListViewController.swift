@@ -18,16 +18,21 @@ class GroupChatListViewController: UIViewController, ViewModelBindableType {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        print("Log -", #fileID, #function, #line, "Appear")
-        viewModel.chatRoomByRoomIdSubject.subscribe(onNext: { val in
-            print("Log -", #fileID, #function, #line, val)
-            self.viewModel.refreshTable()
-        }).disposed(by: rx.disposeBag)
-        viewModel.chatRoomByRoomIdSubject.onNext(viewModel.chatRoomByRoomId)
+        print("Log -", #fileID, #function, #line, "Appear: \(viewModel.sceneCoordinator.getCurrentVC())")
+        viewModel.sceneCoordinator.changeTab(index: 2)
+        self.tabBarController?.tabBar.isHidden = false
+        self.navigationController?.navigationBar.sizeToFit()
+        self.viewModel.refreshTable()
+        
+//        viewModel.chatRoomByRoomIdSubject.subscribe(onNext: { val in
+//            print("Log -", #fileID, #function, #line, val)
+//            self.viewModel.refreshTable()
+//        }).disposed(by: rx.disposeBag)
+//        viewModel.chatRoomByRoomIdSubject.onNext(viewModel.chatRoomByRoomId)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        viewModel.chatRoomByRoomIdSubject.disposed(by: rx.disposeBag)
+//        viewModel.chatRoomByRoomIdSubject.disposed(by: rx.disposeBag)
     }
     
     
@@ -40,5 +45,9 @@ class GroupChatListViewController: UIViewController, ViewModelBindableType {
             .subscribe(onNext: { val in
                 print("Log -", #fileID, #function, #line, val)
             }).disposed(by: rx.disposeBag)
+        
+        tableView.rx.modelSelected(ChatRoom.self)
+            .bind(to: viewModel.presentChatRoom.inputs)
+            .disposed(by: rx.disposeBag)
     }
 }

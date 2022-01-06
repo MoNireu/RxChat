@@ -22,6 +22,10 @@ class PrivateChatListViewController: UIViewController, ViewModelBindableType {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        viewModel.sceneCoordinator.changeTab(index: 1)
+        self.tabBarController?.tabBar.isHidden = false
+        self.navigationController?.navigationBar.sizeToFit()
+        
         print("Log -", #fileID, #function, #line, "Appear")
         viewModel.chatRoomByRoomIdSubject.subscribe(onNext: { val in
             print("Log -", #fileID, #function, #line, val)

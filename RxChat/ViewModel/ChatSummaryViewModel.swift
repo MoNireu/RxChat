@@ -30,11 +30,11 @@ class ChatSummaryViewModel: CommonViewModel {
             
             let friendId = (self?.user.id)!
             
-            ChatUtility.shared.preparePrivateChatRoomTransition(friendId: friendId)
-                .subscribe(onNext: { chatRoom in // 채팅방으로 이동.
+            ChatUtility.shared.preparePrivateChatRoomForTransition(friendId: friendId)
+                .subscribe(onNext: { [weak self] chatRoom in // 채팅방으로 이동.
                     let chatRoomViewModel = ChatRoomViewModel(sceneCoordinator: (self?.sceneCoordinator)!, firebaseUtil: (self?.firebaseUtil)!, chatRoom: chatRoom)
                     let chatRoomScene = Scene.chatRoom(chatRoomViewModel)
-                    self?.sceneCoordinator.transition(to: chatRoomScene, using: .pushOnParent, animated: true)
+                    self?.sceneCoordinator.transition(to: chatRoomScene, using: .dismissThenPushOnPrivateTab, animated: true)
                     print("Connecting to room number: \(chatRoom.UUID)")
                 }).disposed(by: (self?.disposeBag)!)
             

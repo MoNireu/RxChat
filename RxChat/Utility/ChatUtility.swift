@@ -30,7 +30,7 @@ class ChatUtility {
     var ownerGroupChatRoomList: [String] = [] // [GroupRoomUUID]
     
     
-    func createPrivateChatRoom(friendId: String, roomTitle: String) -> Observable<ChatRoom> {
+    func createNewPrivateChatRoomOnFirebase(friendId: String, roomTitle: String) -> Observable<ChatRoom> {
         return Observable.create { observer in
             let roomId = UUID().uuidString
             let privateRoom = ChatRoomType.privateRoom
@@ -61,7 +61,7 @@ class ChatUtility {
     }
     
     
-    func createGroupChatRoom(friendIdList: [String], roomTitle: String) -> Observable<ChatRoom> {
+    func createNewGroupChatRoomOnFirebase(friendIdList: [String], roomTitle: String) -> Observable<ChatRoom> {
         return Observable.create { observer in
             let roomId = UUID().uuidString
             let groupRoom = ChatRoomType.groupRoom
@@ -189,7 +189,7 @@ class ChatUtility {
     }
     
     
-    func getChatRoomBy(roomId: String) -> Observable<ChatRoom> {
+    func getChatRoomFromFirebaseBy(roomId: String) -> Observable<ChatRoom> {
         return Observable.create { observer in
             self.roomsRef
                 .child(roomId)
@@ -240,7 +240,7 @@ class ChatUtility {
     }
     
     
-    func preparePrivateChatRoomTransition(friendId: String) -> Observable<ChatRoom> {
+    func preparePrivateChatRoomForTransition(friendId: String) -> Observable<ChatRoom> {
         // 기존 채팅방이 있는지 확인
         return Observable<ChatRoom>.create { [weak self] observer in
             ChatUtility.shared.getChatRoomIdBy(friendId: friendId, roomType: .privateRoom)
@@ -248,7 +248,7 @@ class ChatUtility {
                     // ChatRoom Object 가져오기
                         guard let privateChatRoomUUID = retrivedChatRoomUUID else { // 기존 채팅방이 없는 경우
                             let roomTitle = Owner.shared.id! + friendId
-                            ChatUtility.shared.createPrivateChatRoom(friendId: friendId, roomTitle: roomTitle)
+                            ChatUtility.shared.createNewPrivateChatRoomOnFirebase(friendId: friendId, roomTitle: roomTitle)
                                 .subscribe(onNext: { chatRoom in
                                     observer.onNext(chatRoom)
                                     observer.onCompleted()
@@ -256,7 +256,7 @@ class ChatUtility {
                             return
                         }
                         guard let chatRoomObject = RealmUtil.shared.readChatRoom(UUID: privateChatRoomUUID) else { // Realm에 존재하지 않을경우 Firebase에서 가져오기
-                            ChatUtility.shared.getChatRoomBy(roomId: privateChatRoomUUID)
+                            ChatUtility.shared.getChatRoomFromFirebaseBy(roomId: privateChatRoomUUID)
                                 .subscribe(onNext: { chatRoomObject in
                                     observer.onNext(chatRoomObject)
                                     observer.onCompleted()
@@ -266,6 +266,22 @@ class ChatUtility {
                         observer.onNext(chatRoomObject)
                         observer.onCompleted()
                 }).disposed(by: (self?.disposeBag)!)
+            return Disposables.create()
+        }
+    }
+    
+    func prepareGroupChatRoomForTransition(roomId: String) -> Observable<ChatRoom> {
+        return Observable<ChatRoom>.create { [weak self] observer in
+            guard let chatRoomObject = RealmUtil.shared.readChatRoom(UUID: roomId) else { // Realm에 존재하지 않을경우 Firebase에서 가져오기
+                ChatUtility.shared.getChatRoomFromFirebaseBy(roomId: roomId)
+                    .subscribe(onNext: { chatRoomObject in
+                        observer.onNext(chatRoomObject)
+                        observer.onCompleted()
+                    }).disposed(by: (self?.disposeBag)!)
+                return Disposables.create()
+            }
+            observer.onNext(chatRoomObject)
+            observer.onCompleted()
             return Disposables.create()
         }
     }
@@ -318,6 +334,7 @@ class ChatUtility {
                 .rx
                 .observeSingleEvent(.value)
                 .subscribe(onSuccess: { snapShot in
+                    print("Log -", #fileID, #function, #line, dump(snapShot))
                     guard snapShot.exists() else {
                         print("Log -", #fileID, #function, #line, "No Chats in ChatRoom")
                         observer.onNext([])
@@ -353,6 +370,7 @@ class ChatUtility {
                 .observeEvent(.value)
                 .subscribe(onNext: { snapShot in
                     // 방을 처음 만들었을 떄
+                    print("Log -", #fileID, #function, #line, dump(snapShot))
                     guard snapShot.exists() else {
                         print("Log -", #fileID, #function, #line, "No Chats in ChatRoom")
                         observer.onNext(nil)

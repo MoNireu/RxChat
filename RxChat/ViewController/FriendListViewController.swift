@@ -24,6 +24,7 @@ class FriendListViewController: UIViewController, ViewModelBindableType {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        viewModel.sceneCoordinator.changeTab(index: 0)
         self.tabBarController?.tabBar.isHidden = false
         self.navigationController?.navigationBar.sizeToFit()
     }

@@ -39,6 +39,7 @@ class ChatRoomViewController: UIViewController, ViewModelBindableType {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        viewModel.sceneCoordinator.getCurrentVC().tabBarController?.tabBar.isHidden = true
         addAdditionalHeightToBottomBar(line: 1)
         viewModel.refreshTableView()
     }

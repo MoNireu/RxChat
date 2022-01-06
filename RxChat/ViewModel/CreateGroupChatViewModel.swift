@@ -93,7 +93,7 @@ class CreateGroupChatViewModel: CommonViewModel {
         return Action { [weak self] roomTitle in
             return Observable.create { [weak self] observer in
                 guard let friendIdList = self?.memberList.map({$0.id!}) else { return Disposables.create() }
-                ChatUtility.shared.createGroupChatRoom(friendIdList: friendIdList, roomTitle: roomTitle)
+                ChatUtility.shared.createNewGroupChatRoomOnFirebase(friendIdList: friendIdList, roomTitle: roomTitle)
                     .subscribe(onNext: { [weak self] chatRoom in
                         observer.onNext(chatRoom)
                     }).disposed(by: self!.disposeBag)
@@ -106,7 +106,7 @@ class CreateGroupChatViewModel: CommonViewModel {
     func presentChatRoom(_ chatRoom: ChatRoom) {
             let chatRoomViewModel = ChatRoomViewModel(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil, chatRoom: chatRoom)
             let chatRoomScene = Scene.chatRoom(chatRoomViewModel)
-            sceneCoordinator.transition(to: chatRoomScene, using: .pushOnParent, animated: true)
+            sceneCoordinator.transition(to: chatRoomScene, using: .dismissThenPushOnGroupTab, animated: true)
             print("Connecting to room number: \(chatRoom.UUID)")
     }
 }

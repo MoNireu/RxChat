@@ -72,6 +72,7 @@ class GroupChatListViewModel: CommonViewModel {
             }()
             
             let lastChat = item.chats.first!
+//            guard let lastChat = item.chats.first? else { return groupChatListCell }
             groupChatListCell.roomTitleLbl.text = item.title
             groupChatListCell.roomLastChatLbl.text = lastChat.text
             
@@ -100,7 +101,7 @@ class GroupChatListViewModel: CommonViewModel {
                         // 방 정보와 채팅을 조합.
                         guard self.chatRoomByRoomId[roomId] != nil
                         else {
-                            ChatUtility.shared.getChatRoomBy(roomId: roomId)
+                            ChatUtility.shared.getChatRoomFromFirebaseBy(roomId: roomId)
                                 .subscribe(onNext: { chatRoom in
                                     chatRoom.chats = [chat]
                                     self.chatRoomByRoomId.updateValue(chatRoom, forKey: roomId, insertingAt: 0)
@@ -128,4 +129,19 @@ class GroupChatListViewModel: CommonViewModel {
         tableDataSubject.onNext(tableData)
         print("Log -", #fileID, #function, #line, Array(chatRoomByRoomId.values))
     }
+    
+    
+    lazy var presentChatRoom: Action<ChatRoom, Void> = {
+        return Action { chatRoom in
+            ChatUtility.shared.prepareGroupChatRoomForTransition(roomId: chatRoom.UUID)
+                .subscribe(onNext: { [weak self] chatRoom in
+                    guard let self = self else { return }
+                    let chatRoomViewModel = ChatRoomViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil, chatRoom: chatRoom)
+                    let chatRoomScene = Scene.chatRoom(chatRoomViewModel)
+                    self.sceneCoordinator.transition(to: chatRoomScene, using: .push, animated: true)
+                    print("Connecting to room number: \(chatRoom.UUID)")
+                }).disposed(by: self.disposeBag)
+            return Observable.empty()
+        }
+    }()
 }

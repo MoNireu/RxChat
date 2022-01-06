@@ -72,7 +72,7 @@ class PrivateChatListViewModel: CommonViewModel {
                         // 방 정보와 채팅을 조합.
                         guard self.chatRoomByRoomId[roomId] != nil
                         else {
-                            ChatUtility.shared.getChatRoomBy(roomId: roomId)
+                            ChatUtility.shared.getChatRoomFromFirebaseBy(roomId: roomId)
                                 .subscribe(onNext: { chatRoom in
                                     chatRoom.chats = [chat]
                                     self.chatRoomByRoomId.updateValue(chatRoom, forKey: roomId, insertingAt: 0)

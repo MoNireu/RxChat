@@ -15,9 +15,17 @@ protocol SceneCoordinatorType {
     @discardableResult
     func transition(to scene: Scene, using style: TransitionStyle, animated: Bool) -> Completable
     
+    func changeTab(index: Int, moveToTabAfterIndexChanged: Bool)
+    
     @discardableResult
     func close(animated: Bool) -> Completable
         
     @discardableResult
     func closed()
+}
+
+extension SceneCoordinatorType {
+    func changeTab(index: Int, moveToTabAfterIndexChanged: Bool = false) {
+        changeTab(index: index, moveToTabAfterIndexChanged: moveToTabAfterIndexChanged)
+    }
 }

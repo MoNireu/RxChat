@@ -81,10 +81,11 @@ class ChatRoomViewModel: CommonViewModel {
             let lastChat = chatRoom.chats.last!
             return lastChat.time! + lastChat.from
         }()
+        print("Log -", #fileID, #function, #line, "lasChatId: \(lastChatId)")
         
         ChatUtility.shared.getChatsBy(roomId: chatRoom.UUID, startingId: lastChatId)
             .subscribe(onNext: { [weak self] chatList in
-                print("Log -", #fileID, #function, #line, chatList)
+                print("Log -", #fileID, #function, #line, "chatList: \(chatList)")
                 guard chatList.count != 0 else {
                     self?.addListenerToChatRoom()
                     return
@@ -92,11 +93,9 @@ class ChatRoomViewModel: CommonViewModel {
                 let downloadedPrivateChat: [Chat] = {
                     print("Log -", #fileID, #function, #line, lastChatId)
                     if lastChatId == nil { return chatList}
-                    else {
-                        var chatListFirstRemoved = chatList
-                        chatListFirstRemoved.remove(at: 0)
-                        return chatListFirstRemoved
-                    }
+                    var chatListFirstRemoved = chatList
+                    chatListFirstRemoved.remove(at: 0)
+                    return chatListFirstRemoved
                 }()
                 self?.newChats.append(contentsOf: downloadedPrivateChat)
                 self?.addListenerToChatRoom()
