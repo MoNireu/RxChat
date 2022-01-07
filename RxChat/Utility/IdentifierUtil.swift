@@ -32,6 +32,7 @@ enum IdentifierUtil {
     enum TableCell {
         static let myProfile = "MyProfileCell"
         static let friendProfile = "FriendProfileCell"
+        static let friendProfileSelect = "FriendProfileSelectCell"
         static let privateChatList = "PrivateChatListCell"
         static let chatByOwner = "ChatByOwnerCell"
         static let chatByFriend = "ChatByFriendCell"

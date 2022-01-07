@@ -39,7 +39,6 @@ class CreateGroupChatViewModel: CommonViewModel {
         self.collectionDataSource = initCollectionDataSource()
     }
     
-    
     lazy var friendSelected: Action<User, Void> = {
         return Action { [weak self] user in
             guard let self = self else { return Observable.empty() }
@@ -98,15 +97,20 @@ class CreateGroupChatViewModel: CommonViewModel {
     
     
     private func initTableDataSource() -> RxTableViewSectionedReloadDataSource<SectionOfUserData> {
-        return RxTableViewSectionedReloadDataSource<SectionOfUserData>(
+        let ds = RxTableViewSectionedReloadDataSource<SectionOfUserData>(
             configureCell: { dataSource, tableView, indexPath, item in
-                let friendInfoCell = tableView.dequeueReusableCell(withIdentifier: IdentifierUtil.TableCell.friendProfile, for: indexPath) as! FriendListFriendTableViewCell
+                let friendInfoCell = tableView.dequeueReusableCell(withIdentifier: IdentifierUtil.TableCell.friendProfileSelect, for: indexPath) as! FriendListFriendSelectTableViewCell
                 friendInfoCell.profileImageView.image = item.profileImg ?? UIImage(named: Resources.defaultProfileImg.rawValue)!
                 friendInfoCell.profileName.text = item.name
                 friendInfoCell.profileStatMsg.text = ""
+                self.memberListSubject.subscribe(onNext: { _ in
+                    let itemSelected = self.memberList.contains(item)
+                    friendInfoCell.radioBtn.isEnabled = itemSelected
+                }).disposed(by: self.disposeBag)
                 
                 return friendInfoCell
             })
+        return ds
     }
     
     private func initCollectionDataSource() -> RxCollectionViewSectionedReloadDataSource<SectionOfUserData> {

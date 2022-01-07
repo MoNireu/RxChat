@@ -1318,7 +1318,7 @@
                                     <textInputTraits key="textInputTraits"/>
                                 </searchBar>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FriendProfileCell" rowHeight="70" id="dAH-wq-y29" customClass="FriendListFriendTableViewCell" customModule="RxChat" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FriendProfileSelectCell" rowHeight="70" id="dAH-wq-y29" customClass="FriendListFriendSelectTableViewCell" customModule="RxChat" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="88.5" width="414" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dAH-wq-y29" id="COk-TR-vyD">
@@ -1326,14 +1326,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WyW-Zd-gTE">
-                                                    <rect key="frame" x="20" y="10" width="50" height="50"/>
+                                                    <rect key="frame" x="58" y="10" width="50" height="50"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="50" id="4fa-W6-SwP"/>
                                                         <constraint firstAttribute="height" constant="50" id="ZlE-id-yTq"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d4G-t4-jQ1">
-                                                    <rect key="frame" x="90" y="26" width="37.5" height="18"/>
+                                                    <rect key="frame" x="128" y="26" width="37.5" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1344,12 +1344,23 @@
                                                     <color key="textColor" systemColor="systemGrayColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fao-OX-CzT">
+                                                    <rect key="frame" x="20" y="20" width="30" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="CFL-Qy-woq"/>
+                                                        <constraint firstAttribute="width" constant="30" id="xhr-IV-Xlg"/>
+                                                    </constraints>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal" image="circle.circle.fill" catalog="system"/>
+                                                </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="WyW-Zd-gTE" firstAttribute="leading" secondItem="COk-TR-vyD" secondAttribute="leading" constant="20" symbolic="YES" id="BYT-fu-SIS"/>
+                                                <constraint firstItem="WyW-Zd-gTE" firstAttribute="leading" secondItem="fao-OX-CzT" secondAttribute="trailing" constant="8" id="BYT-fu-SIS"/>
+                                                <constraint firstItem="fao-OX-CzT" firstAttribute="leading" secondItem="COk-TR-vyD" secondAttribute="leading" constant="20" id="X4F-eX-lL3"/>
                                                 <constraint firstItem="d4G-t4-jQ1" firstAttribute="centerY" secondItem="COk-TR-vyD" secondAttribute="centerY" id="Zv4-43-Opb"/>
                                                 <constraint firstItem="XtG-zt-mvh" firstAttribute="centerY" secondItem="COk-TR-vyD" secondAttribute="centerY" id="ab2-7O-iQo"/>
                                                 <constraint firstAttribute="bottom" secondItem="WyW-Zd-gTE" secondAttribute="bottom" constant="10" id="ai0-Av-HjH"/>
+                                                <constraint firstItem="fao-OX-CzT" firstAttribute="centerY" secondItem="COk-TR-vyD" secondAttribute="centerY" id="buP-Xc-iws"/>
                                                 <constraint firstItem="WyW-Zd-gTE" firstAttribute="top" secondItem="COk-TR-vyD" secondAttribute="top" constant="10" id="jzz-X2-peu"/>
                                                 <constraint firstItem="d4G-t4-jQ1" firstAttribute="leading" secondItem="WyW-Zd-gTE" secondAttribute="trailing" constant="20" id="moW-Au-DNi"/>
                                                 <constraint firstItem="XtG-zt-mvh" firstAttribute="trailing" secondItem="COk-TR-vyD" secondAttribute="trailingMargin" id="qnw-wW-IKt"/>
@@ -1359,6 +1370,7 @@
                                             <outlet property="profileImageView" destination="WyW-Zd-gTE" id="HAs-B0-urg"/>
                                             <outlet property="profileName" destination="d4G-t4-jQ1" id="Rsg-aM-yGE"/>
                                             <outlet property="profileStatMsg" destination="XtG-zt-mvh" id="Sfi-l3-SnC"/>
+                                            <outlet property="radioBtn" destination="fao-OX-CzT" id="6hi-P4-0Zv"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1478,6 +1490,7 @@
     <resources>
         <image name="bubble.left.and.bubble.right.fill" catalog="system" width="128" height="97"/>
         <image name="bubble.right.fill" catalog="system" width="128" height="110"/>
+        <image name="circle.circle.fill" catalog="system" width="128" height="121"/>
         <image name="defaultProfileImage.png" width="225" height="225"/>
         <image name="person.3.fill" catalog="system" width="128" height="61"/>
         <image name="plus.png" width="225" height="225"/>

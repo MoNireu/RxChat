@@ -22,6 +22,7 @@
 		E139C280277AF6EC00EFD61C /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = E139C27F277AF6EC00EFD61C /* Resources.swift */; };
 		E13D44702750AA91005EECB9 /* ChatRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13D446F2750AA91005EECB9 /* ChatRoomViewModel.swift */; };
 		E13D44722750AAB4005EECB9 /* ChatRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13D44712750AAB4005EECB9 /* ChatRoomViewController.swift */; };
+		E145888827882A4A00224EC3 /* FriendListFriendSelectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E145888727882A4A00224EC3 /* FriendListFriendSelectTableViewCell.swift */; };
 		E14BD599270C381C00B48DA6 /* RealmUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14BD598270C381C00B48DA6 /* RealmUtil.swift */; };
 		E14EFAA727782A6A001211A0 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14EFAA627782A6A001211A0 /* StringExtension.swift */; };
 		E159B04726A95C4600071C52 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = E159B04626A95C4600071C52 /* plus.png */; };
@@ -107,6 +108,7 @@
 		E139C27F277AF6EC00EFD61C /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		E13D446F2750AA91005EECB9 /* ChatRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomViewModel.swift; sourceTree = "<group>"; };
 		E13D44712750AAB4005EECB9 /* ChatRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomViewController.swift; sourceTree = "<group>"; };
+		E145888727882A4A00224EC3 /* FriendListFriendSelectTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListFriendSelectTableViewCell.swift; sourceTree = "<group>"; };
 		E14BD598270C381C00B48DA6 /* RealmUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmUtil.swift; sourceTree = "<group>"; };
 		E14EFAA627782A6A001211A0 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		E159B04626A95C4600071C52 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 			children = (
 				E10D16E726B91942003DD5D3 /* FriendListMyTableViewCell.swift */,
 				E18BE12F26BA6D19000B29FA /* FriendListFriendTableViewCell.swift */,
+				E145888727882A4A00224EC3 /* FriendListFriendSelectTableViewCell.swift */,
 				E1B4CCAF2769D96500F55CB6 /* ChatRoomFromOwnerTableViewCell.swift */,
 				E1B4CCB12769D97900F55CB6 /* ChatRoomFromFriendTableViewCell.swift */,
 				E1C03A47276C3D940081D2F5 /* ChatRoomFromFriendWithProfileImageTableViewCell.swift */,
@@ -663,6 +666,7 @@
 				E170DF6626A02B1400A5BAAF /* SignInViewModel.swift in Sources */,
 				E1232F2726AFE73500A9EA31 /* GroupChatListViewController.swift in Sources */,
 				E170DF5C26A01DAD00A5BAAF /* ViewModelBindableType.swift in Sources */,
+				E145888827882A4A00224EC3 /* FriendListFriendSelectTableViewCell.swift in Sources */,
 				E170DF6026A01FC700A5BAAF /* SceneCoordinatorType.swift in Sources */,
 				E1B4CCB22769D97900F55CB6 /* ChatRoomFromFriendTableViewCell.swift in Sources */,
 				E1FD096A277ECDCA00BB4F92 /* CreateGroupChatViewModel.swift in Sources */,
