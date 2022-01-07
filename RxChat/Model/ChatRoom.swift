@@ -44,6 +44,7 @@ class ChatRoom {
     
     
     func getFriendIdFromChatRoom() -> String {
+        assert(self.members.count == 2, "This is not PrivateChatRoom. Use this method only with PrivateChatRoom")
         let firstId = self.members.first!
         let secondId = self.members.last!
         return firstId != Owner.shared.id! ? firstId : secondId

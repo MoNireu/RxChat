@@ -67,6 +67,21 @@ class CreateGroupChatViewController: UIViewController, ViewModelBindableType {
                 self?.tableView.cellForRow(at: row)?.isSelected = false
             }).disposed(by: rx.disposeBag)
         
+        searchBar.rx.text
+            .orEmpty
+            .subscribe(onNext: { [weak self] query in
+                guard let self = self else { return }
+                self.viewModel.friendQueryedList = {
+                    if query.isEmpty {
+                        return self.viewModel.friendList
+                    }
+                    else {
+                        return self.viewModel.friendList.filter({$0.name!.contains(query)})
+                    }
+                }()
+                self.viewModel.friendListSubject.onNext([SectionOfUserData(items: self.viewModel.friendQueryedList)])
+            }).disposed(by: rx.disposeBag)
+        
         nextBtn.rx.tap
             .subscribe(onNext: { [weak self] _ in
                 let alert = UIAlertController(title: "방 이름 설정", message: "단체 채팅방의 이름을 설정해주세요.", preferredStyle: .alert)

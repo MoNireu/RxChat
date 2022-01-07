@@ -20,11 +20,14 @@ class CreateGroupChatViewModel: CommonViewModel {
     
     
     let friendList: [User]
+    var friendQueryedList: [User] = []
     let friendListSubject: BehaviorSubject<[SectionOfUserData]>
     var memberList: Array<User>
     let memberListSubject: BehaviorSubject<[SectionOfUserData]>
     let indexOfRemovedMemberRelay = BehaviorRelay<IndexPath?>(value: nil)
     let memberCountRelay = BehaviorRelay<Int>(value: 0)
+    var tableDataSource: RxTableViewSectionedReloadDataSource<SectionOfUserData>!
+    var collectionDataSource: RxCollectionViewSectionedReloadDataSource<SectionOfUserData>!
     
     override init(sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil) {
         self.memberList = []
@@ -32,35 +35,18 @@ class CreateGroupChatViewModel: CommonViewModel {
         self.friendList = Array(Owner.shared.friendList.values).sorted(by: {$0.name! < $1.name!})
         self.friendListSubject = BehaviorSubject<[SectionOfUserData]>(value: [SectionOfUserData(items: friendList)])
         super.init(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
+        self.tableDataSource = initTableDataSource()
+        self.collectionDataSource = initCollectionDataSource()
     }
     
-    let tableDataSource: RxTableViewSectionedReloadDataSource<SectionOfUserData> = {
-        return RxTableViewSectionedReloadDataSource<SectionOfUserData>(
-            configureCell: { dataSource, tableView, indexPath, item in
-                let friendInfoCell = tableView.dequeueReusableCell(withIdentifier: IdentifierUtil.TableCell.friendProfile, for: indexPath) as! FriendListFriendTableViewCell
-                friendInfoCell.profileImageView.image = item.profileImg ?? UIImage(named: Resources.defaultProfileImg.rawValue)!
-                friendInfoCell.profileName.text = item.name
-                friendInfoCell.profileStatMsg.text = ""
-                return friendInfoCell
-            })
-    }()
-    
-    let collectionDataSource: RxCollectionViewSectionedReloadDataSource<SectionOfUserData> = {
-        return RxCollectionViewSectionedReloadDataSource<SectionOfUserData>(
-            configureCell: { dataSource, collectionView, indexPath, item in
-                let selectedMemberCell = collectionView.dequeueReusableCell(withReuseIdentifier: IdentifierUtil.CollectionCell.groupChatMemberSelect, for: indexPath) as! GroupChatMemberSelectCollectionViewCell
-                selectedMemberCell.profileImageView.image = item.profileImg ?? UIImage(named: Resources.defaultProfileImg.rawValue)!
-                selectedMemberCell.nameLbl.text = item.name
-                return selectedMemberCell
-            })
-    }()
-
     
     lazy var friendSelected: Action<User, Void> = {
         return Action { [weak self] user in
-            self?.memberList.append(user)
-            self?.memberListSubject.onNext([SectionOfUserData(items: self!.memberList)])
-            self?.memberCountRelay.accept(self!.memberList.count)
+            guard let self = self else { return Observable.empty() }
+            guard !self.memberList.contains(user) else { return Observable.empty() }
+            self.memberList.append(user)
+            self.memberListSubject.onNext([SectionOfUserData(items: self.memberList)])
+            self.memberCountRelay.accept(self.memberList.count)
             return Observable.empty()
         }
     }()
@@ -108,5 +94,28 @@ class CreateGroupChatViewModel: CommonViewModel {
             let chatRoomScene = Scene.chatRoom(chatRoomViewModel)
             sceneCoordinator.transition(to: chatRoomScene, using: .dismissThenPushOnGroupTab, animated: true)
             print("Connecting to room number: \(chatRoom.UUID)")
+    }
+    
+    
+    private func initTableDataSource() -> RxTableViewSectionedReloadDataSource<SectionOfUserData> {
+        return RxTableViewSectionedReloadDataSource<SectionOfUserData>(
+            configureCell: { dataSource, tableView, indexPath, item in
+                let friendInfoCell = tableView.dequeueReusableCell(withIdentifier: IdentifierUtil.TableCell.friendProfile, for: indexPath) as! FriendListFriendTableViewCell
+                friendInfoCell.profileImageView.image = item.profileImg ?? UIImage(named: Resources.defaultProfileImg.rawValue)!
+                friendInfoCell.profileName.text = item.name
+                friendInfoCell.profileStatMsg.text = ""
+                
+                return friendInfoCell
+            })
+    }
+    
+    private func initCollectionDataSource() -> RxCollectionViewSectionedReloadDataSource<SectionOfUserData> {
+        return RxCollectionViewSectionedReloadDataSource<SectionOfUserData>(
+            configureCell: { dataSource, collectionView, indexPath, item in
+                let selectedMemberCell = collectionView.dequeueReusableCell(withReuseIdentifier: IdentifierUtil.CollectionCell.groupChatMemberSelect, for: indexPath) as! GroupChatMemberSelectCollectionViewCell
+                selectedMemberCell.profileImageView.image = item.profileImg ?? UIImage(named: Resources.defaultProfileImg.rawValue)!
+                selectedMemberCell.nameLbl.text = item.name
+                return selectedMemberCell
+            })
     }
 }
