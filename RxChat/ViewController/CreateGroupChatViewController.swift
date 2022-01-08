@@ -25,6 +25,7 @@ class CreateGroupChatViewController: UIViewController, ViewModelBindableType {
     }
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
     }
     

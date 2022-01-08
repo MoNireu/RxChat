@@ -21,6 +21,7 @@ class FriendListViewController: UIViewController, ViewModelBindableType {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationItem.searchController = viewModel.searchController
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -28,7 +29,7 @@ class FriendListViewController: UIViewController, ViewModelBindableType {
         self.tabBarController?.tabBar.isHidden = false
         self.navigationController?.navigationBar.sizeToFit()
     }
-    
+
     
     func bindViewModel() {
         

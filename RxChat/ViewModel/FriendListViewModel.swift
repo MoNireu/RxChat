@@ -14,6 +14,7 @@ import RxDataSources
 import GoogleSignIn
 import Firebase
 import FirebaseAuth
+import SwiftUI
 
 
 class FriendListViewModel: CommonViewModel {
@@ -21,6 +22,9 @@ class FriendListViewModel: CommonViewModel {
     let myInfo: Owner = Owner.shared
     var profileInfoSubject: BehaviorSubject<[SectionOfAnimatableUserData]>
     var isTransToChatRoomComplete: BehaviorSubject<IndexPath>
+    let searchController: UISearchController
+    var friendListItems: [User]
+    var filteredFriendList: [User]
     var friendListTableData: [SectionOfAnimatableUserData]!
     var disposeBag = DisposeBag()
     
@@ -53,13 +57,30 @@ class FriendListViewModel: CommonViewModel {
     }()
     
     override init(sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil) {
-        profileInfoSubject = BehaviorSubject<[SectionOfAnimatableUserData]>(value: [])
-        dataSource.titleForHeaderInSection = { dataSource, section in
+        self.isTransToChatRoomComplete = BehaviorSubject<IndexPath>(value: IndexPath(row: 0, section: 0))
+        self.searchController = UISearchController()
+        self.friendListItems = Array<User>(Owner.shared.friendList.values)
+        self.filteredFriendList = friendListItems
+        self.profileInfoSubject = BehaviorSubject<[SectionOfAnimatableUserData]>(value: [])
+        self.dataSource.titleForHeaderInSection = { dataSource, section in
             return dataSource.sectionModels[section].header
         }
-        isTransToChatRoomComplete = BehaviorSubject<IndexPath>(value: IndexPath(row: 0, section: 0))
         super.init(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
-        self.refresh()
+        initSearchController()
+    }
+    
+    private func initSearchController() {
+        self.searchController.searchBar.placeholder = "친구 검색"
+        self.searchController.automaticallyShowsCancelButton = true
+        self.searchController.hidesNavigationBarDuringPresentation = true
+        
+        self.searchController.searchBar.rx.text
+            .orEmpty
+            .subscribe(onNext: { query in
+                if query.isEmpty { self.filteredFriendList = self.friendListItems }
+                else { self.filteredFriendList = self.friendListItems.filter({$0.name!.contains(query)}) }
+                self.refresh()
+            }).disposed(by: self.disposeBag)
     }
     
     
@@ -82,14 +103,21 @@ class FriendListViewModel: CommonViewModel {
     }()
     
     func refresh() {
-        var friendListItems = Array<User>(Owner.shared.friendList.values)
-        friendListItems.sort(by: {$0.name! < $1.name!})
+        filteredFriendList.sort(by: {$0.name! < $1.name!})
         
         friendListTableData = [
-            SectionOfAnimatableUserData(uniqueId: "Owner", header: "나", items: [Owner.shared as User]),
-            SectionOfAnimatableUserData(uniqueId: "Friend", header: "친구(\(Owner.shared.friendList.count))", items: friendListItems)
+            SectionOfAnimatableUserData(uniqueId: "Friend", header: "친구(\(Owner.shared.friendList.count))", items: filteredFriendList)
         ]
+            
+        if !queryExist() {
+            let ownerSectionData = SectionOfAnimatableUserData(uniqueId: "Owner", header: "나", items: [Owner.shared as User])
+            friendListTableData.insert(ownerSectionData, at: 0)
+        }
         profileInfoSubject.onNext(friendListTableData)
+    }
+    
+    private func queryExist() -> Bool {
+        return searchController.searchBar.text!.isEmpty ? false : true
     }
     
     
