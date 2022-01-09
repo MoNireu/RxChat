@@ -5,6 +5,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -461,7 +462,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultProfileImage.png" translatesAutoresizingMaskIntoConstraints="NO" id="WOw-yR-XjK">
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultProfileImage.png" translatesAutoresizingMaskIntoConstraints="NO" id="WOw-yR-XjK">
                                 <rect key="frame" x="157" y="124" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="8we-oP-itJ"/>
@@ -498,19 +499,18 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hgx-2W-a0T">
-                                <rect key="frame" x="20" y="409" width="374" height="31"/>
+                                <rect key="frame" x="20" y="409" width="374" height="40"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TeT-uA-Jct">
-                                        <rect key="frame" x="0.0" y="0.0" width="187" height="31"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="프로필 보기"/>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yyo-1f-I9m">
-                                        <rect key="frame" x="187" y="0.0" width="187" height="31"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="채팅하기"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="40"/>
+                                        <color key="backgroundColor" name="AccentColor"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="채팅하기"/>
                                     </button>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="NyU-Mc-kQ1"/>
+                                </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5UU-5y-MPY">
                                 <rect key="frame" x="373" y="64" width="21" height="21"/>
@@ -520,6 +520,19 @@
                                 <connections>
                                     <action selector="close:" destination="J5T-UP-WJS" eventType="touchUpInside" id="ggo-bc-1oB"/>
                                 </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="35x-RD-p4g">
+                                <rect key="frame" x="227" y="194" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Enu-JR-eUc"/>
+                                    <constraint firstAttribute="width" constant="30" id="b1A-p4-keC"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <color key="tintColor" systemColor="systemGray2Color"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal">
+                                    <imageReference key="image" image="pencil.circle.fill" catalog="system" symbolScale="large"/>
+                                </state>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="1kx-SU-EIc"/>
@@ -532,10 +545,12 @@
                             <constraint firstItem="Hgx-2W-a0T" firstAttribute="top" secondItem="9YI-5m-Cip" secondAttribute="bottom" constant="20" id="MXx-hd-sLX"/>
                             <constraint firstItem="WOw-yR-XjK" firstAttribute="top" secondItem="1kx-SU-EIc" secondAttribute="top" constant="80" id="WTI-r4-FDD"/>
                             <constraint firstItem="WOw-yR-XjK" firstAttribute="centerX" secondItem="ndZ-7g-Qj4" secondAttribute="centerX" id="ZtJ-mK-m2E"/>
+                            <constraint firstItem="35x-RD-p4g" firstAttribute="trailing" secondItem="WOw-yR-XjK" secondAttribute="trailing" id="c9f-Oi-7wz"/>
                             <constraint firstItem="1kx-SU-EIc" firstAttribute="trailing" secondItem="9YI-5m-Cip" secondAttribute="trailing" constant="20" id="caE-l5-YJP"/>
                             <constraint firstItem="9YI-5m-Cip" firstAttribute="leading" secondItem="1kx-SU-EIc" secondAttribute="leading" constant="20" id="eb1-qT-q6t"/>
                             <constraint firstItem="euK-X1-mKP" firstAttribute="top" secondItem="WOw-yR-XjK" secondAttribute="bottom" constant="8" symbolic="YES" id="gYA-1V-zKc"/>
                             <constraint firstItem="9YI-5m-Cip" firstAttribute="top" secondItem="xBJ-U1-gqg" secondAttribute="bottom" constant="8" id="j52-yo-EXx"/>
+                            <constraint firstItem="35x-RD-p4g" firstAttribute="bottom" secondItem="WOw-yR-XjK" secondAttribute="bottom" id="nbb-ek-OAX"/>
                             <constraint firstItem="euK-X1-mKP" firstAttribute="centerX" secondItem="ndZ-7g-Qj4" secondAttribute="centerX" id="p7S-Wu-e3q"/>
                             <constraint firstItem="xBJ-U1-gqg" firstAttribute="top" secondItem="euK-X1-mKP" secondAttribute="bottom" constant="8" id="qEe-HK-i1m"/>
                             <constraint firstItem="1kx-SU-EIc" firstAttribute="trailing" secondItem="Hgx-2W-a0T" secondAttribute="trailing" constant="20" id="vO6-nJ-f9m"/>
@@ -544,10 +559,10 @@
                     <size key="freeformSize" width="414" height="500"/>
                     <connections>
                         <outlet property="collectionView" destination="9YI-5m-Cip" id="Cet-tp-e5T"/>
+                        <outlet property="editProfileImageButton" destination="35x-RD-p4g" id="rY9-N6-p9R"/>
                         <outlet property="nameLbl" destination="euK-X1-mKP" id="Lbu-Uw-dco"/>
                         <outlet property="profileImageView" destination="WOw-yR-XjK" id="1ZT-BV-GKz"/>
                         <outlet property="showChatBtn" destination="yyo-1f-I9m" id="cZg-p6-bnE"/>
-                        <outlet property="showProfileDetailBtn" destination="TeT-uA-Jct" id="Eco-ef-aar"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3R2-8d-CoQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1492,9 +1507,13 @@
         <image name="bubble.right.fill" catalog="system" width="128" height="110"/>
         <image name="circle.circle.fill" catalog="system" width="128" height="121"/>
         <image name="defaultProfileImage.png" width="225" height="225"/>
+        <image name="pencil.circle.fill" catalog="system" width="128" height="121"/>
         <image name="person.3.fill" catalog="system" width="128" height="61"/>
         <image name="plus.png" width="225" height="225"/>
         <image name="xmark.circle.fill" catalog="system" width="128" height="121"/>
+        <namedColor name="AccentColor">
+            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
@@ -1506,6 +1525,9 @@
         </systemColor>
         <systemColor name="systemBlueColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGray2Color">
+            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray6Color">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

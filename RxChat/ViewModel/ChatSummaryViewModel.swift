@@ -38,7 +38,6 @@ class ChatSummaryViewModel: CommonViewModel {
                     print("Connecting to room number: \(chatRoom.UUID)")
                 }).disposed(by: (self?.disposeBag)!)
             
-            
             return Observable.empty()
         }
     }()
