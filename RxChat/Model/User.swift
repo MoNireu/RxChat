@@ -50,16 +50,17 @@ class UserRealm: Object {
 
 // MARK: - RxTableViewSectionedReloadDataSource
 struct SectionOfUserData {
-  var items: [Item]
+    var header: String?
+    var items: [Item]
 }
 
 extension SectionOfUserData: SectionModelType {
-  typealias Item = User
-
-   init(original: SectionOfUserData, items: [Item]) {
-    self = original
-    self.items = items
-  }
+    typealias Item = User
+    
+    init(original: SectionOfUserData, items: [Item]) {
+        self = original
+        self.items = items
+    }
 }
 
 

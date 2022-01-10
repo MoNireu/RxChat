@@ -114,11 +114,3 @@ extension UITextView {
         return Int(round(self.contentSize.height / font.lineHeight)-1)
     } 
 }
-
-
-extension UIView {
-    func setCornerRadius(value: Float) {
-        self.layer.cornerRadius = self.frame.size.width * CGFloat(value)
-        self.clipsToBounds = true
-    }
-}

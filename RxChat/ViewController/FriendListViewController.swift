@@ -12,9 +12,9 @@ import NSObject_Rx
 import Action
 
 class FriendListViewController: UIViewController, ViewModelBindableType {
-    
-    var disposeBag = DisposeBag()
     var viewModel: FriendListViewModel!
+//    @IBOutlet weak var dimmingView: UIView!
+    let dimmingView = UIView.init(frame: UIScreen.main.bounds)
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var findUserButton: UIBarButtonItem!
     
@@ -22,21 +22,36 @@ class FriendListViewController: UIViewController, ViewModelBindableType {
         super.viewDidLoad()
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.searchController = viewModel.searchController
+        self.addDimmingView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        print("Log -", #fileID, #function, #line, "Appear")
         viewModel.sceneCoordinator.changeTab(index: 0)
         self.tabBarController?.tabBar.isHidden = false
         self.navigationController?.navigationBar.sizeToFit()
     }
 
+    private func addDimmingView() {
+        dimmingView.backgroundColor = .black
+        dimmingView.alpha = 0.8
+        dimmingView.isHidden = true
+        self.view.addSubview(dimmingView)
+    }
     
     func bindViewModel() {
+        viewModel.isChatSummaryPresenting
+            .map({!$0})
+            .bind(to: dimmingView.rx.isHidden)
+            .disposed(by: rx.disposeBag)
         
         viewModel.profileInfoSubject
             .bind(to: tableView.rx.items(dataSource: viewModel.dataSource))
-            .disposed(by: disposeBag)
-                
+            .disposed(by: rx.disposeBag)
+        
+        viewModel.profileInfoSubject.subscribe(onNext: { _ in
+            print("Log -", #fileID, #function, #line, "ProfileInfoSubject Called")
+        }).disposed(by: rx.disposeBag)
         
         findUserButton
             .rx
@@ -77,18 +92,18 @@ class FriendListViewController: UIViewController, ViewModelBindableType {
         
         tableView.rx.itemDeleted
             .bind(to: viewModel.deleteFriendAt.inputs)
-            .disposed(by: disposeBag)
+            .disposed(by: rx.disposeBag)
         
         
         tableView.rx.itemSelected
             .bind(to: viewModel.selectFriendAt.inputs)
-            .disposed(by: disposeBag)
+            .disposed(by: rx.disposeBag)
         
         
         viewModel.isTransToChatRoomComplete
             .subscribe(onNext: { [weak self] indexPath in
                 self?.tableView.cellForRow(at: indexPath)?.isSelected = false
             })
-            .disposed(by: disposeBag)
+            .disposed(by: rx.disposeBag)
     }
 }

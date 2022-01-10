@@ -12,10 +12,13 @@ import NSObject_Rx
 
 class ChatSummaryViewController: UIViewController, ViewModelBindableType {
     
-    let CONTENT_HEIGHT: CGFloat = 500
+    let CORNER_RADIUS: Float = 0.035
     var viewModel: ChatSummaryViewModel!
     
     let profileImageViewTap = UITapGestureRecognizer()
+    let backgroundViewTap = UITapGestureRecognizer()
+    @IBOutlet weak var foregroundView: UIView!
+    @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var nameLbl: UILabel!
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var editProfileImageButton: UIButton!
@@ -29,18 +32,16 @@ class ChatSummaryViewController: UIViewController, ViewModelBindableType {
         editProfileImageButton.isHidden = true
         profileImageView.addGestureRecognizer(profileImageViewTap)
         profileImageView.layer.cornerRadius = profileImageView.frame.height * 0.5
-        
+        foregroundView.setCornerRadius(value: CORNER_RADIUS)
+        backgroundView.addGestureRecognizer(backgroundViewTap)
+        showChatBtn.setCornerRadius(value: CORNER_RADIUS)
         super.viewDidLoad()
     }
     
-    override func updateViewConstraints() {
-        self.view.frame.origin.y = UIScreen.main.bounds.height - CONTENT_HEIGHT
-        self.view.layer.cornerRadius = CONTENT_HEIGHT * 0.03
-        super.updateViewConstraints()
-    }
     
     override func viewWillDisappear(_ animated: Bool) {
         print("Log -", #fileID, #function, #line, "View Disappear")
+        viewModel.isChatSummaryPresenting.onNext(false)
         viewModel.sceneCoordinator.closed()
     }
     
@@ -74,6 +75,9 @@ class ChatSummaryViewController: UIViewController, ViewModelBindableType {
             self?.present(alert, animated: true)
         }.disposed(by: rx.disposeBag)
         
+        backgroundViewTap.rx.event.subscribe { [weak self] _ in
+            self?.dismiss(animated: true)
+        }.disposed(by: rx.disposeBag)
         
         showChatBtn.rx.action = viewModel.chatFriend
     }

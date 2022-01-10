@@ -20,29 +20,31 @@ import SwiftUI
 class FriendListViewModel: CommonViewModel {
     
     let myInfo: Owner = Owner.shared
-    var profileInfoSubject: BehaviorSubject<[SectionOfAnimatableUserData]>
+    var profileInfoSubject: BehaviorSubject<[SectionOfUserData]>
     var isTransToChatRoomComplete: BehaviorSubject<IndexPath>
+    var isChatSummaryPresenting: PublishSubject<Bool>
     let searchController: UISearchController
     var friendListItems: [User]
     var filteredFriendList: [User]
-    var friendListTableData: [SectionOfAnimatableUserData]!
+    var friendListTableData: [SectionOfUserData]!
     var disposeBag = DisposeBag()
     
-    let dataSource: RxTableViewSectionedAnimatedDataSource<SectionOfAnimatableUserData> = {
-        let ds = RxTableViewSectionedAnimatedDataSource<SectionOfAnimatableUserData>(
+    let dataSource: RxTableViewSectionedReloadDataSource<SectionOfUserData> = {
+        let ds = RxTableViewSectionedReloadDataSource<SectionOfUserData>(
             configureCell: { dataSource, tableView, indexPath, item in
                 switch indexPath.section {
                 case 0:
                     let myInfoCell = tableView.dequeueReusableCell(withIdentifier: "MyProfileCell", for: indexPath) as! FriendListMyTableViewCell
                     myInfoCell.profileImageView.image = item.profileImg ?? UIImage(named: Resources.defaultProfileImg.rawValue)!
+                    print("Log -", #fileID, #function, #line, item.profileImg)
                     myInfoCell.profileName.text = item.name
-                    myInfoCell.profileStatMsg.text = "This is test MSG"
+                    myInfoCell.profileStatMsg.text = ""
                     return myInfoCell
                 case 1:
                     let friendInfoCell = tableView.dequeueReusableCell(withIdentifier: "FriendProfileCell", for: indexPath) as! FriendListFriendTableViewCell
                     friendInfoCell.profileImageView.image = item.profileImg ?? UIImage(named: Resources.defaultProfileImg.rawValue)!
                     friendInfoCell.profileName.text = item.name
-                    friendInfoCell.profileStatMsg.text = "This is test MSG"
+                    friendInfoCell.profileStatMsg.text = ""
                     return friendInfoCell
                 default:
                     return UITableViewCell()
@@ -58,15 +60,17 @@ class FriendListViewModel: CommonViewModel {
     
     override init(sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil) {
         self.isTransToChatRoomComplete = BehaviorSubject<IndexPath>(value: IndexPath(row: 0, section: 0))
+        self.isChatSummaryPresenting = PublishSubject<Bool>()
         self.searchController = UISearchController()
         self.friendListItems = Array<User>(Owner.shared.friendList.values)
         self.filteredFriendList = friendListItems
-        self.profileInfoSubject = BehaviorSubject<[SectionOfAnimatableUserData]>(value: [])
+        self.profileInfoSubject = BehaviorSubject<[SectionOfUserData]>(value: [])
         self.dataSource.titleForHeaderInSection = { dataSource, section in
             return dataSource.sectionModels[section].header
         }
         super.init(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
         initSearchController()
+        observeIsChatSummaryPresenting()
     }
     
     private func initSearchController() {
@@ -106,18 +110,27 @@ class FriendListViewModel: CommonViewModel {
         filteredFriendList.sort(by: {$0.name! < $1.name!})
         
         friendListTableData = [
-            SectionOfAnimatableUserData(uniqueId: "Friend", header: "친구(\(Owner.shared.friendList.count))", items: filteredFriendList)
+            SectionOfUserData(header: "친구(\(Owner.shared.friendList.count))", items: filteredFriendList)
         ]
             
         if !queryExist() {
-            let ownerSectionData = SectionOfAnimatableUserData(uniqueId: "Owner", header: "나", items: [Owner.shared as User])
+            let ownerSectionData = SectionOfUserData(header: "나", items: [myInfo])
             friendListTableData.insert(ownerSectionData, at: 0)
         }
+        
         profileInfoSubject.onNext(friendListTableData)
     }
     
     private func queryExist() -> Bool {
         return searchController.searchBar.text!.isEmpty ? false : true
+    }
+    
+    private func observeIsChatSummaryPresenting() {
+        isChatSummaryPresenting.subscribe(onNext: { [weak self] isPresenting in
+            if !isPresenting {
+                self?.refresh()
+            }
+        }).disposed(by: self.disposeBag)
     }
     
     
@@ -144,9 +157,11 @@ class FriendListViewModel: CommonViewModel {
             let selectedFriend = currentSection.items[indexPath.row] as User
             
             let chatSummaryViewModel = ChatSummaryViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil, user: selectedFriend)
+            chatSummaryViewModel.isChatSummaryPresenting = self.isChatSummaryPresenting
             let chatSummaryScene = Scene.chatSummary(chatSummaryViewModel)
-            self.sceneCoordinator.transition(to: chatSummaryScene, using: .modal, animated: true)
+            self.sceneCoordinator.transition(to: chatSummaryScene, using: .fullScreen, animated: true)
             
+            self.isChatSummaryPresenting.onNext(true)
             self.isTransToChatRoomComplete.onNext(indexPath)
 
             return Observable.empty()

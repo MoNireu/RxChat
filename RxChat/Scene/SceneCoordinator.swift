@@ -70,11 +70,11 @@ class SceneCoordinator: SceneCoordinatorType {
             subject.onCompleted()
             
         case .fullScreen:
-            target.modalPresentationStyle = .fullScreen
+            target.modalPresentationStyle = .overFullScreen
             currentVC.present(target, animated: true) {
                 subject.onCompleted()
             }
-//            currentVC = target.sceneViewController
+            currentVC = target.sceneViewController
             
             
         case .push:
