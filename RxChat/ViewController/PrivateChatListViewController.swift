@@ -14,11 +14,11 @@ import RxDataSources
 class PrivateChatListViewController: UIViewController, ViewModelBindableType {
     var viewModel: PrivateChatListViewModel!
     @IBOutlet var tableView: UITableView!
+    let searchController = UISearchController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        self.navigationItem.searchController = searchController
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -27,16 +27,10 @@ class PrivateChatListViewController: UIViewController, ViewModelBindableType {
         self.navigationController?.navigationBar.sizeToFit()
         
         viewModel.refreshTable()
-        print("Log -", #fileID, #function, #line, "Appear")
-//        viewModel.chatRoomByRoomIdSubject.subscribe(onNext: { val in
-//            print("Log -", #fileID, #function, #line, val)
-//            self.viewModel.refreshTable()
-//        }).disposed(by: rx.disposeBag)
-//        viewModel.chatRoomByRoomIdSubject.onNext(viewModel.chatRoomByRoomId)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        viewModel.chatRoomByRoomIdSubject.disposed(by: rx.disposeBag)
+        
     }
     
     
@@ -49,6 +43,11 @@ class PrivateChatListViewController: UIViewController, ViewModelBindableType {
             .subscribe(onNext: { val in
                 print("Log -", #fileID, #function, #line, val)
             }).disposed(by: rx.disposeBag)
+        
+        searchController.searchBar.rx.text
+            .orEmpty
+            .bind(to: viewModel.querySubject)
+            .disposed(by: rx.disposeBag)
         
         tableView.rx.modelSelected(ChatRoom.self)
             .bind(to: viewModel.presentChatRoom.inputs)

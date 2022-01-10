@@ -1462,6 +1462,9 @@
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="채팅하기"/>
                                     </button>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="4TJ-Dc-mMj">
+                                        <rect key="frame" x="188.5" y="206.5" width="37" height="37"/>
+                                    </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
@@ -1473,6 +1476,7 @@
                                     <constraint firstAttribute="trailing" secondItem="yQp-nr-ebc" secondAttribute="trailing" constant="20" symbolic="YES" id="AZa-MH-AXj"/>
                                     <constraint firstItem="nUN-TW-pya" firstAttribute="leading" secondItem="oOB-H9-oiH" secondAttribute="leading" constant="20" symbolic="YES" id="BFe-Y1-JWf"/>
                                     <constraint firstAttribute="trailing" secondItem="nUN-TW-pya" secondAttribute="trailing" constant="20" symbolic="YES" id="BIO-i0-Cq9"/>
+                                    <constraint firstItem="4TJ-Dc-mMj" firstAttribute="centerY" secondItem="oOB-H9-oiH" secondAttribute="centerY" id="BRi-sX-RfK"/>
                                     <constraint firstItem="yti-9k-vWZ" firstAttribute="leading" secondItem="oOB-H9-oiH" secondAttribute="leading" constant="20" id="HOR-gP-8XF"/>
                                     <constraint firstItem="yQp-nr-ebc" firstAttribute="leading" secondItem="oOB-H9-oiH" secondAttribute="leading" constant="20" symbolic="YES" id="Jlc-0T-mmG"/>
                                     <constraint firstItem="RK5-g2-jQZ" firstAttribute="trailing" secondItem="WD1-Rp-V8f" secondAttribute="trailing" id="Tlg-eB-TC3"/>
@@ -1482,21 +1486,17 @@
                                     <constraint firstItem="nUN-TW-pya" firstAttribute="top" secondItem="yQp-nr-ebc" secondAttribute="bottom" constant="20" id="sVC-O6-NM4"/>
                                     <constraint firstItem="JfC-2e-vb8" firstAttribute="centerX" secondItem="oOB-H9-oiH" secondAttribute="centerX" id="tXo-Zt-qCh"/>
                                     <constraint firstItem="yti-9k-vWZ" firstAttribute="top" secondItem="JfC-2e-vb8" secondAttribute="bottom" constant="8" id="x6z-Q3-MhN"/>
+                                    <constraint firstItem="4TJ-Dc-mMj" firstAttribute="centerX" secondItem="oOB-H9-oiH" secondAttribute="centerX" id="xe8-9z-DOQ"/>
                                 </constraints>
                             </view>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="4TJ-Dc-mMj">
-                                <rect key="frame" x="188.5" y="429.5" width="37" height="37"/>
-                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vYV-36-cZ5"/>
                         <constraints>
                             <constraint firstItem="oOB-H9-oiH" firstAttribute="leading" secondItem="vYV-36-cZ5" secondAttribute="leading" id="3aH-N2-Q68"/>
                             <constraint firstItem="oOB-H9-oiH" firstAttribute="top" secondItem="zki-2V-HSg" secondAttribute="bottom" id="8dP-SP-jyK"/>
                             <constraint firstItem="zki-2V-HSg" firstAttribute="trailing" secondItem="vYV-36-cZ5" secondAttribute="trailing" id="D0R-5J-hYR"/>
-                            <constraint firstItem="4TJ-Dc-mMj" firstAttribute="centerY" secondItem="g0a-ZU-s0d" secondAttribute="centerY" id="E6K-V3-VZf"/>
                             <constraint firstItem="oOB-H9-oiH" firstAttribute="trailing" secondItem="vYV-36-cZ5" secondAttribute="trailing" id="Mti-Gj-mVb"/>
                             <constraint firstItem="zki-2V-HSg" firstAttribute="leading" secondItem="vYV-36-cZ5" secondAttribute="leading" id="S40-ij-375"/>
-                            <constraint firstItem="4TJ-Dc-mMj" firstAttribute="centerX" secondItem="g0a-ZU-s0d" secondAttribute="centerX" id="SAb-Oe-WNV"/>
                             <constraint firstItem="zki-2V-HSg" firstAttribute="top" secondItem="g0a-ZU-s0d" secondAttribute="top" id="dE3-CF-rf2"/>
                             <constraint firstItem="oOB-H9-oiH" firstAttribute="bottom" secondItem="g0a-ZU-s0d" secondAttribute="bottom" id="s3D-v1-yRZ"/>
                         </constraints>
