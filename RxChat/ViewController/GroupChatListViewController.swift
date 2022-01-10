@@ -10,29 +10,23 @@ import UIKit
 class GroupChatListViewController: UIViewController, ViewModelBindableType {
     var viewModel: GroupChatListViewModel!
     @IBOutlet var tableView: UITableView!
+    let searchController = UISearchController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.navigationItem.searchController = searchController
         // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        print("Log -", #fileID, #function, #line, "Appear: \(viewModel.sceneCoordinator.getCurrentVC())")
         viewModel.sceneCoordinator.changeTab(index: 2)
         self.tabBarController?.tabBar.isHidden = false
         self.navigationController?.navigationBar.sizeToFit()
         self.viewModel.refreshTable()
-        
-//        viewModel.chatRoomByRoomIdSubject.subscribe(onNext: { val in
-//            print("Log -", #fileID, #function, #line, val)
-//            self.viewModel.refreshTable()
-//        }).disposed(by: rx.disposeBag)
-//        viewModel.chatRoomByRoomIdSubject.onNext(viewModel.chatRoomByRoomId)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-//        viewModel.chatRoomByRoomIdSubject.disposed(by: rx.disposeBag)
+        
     }
     
     
@@ -45,6 +39,11 @@ class GroupChatListViewController: UIViewController, ViewModelBindableType {
             .subscribe(onNext: { val in
                 print("Log -", #fileID, #function, #line, val)
             }).disposed(by: rx.disposeBag)
+        
+        searchController.searchBar.rx.text
+            .orEmpty
+            .bind(to: viewModel.querySubject)
+            .disposed(by: rx.disposeBag)
         
         tableView.rx.modelSelected(ChatRoom.self)
             .bind(to: viewModel.presentChatRoom.inputs)

@@ -13,6 +13,7 @@
 		E105FFAE2782D01400C6B73B /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E105FFAD2782D01400C6B73B /* DictionaryExtension.swift */; };
 		E10D16E826B91942003DD5D3 /* FriendListMyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10D16E726B91942003DD5D3 /* FriendListMyTableViewCell.swift */; };
 		E121A4B6278BC3D40011D35B /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E121A4B5278BC3D40011D35B /* ViewExtension.swift */; };
+		E121A4B8278C01BE0011D35B /* ChatListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E121A4B7278C01BE0011D35B /* ChatListViewModel.swift */; };
 		E1232F1D26AFE5E000A9EA31 /* FriendListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1232F1C26AFE5E000A9EA31 /* FriendListViewModel.swift */; };
 		E1232F1F26AFE5EF00A9EA31 /* FriendListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1232F1E26AFE5EF00A9EA31 /* FriendListViewController.swift */; };
 		E1232F2126AFE6A700A9EA31 /* PrivateChatListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1232F2026AFE6A700A9EA31 /* PrivateChatListViewController.swift */; };
@@ -101,6 +102,7 @@
 		E105FFAD2782D01400C6B73B /* DictionaryExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExtension.swift; sourceTree = "<group>"; };
 		E10D16E726B91942003DD5D3 /* FriendListMyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListMyTableViewCell.swift; sourceTree = "<group>"; };
 		E121A4B5278BC3D40011D35B /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
+		E121A4B7278C01BE0011D35B /* ChatListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListViewModel.swift; sourceTree = "<group>"; };
 		E1232F1C26AFE5E000A9EA31 /* FriendListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListViewModel.swift; sourceTree = "<group>"; };
 		E1232F1E26AFE5EF00A9EA31 /* FriendListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListViewController.swift; sourceTree = "<group>"; };
 		E1232F2026AFE6A700A9EA31 /* PrivateChatListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateChatListViewController.swift; sourceTree = "<group>"; };
@@ -330,6 +332,7 @@
 				E13D446F2750AA91005EECB9 /* ChatRoomViewModel.swift */,
 				E18D1D90277C039000024E0D /* ChatSummaryViewModel.swift */,
 				E1FD0969277ECDCA00BB4F92 /* CreateGroupChatViewModel.swift */,
+				E121A4B7278C01BE0011D35B /* ChatListViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -680,6 +683,7 @@
 				E1232F1F26AFE5EF00A9EA31 /* FriendListViewController.swift in Sources */,
 				E1A76A2026A7FD0D00C8F783 /* UIImagePickerController+Rx.swift in Sources */,
 				E1D9946A2733AED500352547 /* LaunchViewModel.swift in Sources */,
+				E121A4B8278C01BE0011D35B /* ChatListViewModel.swift in Sources */,
 				E121A4B6278BC3D40011D35B /* ViewExtension.swift in Sources */,
 				E1FD096E277ECFD500BB4F92 /* GroupChatMemberSelectCollectionViewCell.swift in Sources */,
 				E1E11E3F269C1F19000CE221 /* User.swift in Sources */,

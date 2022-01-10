@@ -13,20 +13,12 @@ import RxDataSources
 import OrderedCollections
 
 
-class GroupChatListViewModel: CommonViewModel {
-    var disposeBag = DisposeBag()
-    var chatRoomByRoomId: OrderedDictionary<String, ChatRoom> = [:] // [roomId: ChatRoom]
-    var chatRoomByRoomIdSubject = PublishSubject<OrderedDictionary<String, ChatRoom>>()
-    var tableData: [SectionOfChatRoomData]!
-    var tableDataSubject = BehaviorSubject<[SectionOfChatRoomData]>(value: [])
-    static var todayMonthDay: String = {
-        let today = DateFormatter().dateToDefaultFormat(date:Date())
-        return today.convertTimeStampToMonthDay()
-    }()
-    
+class GroupChatListViewModel: ChatListViewModel {
     override init(sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil) {
         super.init(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
-        addNewRoomListener()
+        filteredChatRoom = Array(chatRoomByRoomId.values)
+        addNewRoomListener(roomType: .groupRoom)
+        observeQuery()
     }
     
     let dataSource: RxTableViewSectionedReloadDataSource<SectionOfChatRoomData> = {
@@ -72,7 +64,6 @@ class GroupChatListViewModel: CommonViewModel {
             }()
             
             let lastChat = item.chats.first!
-//            guard let lastChat = item.chats.first? else { return groupChatListCell }
             groupChatListCell.roomTitleLbl.text = item.title
             groupChatListCell.roomLastChatLbl.text = lastChat.text
             
@@ -85,63 +76,5 @@ class GroupChatListViewModel: CommonViewModel {
             }
             return groupChatListCell
         })
-    }()
-
-    private func addNewRoomListener() {
-        ChatUtility.shared.listenNewRoom(roomType: .groupRoom)
-            .subscribe(onNext: { newRoom in
-                let roomId = newRoom.first!.value
-                print("Log -", #fileID, #function, #line, roomId)
-                
-                // 채팅방에 리스너 추가
-                ChatUtility.shared.listenChat(roomId: roomId)
-                    .subscribe(onNext: { chat in
-                        guard let chat = chat else {return}
-                        
-                        // 방 정보와 채팅을 조합.
-                        guard self.chatRoomByRoomId[roomId] != nil
-                        else {
-                            ChatUtility.shared.getChatRoomFromFirebaseBy(roomId: roomId)
-                                .subscribe(onNext: { chatRoom in
-                                    chatRoom.chats = [chat]
-                                    self.chatRoomByRoomId.updateValue(chatRoom, forKey: roomId, insertingAt: 0)
-                                    self.chatRoomByRoomId.sort(by: {$0.value.chats.first!.time! > $1.value.chats.first!.time!})
-                                    self.chatRoomByRoomIdSubject.onNext(self.chatRoomByRoomId)
-                                }).disposed(by: self.disposeBag)
-                            return
-                        }
-                        let chatRoom = self.chatRoomByRoomId[roomId]!
-                        chatRoom.chats = [chat]
-                        self.chatRoomByRoomId.removeValue(forKey: roomId)
-                        self.chatRoomByRoomId.updateValue(chatRoom, forKey: roomId, insertingAt: 0)
-                        self.chatRoomByRoomIdSubject.onNext(self.chatRoomByRoomId)
-                        print("Log -", #fileID, #function, #line, "\(roomId):\(chat)")
-                    }).disposed(by: self.disposeBag)
-            }).disposed(by: self.disposeBag)
-    }
-    
-
-    func refreshTable() {
-        let today = DateFormatter().dateToDefaultFormat(date:Date())
-        PrivateChatListViewModel.todayMonthDay = today.convertTimeStampToMonthDay()
-        
-        tableData = [SectionOfChatRoomData(header: "", items: Array(chatRoomByRoomId.values))]
-        tableDataSubject.onNext(tableData)
-        print("Log -", #fileID, #function, #line, Array(chatRoomByRoomId.values))
-    }
-    
-    
-    lazy var presentChatRoom: Action<ChatRoom, Void> = {
-        return Action { chatRoom in
-            ChatUtility.shared.prepareGroupChatRoomForTransition(roomId: chatRoom.UUID)
-                .subscribe(onNext: { [weak self] chatRoom in
-                    guard let self = self else { return }
-                    let chatRoomViewModel = ChatRoomViewModel(sceneCoordinator: self.sceneCoordinator, firebaseUtil: self.firebaseUtil, chatRoom: chatRoom)
-                    let chatRoomScene = Scene.chatRoom(chatRoomViewModel)
-                    self.sceneCoordinator.transition(to: chatRoomScene, using: .push, animated: true)
-                    print("Connecting to room number: \(chatRoom.UUID)")
-                }).disposed(by: self.disposeBag)
-            return Observable.empty()
-        }
     }()
 }
