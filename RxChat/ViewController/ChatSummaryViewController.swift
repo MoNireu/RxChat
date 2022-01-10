@@ -24,6 +24,7 @@ class ChatSummaryViewController: UIViewController, ViewModelBindableType {
     @IBOutlet weak var editProfileImageButton: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var showChatBtn: UIButton!
+    @IBOutlet weak var actIndicator: UIActivityIndicatorView!
     @IBAction func close(_ sender: Any) {
         self.dismiss(animated: true)
     }
@@ -35,6 +36,7 @@ class ChatSummaryViewController: UIViewController, ViewModelBindableType {
         foregroundView.setCornerRadius(value: CORNER_RADIUS)
         backgroundView.addGestureRecognizer(backgroundViewTap)
         showChatBtn.setCornerRadius(value: CORNER_RADIUS)
+        actIndicator.stopAnimating()
         super.viewDidLoad()
     }
     
@@ -61,14 +63,14 @@ class ChatSummaryViewController: UIViewController, ViewModelBindableType {
                 self?.profileImageView.image = defaultImage
             })
             alert.addAction(UIAlertAction(title: "나의 앨범에서 선택", style: .default) { _ in
-//                self?.viewModel.isUploadingProfileSubject.onNext(true)
+                self?.actIndicator.startAnimating()
                 let imgPicker = UIImagePickerController()
                 imgPicker.delegate = self
                 imgPicker.sourceType = .photoLibrary
                 imgPicker.mediaTypes = ["public.image"]
                 imgPicker.allowsEditing = true
                 self?.present(imgPicker, animated: true) {
-//                    self?.viewModel.isUploadingProfileSubject.onNext(false)
+                    self?.actIndicator.stopAnimating()
                 }
             })
             alert.addAction(UIAlertAction(title: "취소", style: .cancel))
@@ -88,18 +90,17 @@ class ChatSummaryViewController: UIViewController, ViewModelBindableType {
 extension ChatSummaryViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[.originalImage] as? UIImage {
+            actIndicator.startAnimating()
             Owner.shared.profileImg = image
             profileImageView.image = image
             
             let uploadProfileImage = viewModel.firebaseUtil.uploadProfileImage(Owner.shared.id!, image)
             let uploadProfileUpdateTime = viewModel.firebaseUtil.uploadProfileUpdateTime(Owner.shared.id!)
             
-            Observable.zip(uploadProfileImage, uploadProfileUpdateTime) {
-                print("Log -", #fileID, #function, #line, "profileImage: \($0)")
-                print("Log -", #fileID, #function, #line, "profileUpdateTime: \($1)")
-            }
-                .subscribe(onNext: { _ in
+            Observable.zip(uploadProfileImage, uploadProfileUpdateTime)
+                .subscribe(onNext: { [weak self] _ in
                     print("Log -", #fileID, #function, #line, "Profile Image and Update time Upload Completed")
+                    self?.actIndicator.stopAnimating()
                     picker.dismiss(animated: true)
                 }).disposed(by: rx.disposeBag)
         }

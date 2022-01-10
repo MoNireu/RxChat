@@ -1484,19 +1484,25 @@
                                     <constraint firstItem="yti-9k-vWZ" firstAttribute="top" secondItem="JfC-2e-vb8" secondAttribute="bottom" constant="8" id="x6z-Q3-MhN"/>
                                 </constraints>
                             </view>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="4TJ-Dc-mMj">
+                                <rect key="frame" x="188.5" y="429.5" width="37" height="37"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vYV-36-cZ5"/>
                         <constraints>
                             <constraint firstItem="oOB-H9-oiH" firstAttribute="leading" secondItem="vYV-36-cZ5" secondAttribute="leading" id="3aH-N2-Q68"/>
                             <constraint firstItem="oOB-H9-oiH" firstAttribute="top" secondItem="zki-2V-HSg" secondAttribute="bottom" id="8dP-SP-jyK"/>
                             <constraint firstItem="zki-2V-HSg" firstAttribute="trailing" secondItem="vYV-36-cZ5" secondAttribute="trailing" id="D0R-5J-hYR"/>
+                            <constraint firstItem="4TJ-Dc-mMj" firstAttribute="centerY" secondItem="g0a-ZU-s0d" secondAttribute="centerY" id="E6K-V3-VZf"/>
                             <constraint firstItem="oOB-H9-oiH" firstAttribute="trailing" secondItem="vYV-36-cZ5" secondAttribute="trailing" id="Mti-Gj-mVb"/>
                             <constraint firstItem="zki-2V-HSg" firstAttribute="leading" secondItem="vYV-36-cZ5" secondAttribute="leading" id="S40-ij-375"/>
+                            <constraint firstItem="4TJ-Dc-mMj" firstAttribute="centerX" secondItem="g0a-ZU-s0d" secondAttribute="centerX" id="SAb-Oe-WNV"/>
                             <constraint firstItem="zki-2V-HSg" firstAttribute="top" secondItem="g0a-ZU-s0d" secondAttribute="top" id="dE3-CF-rf2"/>
                             <constraint firstItem="oOB-H9-oiH" firstAttribute="bottom" secondItem="g0a-ZU-s0d" secondAttribute="bottom" id="s3D-v1-yRZ"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="actIndicator" destination="4TJ-Dc-mMj" id="1bT-Ou-wEO"/>
                         <outlet property="backgroundView" destination="zki-2V-HSg" id="CU6-4o-8gB"/>
                         <outlet property="collectionView" destination="yQp-nr-ebc" id="etu-2J-76e"/>
                         <outlet property="editProfileImageButton" destination="RK5-g2-jQZ" id="Fub-ef-q8V"/>

@@ -17,10 +17,12 @@ class ChatSummaryViewModel: CommonViewModel {
     let user: User
     let userDriver: Driver<User>
     var isChatSummaryPresenting: PublishSubject<Bool>!
+    var isLoading: PublishSubject<Bool>
     
     init(sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil, user: User) {
         self.user = user
         self.userDriver = Driver<User>.just(user)
+        self.isLoading = PublishSubject<Bool>()
         super.init(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
     }
     
