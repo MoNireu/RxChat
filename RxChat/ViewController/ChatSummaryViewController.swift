@@ -86,11 +86,22 @@ extension ChatSummaryViewController: UIImagePickerControllerDelegate, UINavigati
         if let image = info[.originalImage] as? UIImage {
             Owner.shared.profileImg = image
             profileImageView.image = image
-            viewModel.firebaseUtil.uploadProfileImage(Owner.shared.id!, image).subscribe(onNext: { _ in
-                print("Log -", #fileID, #function, #line, "profile successfully changed.")
-            }).disposed(by: rx.disposeBag)
+            
+            let uploadProfileImage = viewModel.firebaseUtil.uploadProfileImage(Owner.shared.id!, image)
+            let uploadProfileUpdateTime = viewModel.firebaseUtil.uploadProfileUpdateTime(Owner.shared.id!)
+            
+            Observable.zip(uploadProfileImage, uploadProfileUpdateTime) {
+                print("Log -", #fileID, #function, #line, "profileImage: \($0)")
+                print("Log -", #fileID, #function, #line, "profileUpdateTime: \($1)")
+            }
+                .subscribe(onNext: { _ in
+                    print("Log -", #fileID, #function, #line, "Profile Image and Update time Upload Completed")
+                    picker.dismiss(animated: true)
+                }).disposed(by: rx.disposeBag)
         }
-        picker.dismiss(animated: true)
+        else {
+            picker.dismiss(animated: true)
+        }
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

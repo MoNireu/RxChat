@@ -341,6 +341,7 @@ class FirebaseUtil {
             profileLastUpdateDocRef.rx
                 .setData(["lastUpdateTime" : Timestamp(date: Date())])
                 .subscribe(onCompleted: {
+                    observer.onNext(())
                     observer.onCompleted()
                 }).disposed(by: self.disposeBag)
             
