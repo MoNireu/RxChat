@@ -72,7 +72,6 @@ class ChatListViewModel: CommonViewModel {
         filterChatRoomBy(query: self.query)
         tableData = [SectionOfChatRoomData(header: "", items: filteredChatRoom)]
         tableDataSubject.onNext(tableData)
-        print("Log -", #fileID, #function, #line, Array(chatRoomByRoomId.values))
     }
     
     

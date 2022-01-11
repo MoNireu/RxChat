@@ -879,8 +879,11 @@
                             <constraint firstItem="ZAQ-yZ-JQw" firstAttribute="bottom" secondItem="rDT-mC-AYF" secondAttribute="bottom" id="voe-5X-uoY"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="단체채팅" id="eWa-OV-SM5"/>
+                    <navigationItem key="navigationItem" title="단체채팅" id="eWa-OV-SM5">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="plus.message" catalog="system" id="meX-ou-ROB"/>
+                    </navigationItem>
                     <connections>
+                        <outlet property="addGroupChatBtn" destination="meX-ou-ROB" id="pVk-fz-RdQ"/>
                         <outlet property="tableView" destination="ZAQ-yZ-JQw" id="PHG-21-RzV"/>
                     </connections>
                 </viewController>
@@ -1524,6 +1527,7 @@
         <image name="defaultProfileImage.png" width="225" height="225"/>
         <image name="pencil.circle.fill" catalog="system" width="128" height="121"/>
         <image name="person.3.fill" catalog="system" width="128" height="61"/>
+        <image name="plus.message" catalog="system" width="128" height="113"/>
         <image name="plus.png" width="225" height="225"/>
         <image name="xmark.circle.fill" catalog="system" width="128" height="121"/>
         <namedColor name="AccentColor">

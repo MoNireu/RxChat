@@ -67,7 +67,7 @@ class FriendListViewController: UIViewController, ViewModelBindableType {
                 findUser.setValue(findUserImage, forKey: "image")
                 
                 let createGroupChat = UIAlertAction(title: "단체채팅 생성", style: .default) { [weak self] _ in
-                    self?.viewModel.presentGroupChatMemberSelectView.execute()
+                    self?.viewModel.CreateGroupChatView.execute()
                 }
                 let createGroupChatImage = UIImage(systemName: "plus.bubble")
                 createGroupChat.setValue(createGroupChatImage, forKey: "image")

@@ -9,7 +9,8 @@ import UIKit
 
 class GroupChatListViewController: UIViewController, ViewModelBindableType {
     var viewModel: GroupChatListViewModel!
-    @IBOutlet var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var addGroupChatBtn: UIBarButtonItem!
     let searchController = UISearchController()
     
     override func viewDidLoad() {
@@ -37,7 +38,6 @@ class GroupChatListViewController: UIViewController, ViewModelBindableType {
         
         viewModel.tableDataSubject
             .subscribe(onNext: { val in
-                print("Log -", #fileID, #function, #line, val)
             }).disposed(by: rx.disposeBag)
         
         searchController.searchBar.rx.text
@@ -48,5 +48,7 @@ class GroupChatListViewController: UIViewController, ViewModelBindableType {
         tableView.rx.modelSelected(ChatRoom.self)
             .bind(to: viewModel.presentChatRoom.inputs)
             .disposed(by: rx.disposeBag)
+        
+        addGroupChatBtn.rx.action = viewModel.createGroupChatView
     }
 }

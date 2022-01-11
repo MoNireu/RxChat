@@ -77,4 +77,14 @@ class GroupChatListViewModel: ChatListViewModel {
             return groupChatListCell
         })
     }()
+    
+    
+    lazy var createGroupChatView: CocoaAction = {
+        return Action { [weak self] _ in
+            let CreateGroupChatViewModel = CreateGroupChatViewModel(sceneCoordinator: self!.sceneCoordinator, firebaseUtil: self!.firebaseUtil)
+            let CreateGroupChatScene = Scene.groupChatMemberSelect(CreateGroupChatViewModel)
+            self?.sceneCoordinator.transition(to: CreateGroupChatScene, using: .modal, animated: true)
+            return Observable.empty()
+        }
+    }()
 }

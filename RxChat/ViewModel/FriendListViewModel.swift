@@ -97,11 +97,11 @@ class FriendListViewModel: CommonViewModel {
         }
     }()
     
-    lazy var presentGroupChatMemberSelectView: CocoaAction = {
+    lazy var CreateGroupChatView: CocoaAction = {
         return Action { [weak self] _ in
-            let groupChatMemberSelectViewModel = CreateGroupChatViewModel(sceneCoordinator: self!.sceneCoordinator, firebaseUtil: self!.firebaseUtil)
-            let groupChatMemberSelectScene = Scene.groupChatMemberSelect(groupChatMemberSelectViewModel)
-            self?.sceneCoordinator.transition(to: groupChatMemberSelectScene, using: .modal, animated: true)
+            let CreateGroupChatViewModel = CreateGroupChatViewModel(sceneCoordinator: self!.sceneCoordinator, firebaseUtil: self!.firebaseUtil)
+            let CreateGroupChatScene = Scene.groupChatMemberSelect(CreateGroupChatViewModel)
+            self?.sceneCoordinator.transition(to: CreateGroupChatScene, using: .modal, animated: true)
             return Observable.empty()
         }
     }()
