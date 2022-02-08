@@ -1446,13 +1446,161 @@
                                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         </collectionViewFlowLayout>
                                         <cells>
-                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ChatSummaryGroupsCelll" id="H5g-wt-Fr7">
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ChatSummaryGroupsCelll" id="H5g-wt-Fr7" customClass="GroupChatOneMemberCollectionViewCell" customModule="RxChat" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="GkP-vd-Ob5">
                                                     <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                                     <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XiG-NW-mln">
+                                                            <rect key="frame" x="10" y="10" width="80" height="80"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="80" id="E3B-DV-Lqa"/>
+                                                                <constraint firstAttribute="width" constant="80" id="TO1-Fa-Dbc"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="XiG-NW-mln" firstAttribute="centerY" secondItem="GkP-vd-Ob5" secondAttribute="centerY" id="R0W-JU-qgZ"/>
+                                                        <constraint firstItem="XiG-NW-mln" firstAttribute="centerX" secondItem="GkP-vd-Ob5" secondAttribute="centerX" id="l08-v8-sE6"/>
+                                                    </constraints>
                                                 </collectionViewCellContentView>
+                                                <connections>
+                                                    <outlet property="groupChatImageView1" destination="XiG-NW-mln" id="iqW-53-Bog"/>
+                                                </connections>
+                                            </collectionViewCell>
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="mVX-kH-FjA" customClass="GroupChatTwoMemberCollectionViewCell" customModule="RxChat" customModuleProvider="target">
+                                                <rect key="frame" x="110" y="0.0" width="100" height="100"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="8ti-dA-kTM">
+                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LCw-3K-IU5">
+                                                            <rect key="frame" x="10" y="10" width="45" height="45"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="45" id="fla-8G-LF2"/>
+                                                                <constraint firstAttribute="width" constant="45" id="rLf-92-BXx"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="I0Y-WB-drC">
+                                                            <rect key="frame" x="45" y="45" width="45" height="45"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="45" id="SZt-sF-YAo"/>
+                                                                <constraint firstAttribute="width" constant="45" id="ouP-YU-TMy"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="LCw-3K-IU5" firstAttribute="top" secondItem="8ti-dA-kTM" secondAttribute="top" constant="10" id="B1E-wf-V5K"/>
+                                                        <constraint firstAttribute="trailing" secondItem="I0Y-WB-drC" secondAttribute="trailing" constant="10" id="NrE-ZK-H2k"/>
+                                                        <constraint firstItem="LCw-3K-IU5" firstAttribute="leading" secondItem="8ti-dA-kTM" secondAttribute="leading" constant="10" id="XpO-qs-n53"/>
+                                                        <constraint firstAttribute="bottom" secondItem="I0Y-WB-drC" secondAttribute="bottom" constant="10" id="gld-HW-dML"/>
+                                                    </constraints>
+                                                </collectionViewCellContentView>
+                                                <connections>
+                                                    <outlet property="groupChatImageView1" destination="LCw-3K-IU5" id="UtH-eh-Gv9"/>
+                                                    <outlet property="groupChatImageView2" destination="I0Y-WB-drC" id="OOa-So-kjo"/>
+                                                </connections>
+                                            </collectionViewCell>
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Xm1-oQ-HNL" customClass="GroupChatThreeMemberCollectionViewCell" customModule="RxChat" customModuleProvider="target">
+                                                <rect key="frame" x="220" y="0.0" width="100" height="100"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="FSI-dE-H0r">
+                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="V6c-YU-csK">
+                                                            <rect key="frame" x="31" y="10" width="38" height="38"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="38" id="7Lz-EK-EdK"/>
+                                                                <constraint firstAttribute="width" constant="38" id="DyF-Fz-eO0"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JWi-gL-VzN">
+                                                            <rect key="frame" x="10" y="52" width="38" height="38"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="38" id="6Ie-95-Z9d"/>
+                                                                <constraint firstAttribute="height" constant="38" id="bhc-tE-5B6"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QDR-Me-X2e">
+                                                            <rect key="frame" x="52" y="52" width="38" height="38"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="38" id="AJ5-vr-tJB"/>
+                                                                <constraint firstAttribute="height" constant="38" id="fWV-mz-7kv"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="bottom" secondItem="QDR-Me-X2e" secondAttribute="bottom" constant="10" id="0rd-MA-tHG"/>
+                                                        <constraint firstAttribute="trailing" secondItem="QDR-Me-X2e" secondAttribute="trailing" constant="10" id="1mR-wo-Lnq"/>
+                                                        <constraint firstItem="V6c-YU-csK" firstAttribute="top" secondItem="FSI-dE-H0r" secondAttribute="top" constant="10" id="CAs-2H-yDb"/>
+                                                        <constraint firstItem="JWi-gL-VzN" firstAttribute="leading" secondItem="FSI-dE-H0r" secondAttribute="leading" constant="10" id="Fiu-D7-CoJ"/>
+                                                        <constraint firstAttribute="bottom" secondItem="JWi-gL-VzN" secondAttribute="bottom" constant="10" id="WEQ-Ql-oVr"/>
+                                                        <constraint firstItem="V6c-YU-csK" firstAttribute="centerX" secondItem="FSI-dE-H0r" secondAttribute="centerX" id="dkc-Hu-f2a"/>
+                                                    </constraints>
+                                                </collectionViewCellContentView>
+                                                <connections>
+                                                    <outlet property="groupChatImageView1" destination="V6c-YU-csK" id="P3h-aA-x3R"/>
+                                                    <outlet property="groupChatImageView2" destination="JWi-gL-VzN" id="qAc-rk-0eJ"/>
+                                                    <outlet property="groupChatImageView3" destination="QDR-Me-X2e" id="RgP-iS-Uc4"/>
+                                                </connections>
+                                            </collectionViewCell>
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="ChM-Ng-HLS" customClass="GroupChatFourMemberCollectionViewCell" customModule="RxChat" customModuleProvider="target">
+                                                <rect key="frame" x="330" y="0.0" width="100" height="100"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="37Q-Od-VrR">
+                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fyM-VO-EZ8">
+                                                            <rect key="frame" x="10" y="10" width="38" height="38"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="38" id="8jp-21-r5x"/>
+                                                                <constraint firstAttribute="height" constant="38" id="vqy-QD-heI"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Md4-RI-q8W">
+                                                            <rect key="frame" x="52" y="10" width="38" height="38"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="38" id="bxd-ST-L0e"/>
+                                                                <constraint firstAttribute="width" constant="38" id="vzO-kC-ZSh"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eiv-Mp-4Qb">
+                                                            <rect key="frame" x="52" y="52" width="38" height="38"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="38" id="TwQ-gX-eVU"/>
+                                                                <constraint firstAttribute="height" constant="38" id="YRC-U7-PDC"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Hg7-Jt-HIE">
+                                                            <rect key="frame" x="10" y="52" width="38" height="38"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="38" id="UEB-ly-ODy"/>
+                                                                <constraint firstAttribute="height" constant="38" id="iCi-5a-c1P"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="fyM-VO-EZ8" firstAttribute="leading" secondItem="37Q-Od-VrR" secondAttribute="leading" constant="10" id="69x-eI-6kF"/>
+                                                        <constraint firstItem="Hg7-Jt-HIE" firstAttribute="leading" secondItem="37Q-Od-VrR" secondAttribute="leading" constant="10" id="DTZ-a7-NQF"/>
+                                                        <constraint firstAttribute="bottom" secondItem="Hg7-Jt-HIE" secondAttribute="bottom" constant="10" id="KLM-by-kcQ"/>
+                                                        <constraint firstItem="fyM-VO-EZ8" firstAttribute="top" secondItem="37Q-Od-VrR" secondAttribute="top" constant="10" id="KjK-oU-HdS"/>
+                                                        <constraint firstAttribute="trailing" secondItem="Md4-RI-q8W" secondAttribute="trailing" constant="10" id="Kmy-6G-Wmp"/>
+                                                        <constraint firstAttribute="bottom" secondItem="eiv-Mp-4Qb" secondAttribute="bottom" constant="10" id="oqX-ph-WAW"/>
+                                                        <constraint firstAttribute="trailing" secondItem="eiv-Mp-4Qb" secondAttribute="trailing" constant="10" id="rni-zG-MOI"/>
+                                                        <constraint firstItem="Md4-RI-q8W" firstAttribute="top" secondItem="37Q-Od-VrR" secondAttribute="top" constant="10" id="toE-tp-SFx"/>
+                                                    </constraints>
+                                                </collectionViewCellContentView>
+                                                <connections>
+                                                    <outlet property="groupChatImageView1" destination="fyM-VO-EZ8" id="yXm-DN-Qbc"/>
+                                                    <outlet property="groupChatImageView2" destination="Md4-RI-q8W" id="JJN-J9-ZbI"/>
+                                                    <outlet property="groupChatImageView3" destination="Hg7-Jt-HIE" id="hr9-bF-H4M"/>
+                                                    <outlet property="groupChatImageView4" destination="eiv-Mp-4Qb" id="BXI-jD-ZR1"/>
+                                                </connections>
                                             </collectionViewCell>
                                         </cells>
                                     </collectionView>
@@ -1517,7 +1665,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C1r-fD-9qp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3558" y="1507"/>
+            <point key="canvasLocation" x="3557.971014492754" y="1506.6964285714284"/>
         </scene>
     </scenes>
     <resources>
