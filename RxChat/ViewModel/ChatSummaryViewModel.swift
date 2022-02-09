@@ -24,6 +24,9 @@ class ChatSummaryViewModel: CommonViewModel {
         self.userDriver = Driver<User>.just(user)
         self.isLoading = PublishSubject<Bool>()
         super.init(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
+        
+        let chatRooms = GroupChatListViewModel.chatRoomById.values
+        print("Log -", #fileID, #function, #line, chatRooms.filter({$0.members.contains(user.id!)}))
     }
     
     deinit { print("Log -", #fileID, #function, #line, "DeInit")}
