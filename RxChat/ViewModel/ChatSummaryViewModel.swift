@@ -9,6 +9,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 import Action
+import RxDataSources
 
 class ChatSummaryViewModel: CommonViewModel {
     
@@ -16,17 +17,21 @@ class ChatSummaryViewModel: CommonViewModel {
     
     let user: User
     let userDriver: Driver<User>
+    let groupChatList: [ChatRoom]
+    var dataSource: RxCollectionViewSectionedReloadDataSource<SectionOfChatRoomData>!
     var isChatSummaryPresenting: PublishSubject<Bool>!
     var isLoading: PublishSubject<Bool>
+    var groupChatListSubject: Observable<[SectionOfChatRoomData]>
     
     init(sceneCoordinator: SceneCoordinatorType, firebaseUtil: FirebaseUtil, user: User) {
         self.user = user
         self.userDriver = Driver<User>.just(user)
         self.isLoading = PublishSubject<Bool>()
-        super.init(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
+        self.groupChatList = GroupChatListViewModel.chatRoomById.values.filter({$0.members.contains(user.id!)})
+        self.groupChatListSubject = Observable.just([SectionOfChatRoomData(header: "", items: groupChatList)])
         
-        let chatRooms = GroupChatListViewModel.chatRoomById.values
-        print("Log -", #fileID, #function, #line, chatRooms.filter({$0.members.contains(user.id!)}))
+        super.init(sceneCoordinator: sceneCoordinator, firebaseUtil: firebaseUtil)
+        self.dataSource = initCollectionDataSource()
     }
     
     deinit { print("Log -", #fileID, #function, #line, "DeInit")}
@@ -47,4 +52,35 @@ class ChatSummaryViewModel: CommonViewModel {
             return Observable.empty()
         }
     }()
+    
+    private func initCollectionDataSource() -> RxCollectionViewSectionedReloadDataSource<SectionOfChatRoomData> {
+        return RxCollectionViewSectionedReloadDataSource<SectionOfChatRoomData>(
+            configureCell: { dataSource, collectionView, indexPath, item in
+                switch item.members.count {
+                case 1:
+                    let chatSummaryGroupChatCell = collectionView.dequeueReusableCell(withReuseIdentifier: IdentifierUtil.CollectionCell.chatSummaryGroupChatOneMemberCell, for: indexPath) as! GroupChatOneMemberCollectionViewCell
+                    chatSummaryGroupChatCell.groupChatImageView1.image = Owner.shared.getUserProfileImage(userId: item.members[0])
+                    return chatSummaryGroupChatCell
+                case 2:
+                    let chatSummaryGroupChatCell = collectionView.dequeueReusableCell(withReuseIdentifier: IdentifierUtil.CollectionCell.chatSummaryGroupChatTwoMemberCell, for: indexPath) as! GroupChatTwoMemberCollectionViewCell
+                    chatSummaryGroupChatCell.groupChatImageView1.image = Owner.shared.getUserProfileImage(userId: item.members[0])
+                    chatSummaryGroupChatCell.groupChatImageView2.image = Owner.shared.getUserProfileImage(userId: item.members[1])
+                    return chatSummaryGroupChatCell
+                case 3:
+                    let chatSummaryGroupChatCell = collectionView.dequeueReusableCell(withReuseIdentifier: IdentifierUtil.CollectionCell.chatSummaryGroupChatThreeMemberCell, for: indexPath) as! GroupChatThreeMemberCollectionViewCell
+                    chatSummaryGroupChatCell.groupChatImageView1.image = Owner.shared.getUserProfileImage(userId: item.members[0])
+                    chatSummaryGroupChatCell.groupChatImageView2.image = Owner.shared.getUserProfileImage(userId: item.members[1])
+                    chatSummaryGroupChatCell.groupChatImageView3.image = Owner.shared.getUserProfileImage(userId: item.members[2])
+                    return chatSummaryGroupChatCell
+                default:
+                    let chatSummaryGroupChatCell = collectionView.dequeueReusableCell(withReuseIdentifier: IdentifierUtil.CollectionCell.chatSummaryGroupChatFourMemberCell, for: indexPath) as! GroupChatFourMemberCollectionViewCell
+                    chatSummaryGroupChatCell.groupChatImageView1.image = Owner.shared.getUserProfileImage(userId: item.members[0])
+                    chatSummaryGroupChatCell.groupChatImageView2.image = Owner.shared.getUserProfileImage(userId: item.members[1])
+                    chatSummaryGroupChatCell.groupChatImageView3.image = Owner.shared.getUserProfileImage(userId: item.members[2])
+                    chatSummaryGroupChatCell.groupChatImageView4.image = Owner.shared.getUserProfileImage(userId: item.members[3])
+                    return chatSummaryGroupChatCell
+                }
+            })
+    }
+    
 }

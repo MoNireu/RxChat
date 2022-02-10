@@ -55,6 +55,10 @@ class ChatSummaryViewController: UIViewController, ViewModelBindableType {
                 self?.nameLbl.text = user.name
             }).disposed(by: rx.disposeBag)
         
+        viewModel.groupChatListSubject
+            .bind(to: collectionView.rx.items(dataSource: viewModel.dataSource))
+            .disposed(by: rx.disposeBag)
+        
         profileImageViewTap.rx.event.bind { [weak self] _ in
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             alert.addAction(UIAlertAction(title: "기본 이미지 선택", style: .default) { _ in
@@ -76,6 +80,7 @@ class ChatSummaryViewController: UIViewController, ViewModelBindableType {
             alert.addAction(UIAlertAction(title: "취소", style: .cancel))
             self?.present(alert, animated: true)
         }.disposed(by: rx.disposeBag)
+        
         
         backgroundViewTap.rx.event.subscribe { [weak self] _ in
             self?.dismiss(animated: true)

@@ -44,6 +44,9 @@ enum IdentifierUtil {
     }
     enum CollectionCell {
         static let groupChatMemberSelect = "GroupChatMemberSelectCell"
-        static let chatSummaryGroups = "ChatSummaryGroupsCell"
+        static let chatSummaryGroupChatOneMemberCell = "ChatSummaryGroupChatOneMemberCell"
+        static let chatSummaryGroupChatTwoMemberCell = "ChatSummaryGroupChatTwoMemberCell"
+        static let chatSummaryGroupChatThreeMemberCell = "ChatSummaryGroupChatThreeMemberCell"
+        static let chatSummaryGroupChatFourMemberCell = "ChatSummaryGroupChatFourMemberCell"
     }
 }
