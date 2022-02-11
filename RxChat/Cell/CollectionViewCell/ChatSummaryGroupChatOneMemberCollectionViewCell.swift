@@ -7,22 +7,26 @@
 
 import UIKit
 
-class GroupChatOneMemberCollectionViewCell: UICollectionViewCell {
+class ChatSummaryGroupChatMemberCollectionViewCell: UICollectionViewCell {
+    @IBOutlet weak var groupChatNameLabel: UILabel!
+}
+
+class ChatSummaryGroupChatOneMemberCollectionViewCell: ChatSummaryGroupChatMemberCollectionViewCell {
     @IBOutlet weak var groupChatImageView1: UIImageView!
 }
 
-class GroupChatTwoMemberCollectionViewCell: UICollectionViewCell {
+class ChatSummaryGroupChatTwoMemberCollectionViewCell: ChatSummaryGroupChatMemberCollectionViewCell {
     @IBOutlet weak var groupChatImageView1: UIImageView!
     @IBOutlet weak var groupChatImageView2: UIImageView!
 }
 
-class GroupChatThreeMemberCollectionViewCell: UICollectionViewCell {
+class ChatSummaryGroupChatThreeMemberCollectionViewCell: ChatSummaryGroupChatMemberCollectionViewCell {
     @IBOutlet weak var groupChatImageView1: UIImageView!
     @IBOutlet weak var groupChatImageView2: UIImageView!
     @IBOutlet weak var groupChatImageView3: UIImageView!
 }
 
-class GroupChatFourMemberCollectionViewCell: UICollectionViewCell {
+class ChatSummaryGroupChatFourMemberCollectionViewCell: ChatSummaryGroupChatMemberCollectionViewCell {
     @IBOutlet weak var groupChatImageView1: UIImageView!
     @IBOutlet weak var groupChatImageView2: UIImageView!
     @IBOutlet weak var groupChatImageView3: UIImageView!

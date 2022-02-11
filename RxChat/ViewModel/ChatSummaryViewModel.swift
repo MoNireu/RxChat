@@ -58,26 +58,30 @@ class ChatSummaryViewModel: CommonViewModel {
             configureCell: { dataSource, collectionView, indexPath, item in
                 switch item.members.count {
                 case 1:
-                    let chatSummaryGroupChatCell = collectionView.dequeueReusableCell(withReuseIdentifier: IdentifierUtil.CollectionCell.chatSummaryGroupChatOneMemberCell, for: indexPath) as! GroupChatOneMemberCollectionViewCell
+                    let chatSummaryGroupChatCell = collectionView.dequeueReusableCell(withReuseIdentifier: IdentifierUtil.CollectionCell.chatSummaryGroupChatOneMemberCell, for: indexPath) as! ChatSummaryGroupChatOneMemberCollectionViewCell
                     chatSummaryGroupChatCell.groupChatImageView1.image = Owner.shared.getUserProfileImage(userId: item.members[0])
+                    chatSummaryGroupChatCell.groupChatNameLabel.text = item.title
                     return chatSummaryGroupChatCell
                 case 2:
-                    let chatSummaryGroupChatCell = collectionView.dequeueReusableCell(withReuseIdentifier: IdentifierUtil.CollectionCell.chatSummaryGroupChatTwoMemberCell, for: indexPath) as! GroupChatTwoMemberCollectionViewCell
+                    let chatSummaryGroupChatCell = collectionView.dequeueReusableCell(withReuseIdentifier: IdentifierUtil.CollectionCell.chatSummaryGroupChatTwoMemberCell, for: indexPath) as! ChatSummaryGroupChatTwoMemberCollectionViewCell
                     chatSummaryGroupChatCell.groupChatImageView1.image = Owner.shared.getUserProfileImage(userId: item.members[0])
                     chatSummaryGroupChatCell.groupChatImageView2.image = Owner.shared.getUserProfileImage(userId: item.members[1])
+                    chatSummaryGroupChatCell.groupChatNameLabel.text = item.title
                     return chatSummaryGroupChatCell
                 case 3:
-                    let chatSummaryGroupChatCell = collectionView.dequeueReusableCell(withReuseIdentifier: IdentifierUtil.CollectionCell.chatSummaryGroupChatThreeMemberCell, for: indexPath) as! GroupChatThreeMemberCollectionViewCell
+                    let chatSummaryGroupChatCell = collectionView.dequeueReusableCell(withReuseIdentifier: IdentifierUtil.CollectionCell.chatSummaryGroupChatThreeMemberCell, for: indexPath) as! ChatSummaryGroupChatThreeMemberCollectionViewCell
                     chatSummaryGroupChatCell.groupChatImageView1.image = Owner.shared.getUserProfileImage(userId: item.members[0])
                     chatSummaryGroupChatCell.groupChatImageView2.image = Owner.shared.getUserProfileImage(userId: item.members[1])
                     chatSummaryGroupChatCell.groupChatImageView3.image = Owner.shared.getUserProfileImage(userId: item.members[2])
+                    chatSummaryGroupChatCell.groupChatNameLabel.text = item.title
                     return chatSummaryGroupChatCell
                 default:
-                    let chatSummaryGroupChatCell = collectionView.dequeueReusableCell(withReuseIdentifier: IdentifierUtil.CollectionCell.chatSummaryGroupChatFourMemberCell, for: indexPath) as! GroupChatFourMemberCollectionViewCell
+                    let chatSummaryGroupChatCell = collectionView.dequeueReusableCell(withReuseIdentifier: IdentifierUtil.CollectionCell.chatSummaryGroupChatFourMemberCell, for: indexPath) as! ChatSummaryGroupChatFourMemberCollectionViewCell
                     chatSummaryGroupChatCell.groupChatImageView1.image = Owner.shared.getUserProfileImage(userId: item.members[0])
                     chatSummaryGroupChatCell.groupChatImageView2.image = Owner.shared.getUserProfileImage(userId: item.members[1])
                     chatSummaryGroupChatCell.groupChatImageView3.image = Owner.shared.getUserProfileImage(userId: item.members[2])
                     chatSummaryGroupChatCell.groupChatImageView4.image = Owner.shared.getUserProfileImage(userId: item.members[3])
+                    chatSummaryGroupChatCell.groupChatNameLabel.text = item.title
                     return chatSummaryGroupChatCell
                 }
             })

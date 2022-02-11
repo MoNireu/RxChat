@@ -146,12 +146,11 @@ class GroupChatListViewModel: CommonViewModel {
     
     lazy var presentChatRoom: Action<ChatRoom, Void> = {
         return Action { [weak self] chatRoom in
-            let friendId = chatRoom.getFriendIdFromChatRoom()
-            ChatUtility.shared.preparePrivateChatRoomForTransition(friendId: friendId)
+            ChatUtility.shared.prepareGroupChatRoomForTransition(roomId: chatRoom.UUID)
                 .subscribe(onNext: { [weak self] chatRoom in // 채팅방으로 이동.
                     let chatRoomViewModel = ChatRoomViewModel(sceneCoordinator: (self?.sceneCoordinator)!, firebaseUtil: (self?.firebaseUtil)!, chatRoom: chatRoom)
                     let chatRoomScene = Scene.chatRoom(chatRoomViewModel)
-                    self?.sceneCoordinator.transition(to: chatRoomScene, using: .dismissThenPushOnPrivateTab, animated: true)
+                    self?.sceneCoordinator.transition(to: chatRoomScene, using: .dismissThenPushOnGroupTab, animated: true)
                     print("Connecting to room number: \(chatRoom.UUID)")
                 }).disposed(by: (self?.disposeBag)!)
             return Observable.empty()

@@ -56,7 +56,7 @@
 		E1A76A2226A8091E00C8F783 /* RxImagePickerDelegateProxy.swift .swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A76A2126A8091E00C8F783 /* RxImagePickerDelegateProxy.swift .swift */; };
 		E1B4CCB02769D96500F55CB6 /* ChatRoomFromOwnerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B4CCAF2769D96500F55CB6 /* ChatRoomFromOwnerTableViewCell.swift */; };
 		E1B4CCB22769D97900F55CB6 /* ChatRoomFromFriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B4CCB12769D97900F55CB6 /* ChatRoomFromFriendTableViewCell.swift */; };
-		E1B6F95F27B26E32001B3CC2 /* GroupChatOneMemberCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B6F95E27B26E32001B3CC2 /* GroupChatOneMemberCollectionViewCell.swift */; };
+		E1B6F95F27B26E32001B3CC2 /* ChatSummaryGroupChatOneMemberCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B6F95E27B26E32001B3CC2 /* ChatSummaryGroupChatOneMemberCollectionViewCell.swift */; };
 		E1C03A48276C3D940081D2F5 /* ChatRoomFromFriendWithProfileImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C03A47276C3D940081D2F5 /* ChatRoomFromFriendWithProfileImageTableViewCell.swift */; };
 		E1D89ECB2762EF260068D333 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D89ECA2762EF260068D333 /* Chat.swift */; };
 		E1D89ECD2762EFF50068D333 /* ChatRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D89ECC2762EFF50068D333 /* ChatRoom.swift */; };
@@ -149,7 +149,7 @@
 		E1A76A2126A8091E00C8F783 /* RxImagePickerDelegateProxy.swift .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RxImagePickerDelegateProxy.swift .swift"; sourceTree = "<group>"; };
 		E1B4CCAF2769D96500F55CB6 /* ChatRoomFromOwnerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomFromOwnerTableViewCell.swift; sourceTree = "<group>"; };
 		E1B4CCB12769D97900F55CB6 /* ChatRoomFromFriendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomFromFriendTableViewCell.swift; sourceTree = "<group>"; };
-		E1B6F95E27B26E32001B3CC2 /* GroupChatOneMemberCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupChatOneMemberCollectionViewCell.swift; sourceTree = "<group>"; };
+		E1B6F95E27B26E32001B3CC2 /* ChatSummaryGroupChatOneMemberCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSummaryGroupChatOneMemberCollectionViewCell.swift; sourceTree = "<group>"; };
 		E1C03A47276C3D940081D2F5 /* ChatRoomFromFriendWithProfileImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomFromFriendWithProfileImageTableViewCell.swift; sourceTree = "<group>"; };
 		E1D89ECA2762EF260068D333 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		E1D89ECC2762EFF50068D333 /* ChatRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoom.swift; sourceTree = "<group>"; };
@@ -392,7 +392,7 @@
 			isa = PBXGroup;
 			children = (
 				E1FD096D277ECFD500BB4F92 /* GroupChatMemberSelectCollectionViewCell.swift */,
-				E1B6F95E27B26E32001B3CC2 /* GroupChatOneMemberCollectionViewCell.swift */,
+				E1B6F95E27B26E32001B3CC2 /* ChatSummaryGroupChatOneMemberCollectionViewCell.swift */,
 			);
 			path = CollectionViewCell;
 			sourceTree = "<group>";
@@ -654,7 +654,7 @@
 				E1F84483277FFED4000330C9 /* IdentifierUtil.swift in Sources */,
 				E13D44722750AAB4005EECB9 /* ChatRoomViewController.swift in Sources */,
 				E105FFAE2782D01400C6B73B /* DictionaryExtension.swift in Sources */,
-				E1B6F95F27B26E32001B3CC2 /* GroupChatOneMemberCollectionViewCell.swift in Sources */,
+				E1B6F95F27B26E32001B3CC2 /* ChatSummaryGroupChatOneMemberCollectionViewCell.swift in Sources */,
 				E180E3EA26C277D1000F4CEA /* FindUserViewModel.swift in Sources */,
 				E170DF6226A0203A00A5BAAF /* SceneCoordinator.swift in Sources */,
 				E10D16E826B91942003DD5D3 /* FriendListMyTableViewCell.swift in Sources */,
